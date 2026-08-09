@@ -196,6 +196,53 @@ body{
 .panel .k{ color:var(--tint2); }
 .panel .k b{ color:var(--wht); }
 
+/* ═══ SLIDE DEL PROBLEMA ════════════════════════════════════════
+   Las dos pérdidas se cuentan como una sola: cada pedido cobra en
+   plata y cobra en cliente. Antes eran dos números sin relación
+   entre sí, centrados en el medio de la slide.
+   ═══════════════════════════════════════════════════════════════ */
+.prob-lead{
+  font-family:var(--font-d); font-weight:700;
+  font-size:clamp(1rem,2.1vw,2.05rem); line-height:1.15;
+  color:var(--blk); margin-bottom:var(--gap);
+}
+.prob-lead .vio{ color:var(--vio); }
+
+.perdidas{ display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(1rem,3.4vw,3.4rem); flex:1; min-height:0; align-content:center; }
+.perdida{ border-top:3px solid var(--vio); padding-top:clamp(.5rem,1.4vh,1rem); }
+.perdida-n{
+  font-weight:700; font-size:var(--t-small); letter-spacing:.18em;
+  text-transform:uppercase; color:var(--vio); margin-bottom:.5em;
+}
+.perdida .k{ margin-top:.75em; }
+
+/* El ticket: la barra ES el pedido. La franja pálida rayada es lo
+   que se lleva la app, dibujada en el 25% (medio del rango).     */
+.ticket{ display:flex; height:clamp(20px,3.4vh,38px); margin-top:.7em; border-radius:var(--r); overflow:hidden; }
+.ticket-queda{ width:75%; background:var(--vio); }
+.ticket-app{
+  width:25%;
+  background:repeating-linear-gradient(135deg,var(--pale) 0 6px,var(--tint) 6px 12px);
+  border-left:2px solid var(--wht);
+}
+.ticket-pies{ display:flex; margin-top:.4em; font-size:var(--t-small); color:var(--gry); }
+.ticket-pies span:first-child{ width:75%; }
+.ticket-pies .app{ width:25%; color:var(--ind); font-weight:700; }
+
+/* Los tres campos tachados: el dato que la marca nunca ve.        */
+.tachados{ display:flex; flex-wrap:wrap; gap:.5em clamp(.5rem,1.4vw,1.2rem); margin-top:.7em; }
+.tachados span{
+  position:relative; font-family:var(--font-d); font-weight:700;
+  font-size:clamp(.8rem,1.5vw,1.4rem); color:var(--hair);
+  /* El padding da el vuelo del tachado. Con offsets negativos en el
+     ::after el mismo efecto se salía de la caja del span.         */
+  padding:0 .1em;
+}
+.tachados span::after{
+  content:''; position:absolute; left:0; right:0; top:52%;
+  height:3px; background:var(--vio); border-radius:2px;
+}
+
 /* ═══ EMBUDO · proporciones reales (100 / 15 / 4) ═══════════════
    El deck viejo dibujaba el 15 al 42% y el 4 al 20%. Acá el
    ancho ES el número. El track hairline deja ver el 100 de
@@ -577,6 +624,8 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      repeat(2,1fr) rompía las listas de una sola columna.         */
   .stats{ grid-template-columns:repeat(auto-fit,minmax(140px,1fr)) !important; gap:clamp(.5rem,3vw,1rem) !important; }
   .team{ grid-template-columns:repeat(2,1fr) !important; }
+  /* 158 px de columna no alcanzan para el número más la barra */
+  .perdidas{ grid-template-columns:1fr !important; gap:clamp(.9rem,4vw,1.6rem) !important; }
   .founders{ grid-template-columns:1fr !important; }
   .arc{ grid-template-columns:1fr !important; }
 
@@ -671,17 +720,37 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <h2 class="s-title reveal">El restaurante <span class="vio">alquila a sus propios clientes.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
-    <div class="s-body" style="justify-content:center;">
-      <div class="stats reveal" style="grid-template-columns:repeat(2,1fr);">
-        <div class="stat">
+    <!-- Antes eran dos datos sueltos flotando en el medio de la slide.
+         "Le cobra dos veces" los convierte en una sola idea con dos
+         partes, que es lo que el título ya promete: alquilar. -->
+    <div class="s-body">
+      <p class="prob-lead reveal">Cada pedido por la app <span class="vio">le cobra dos veces.</span></p>
+
+      <div class="perdidas reveal">
+        <div class="perdida">
+          <p class="perdida-n">01 · Primero, la plata</p>
           <span class="n lg">15–35%</span>
-          <p class="lbl">La comisión</p>
-          <p class="k">del ticket se lo lleva la app en cada pedido. Y algunos quedan atrapados por cláusulas de cuota mínima.</p>
+          <!-- El corte se dibuja en el 25%, que es el medio del rango
+               declarado. La etiqueta dice el rango completo: nadie lee
+               una barra rotulada "15–35%" como una medición exacta. -->
+          <div class="ticket" aria-label="De cada ticket, entre 15 y 35% se lo lleva la app">
+            <div class="ticket-queda"></div>
+            <div class="ticket-app"></div>
+          </div>
+          <div class="ticket-pies">
+            <span>lo que le queda</span>
+            <span class="app">se lo lleva la app</span>
+          </div>
+          <p class="k">De cada ticket, en cada pedido. Y algunos quedan atrapados por cláusulas de cuota mínima.</p>
         </div>
-        <div class="stat">
+
+        <div class="perdida">
+          <p class="perdida-n">02 · Y después, el cliente</p>
           <span class="n lg">0</span>
-          <p class="lbl">Los datos</p>
-          <p class="k">datos del cliente vuelven a la marca: ni nombre, ni teléfono, ni frecuencia. El cliente queda registrado en la app, no en su base.</p>
+          <div class="tachados">
+            <span>nombre</span><span>teléfono</span><span>frecuencia</span>
+          </div>
+          <p class="k">datos vuelven a la marca. El cliente queda registrado en la app, <b>no en su base.</b></p>
         </div>
       </div>
     </div>
