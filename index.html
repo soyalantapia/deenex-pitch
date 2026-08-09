@@ -390,7 +390,12 @@ body{
 .alloc-lbl span{ font-size:var(--t-micro); color:var(--gry); text-align:center }
 
 /* ═══ PORTADA ═══════════════════════════════════════════════════ */
-.cover .slide-content{ flex-direction:row; align-items:center; gap:clamp(1rem,3.2vw,3.4rem); padding-bottom:var(--m); }
+/* La portada es la única slide sin rail. El wordmark ya está en el
+   contenido, así que la vertical rotada sería redundante y lo único
+   que hace es empujar el título hacia adentro. Sin rail, la
+   tipografía arranca en el margen y la slide gana peso.          */
+.cover .rail{ display:none; }
+.cover .slide-content{ flex-direction:row; align-items:center; gap:clamp(1rem,3.2vw,3.4rem); padding:var(--m); }
 .cover-l{ flex:1 1 53%; min-width:0 }
 .cover-r{ flex:1 1 47%; min-width:0; display:flex; align-items:center; justify-content:center }
 .cover-r img{ max-height:min(74vh,640px); width:auto }
