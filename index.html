@@ -647,10 +647,7 @@ body{
 .nav-dots{ position:fixed; right:clamp(7px,1vw,16px); top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:7px; z-index:9000 }
 .nav-dots button{ width:7px; height:7px; border-radius:50%; border:0; background:var(--hair); cursor:pointer; padding:0; transition:all .3s var(--ease) }
 .nav-dots button.active{ background:var(--vio); transform:scale(1.5) }
-.badge-backup{ position:absolute; top:var(--m); right:var(--m); font-size:var(--t-micro); font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--lav); z-index:3 }
 
-.slide[data-track="backup"]{ display:none }
-body.show-backup .slide[data-track="backup"]{ display:flex }
 
 .index{ position:fixed; inset:0; background:rgba(255,255,255,.985); z-index:10500; display:none; padding:clamp(1.2rem,4vw,3rem); overflow-y:auto }
 .index.open{ display:block }
@@ -826,15 +823,14 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 <div class="progress-bar" id="progressBar"></div>
 <nav class="nav-dots" id="navDots" aria-label="Navegación de slides"></nav>
 <div class="timer" id="timer">0:00</div>
-<p class="keyboard-hint" id="hint">← → navegar · M índice · B respaldo · T cronómetro</p>
+<p class="keyboard-hint" id="hint">← → navegar · M índice · T cronómetro</p>
 
 <div class="edit-hotzone" aria-hidden="true"></div>
 <button class="edit-toggle" id="editToggle" title="Modo edición (E)" aria-label="Modo edición">✏️</button>
 <div class="edit-banner" id="editBanner">Modo edición · Clic en cualquier texto para editarlo · Ctrl+S para exportar</div>
 
 <div class="index" id="indexOverlay" role="dialog" aria-label="Índice de slides">
-  <h3>En vivo</h3><ol id="indexLive"></ol>
-  <h3>Respaldo · para Q&amp;A</h3><ol id="indexBackup"></ol>
+  <ol id="indexLive"></ol>
 </div>
 
 <div class="lightbox" id="lightbox"><div id="lightboxInner"></div></div>
@@ -842,7 +838,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 <main>
 
 <!-- ══ 01 · PORTADA ══════════════════════════════════════════════ -->
-<section class="slide cover" data-track="live" data-title="Portada">
+<section class="slide cover" data-title="Portada">
   <div class="slide-content">
     <div class="cover-l">
       <img class="wordmark reveal" src="assets/logo-wordmark.png" alt="Deenex">
@@ -867,7 +863,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 <!-- ══ 02 · EL PROBLEMA ══════════════════════════════════════════
      Los dos números cuelgan de una regla violeta, sin caja. Es la
      diferencia entre una pastilla de plantilla y un dato con peso. -->
-<section class="slide" data-track="live" data-title="El problema">
+<section class="slide" data-title="El problema">
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">El problema</p>
@@ -916,7 +912,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      Slide propia. En el deck viejo esta cita vivía apretada abajo
      de dos tarjetas; es lo mejor que tiene el pitch y necesita
      silencio alrededor. Primera de las dos slates violeta.        -->
-<section class="slide slate" data-track="live" data-title="La cita">
+<section class="slide slate" data-title="La cita">
   <div class="slide-content" style="justify-content:center;">
     <p class="eyebrow reveal">El problema</p>
     <blockquote class="quote wipe">“Las apps son un gusano que te funde: 25.000 pedidos por mes y ni un cliente es mío.”</blockquote>
@@ -925,7 +921,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 </section>
 
 <!-- ══ 04 · LA PRUEBA DEL PROBLEMA ═══════════════════════════════ -->
-<section class="slide" data-track="live" data-title="La prueba del problema">
+<section class="slide" data-title="La prueba del problema">
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">La prueba</p>
@@ -954,7 +950,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 <!-- ══ 05 · EL INSIGHT ═══════════════════════════════════════════
      Barras a proporción real. El track hairline es el 100 de
      referencia: sin él, una barra del 4% no se lee como caída.    -->
-<section class="slide" data-track="live" data-title="El insight">
+<section class="slide" data-title="El insight">
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">El insight</p>
@@ -987,7 +983,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 <!-- ══ 06 · LA SOLUCIÓN · EL LOOP ════════════════════════════════
      La firma visual del deck. El isotipo de Deenex es un imán y
      el producto es un circuito cerrado: acá se dibujan juntos.    -->
-<section class="slide" data-track="live" data-title="La solución">
+<section class="slide" data-title="La solución">
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">La solución</p>
@@ -1026,7 +1022,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 </section>
 
 <!-- ══ 07 · TRACCIÓN ═════════════════════════════════════════════ -->
-<section class="slide" data-track="live" data-title="Tracción">
+<section class="slide" data-title="Tracción">
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">Tracción</p>
@@ -1080,7 +1076,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      meses cae en noviembre, o sea dentro de Q4: la atribución de
      Activa y los US$15K son el mismo hito, y por eso el pre-seed
      cuelga de ahí sin forzar nada.                                -->
-<section class="slide" data-track="live" data-title="El camino">
+<section class="slide" data-title="El camino">
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">El camino</p>
@@ -1138,7 +1134,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      reconciliación Legacy vs ICP va en el cuerpo, no al pie: con
      US$15K y 15 marcas la división da ~US$1.000 por cuenta contra
      los $221 del modelo. Si no lo explicamos, lo encuentra él.   -->
-<section class="slide" data-track="live" data-title="Modelo de ingresos">
+<section class="slide" data-title="Modelo de ingresos">
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">Modelo</p>
@@ -1189,8 +1185,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      ══════════════════════════════════════════════════════════════ -->
 
 <!-- B1 · CASOS DE ÉXITO -->
-<section class="slide" data-track="backup" data-title="Casos de éxito">
-  <span class="badge-backup">Respaldo</span>
+<section class="slide" data-title="Casos de éxito">
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">Casos</p>
@@ -1233,8 +1228,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 </section>
 
 <!-- B2 · MERCADO -->
-<section class="slide" data-track="backup" data-title="Mercado">
-  <span class="badge-backup">Respaldo</span>
+<section class="slide" data-title="Mercado">
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">Mercado</p>
@@ -1278,8 +1272,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 
 
 <!-- B4 · ADQUISICIÓN -->
-<section class="slide" data-track="backup" data-title="Adquisición">
-  <span class="badge-backup">Respaldo</span>
+<section class="slide" data-title="Adquisición">
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">Adquisición</p>
@@ -1326,8 +1319,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 <!-- B7 · PANORAMA COMPETITIVO
      La slide que faltaba. "¿Por qué no lo hace Fudo o Rappi?" es
      la primera pregunta de cualquier inversor. -->
-<section class="slide" data-track="backup" data-title="Competencia">
-  <span class="badge-backup">Respaldo</span>
+<section class="slide" data-title="Competencia">
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">Competencia</p>
@@ -1372,8 +1364,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 </section>
 
 
-<section class="slide" data-track="backup" data-title="Equipo">
-  <span class="badge-backup">Respaldo</span>
+<section class="slide" data-title="Equipo">
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">Equipo</p>
@@ -1429,7 +1420,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      así que atarle la ronda la volvía circular. Este hito se
      alcanza con el equipo actual y es el que más mueve la
      valuación. Para cambiarlo se toca solo esta slide.          -->
-<section class="slide slate" data-track="live" data-title="La ronda">
+<section class="slide slate" data-title="La ronda">
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">La ronda</p>
@@ -1551,7 +1542,6 @@ class SlidePresentation{
         case 'ArrowLeft':  case 'ArrowUp':   case 'PageUp':             e.preventDefault(); this.prev(); break;
         case 'Home': e.preventDefault(); this.goTo(0); break;
         case 'End':  e.preventDefault(); this.goTo(this.live.length-1); break;
-        case 'b': case 'B': this.toggleBackup(); break;
         case 'm': case 'M': this.toggleIndex(); break;
         case 'Escape': this.closeIndex(); this.closeLightbox(); break;
       }
@@ -1601,29 +1591,21 @@ class SlidePresentation{
     this.progress.style.width = (n > 1 ? (this.current/(n-1))*100 : 100) + '%';
   }
 
-  toggleBackup(){
-    document.body.classList.toggle('show-backup');
-    this.buildDots();
-    this.syncProgress();
-  }
 
   /* La numeración cuenta por track, no por posición en el DOM: La
      ronda vive al final del documento para cerrar también el modo
      respaldo, así que "índice del DOM menos cantidad de live" ya no
      da el número correcto para ninguna de las dos listas.          */
   buildIndex(){
-    const liveOl = document.getElementById('indexLive'), backOl = document.getElementById('indexBackup');
-    let nLive = 0, nBack = 0;
-    this.all.forEach(s => {
+    const ol = document.getElementById('indexLive');
+    this.all.forEach((s, i) => {
       const li = document.createElement('li'), b = document.createElement('button');
-      const isBackup = s.dataset.track === 'backup';
-      b.innerHTML = '<i>'+(isBackup ? 'B'+(++nBack) : String(++nLive).padStart(2,'0'))+'</i>'+(s.dataset.title||'');
+      b.innerHTML = '<i>'+String(i+1).padStart(2,'0')+'</i>'+(s.dataset.title||'');
       b.addEventListener('click', () => {
-        if(isBackup && !document.body.classList.contains('show-backup')) this.toggleBackup();
         this.closeIndex();
         requestAnimationFrame(() => s.scrollIntoView({behavior:'smooth'}));
       });
-      li.appendChild(b); (isBackup ? backOl : liveOl).appendChild(li);
+      li.appendChild(b); ol.appendChild(li);
     });
   }
   toggleIndex(){ document.getElementById('indexOverlay').classList.toggle('open') }
