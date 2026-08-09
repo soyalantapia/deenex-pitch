@@ -138,6 +138,15 @@ body{
   text-transform:uppercase; color:var(--vio);
   margin-bottom:clamp(.3rem,.85vh,.65rem);
 }
+/* Equipo se quedó sin rótulo —el título ya dice "Equipo Deenex"— pero
+   su titular igual tiene que arrancar donde arrancan los otros quince:
+   sin esto, al pasar de Competencia a Equipo el título saltaba 22 px
+   hacia arriba y el salto se ve al pasar las slides.
+   Reserva exactamente la caja del rótulo: 1,5 de interlínea (el
+   heredado, medido) más su propio margen inferior.                */
+.slide[data-title="Equipo"] .s-head{
+  padding-top:calc(var(--t-micro) * 1.5 + clamp(.3rem,.85vh,.65rem));
+}
 
 /* ═══ CABEZAL DE SLIDE ══════════════════════════════════════════ */
 .s-head{ flex:none; }
@@ -503,12 +512,6 @@ body{
 .press-name{ font-family:var(--font-d); font-weight:700; font-size:clamp(.7rem,1.1vw,1.05rem); color:var(--ind); white-space:nowrap; }
 .press-sep{ color:var(--hair); }
 
-/* ═══ CONTACTO ══════════════════════════════════════════════════ */
-.contact{ display:flex; align-items:center; gap:clamp(.6rem,1.4vw,1.2rem); }
-.contact img{ width:clamp(52px,6.4vw,96px); height:auto; max-height:none; border-radius:var(--r); background:var(--wht); padding:5px; }
-.contact a{ color:var(--wht); font-weight:700; text-decoration:none; display:block; font-size:var(--t-body); }
-.contact-lbl{ display:block; font-size:var(--t-small); color:var(--tint2); margin-bottom:.25em; }
-
 /* ═══ SLIDE DE RONDA ════════════════════════════════════════════
    Se rehízo alrededor del pedido. Antes declaraba una posición y
    daba un mail; ahora dice qué queremos del inversor esta semana.
@@ -537,10 +540,10 @@ body{
 .ask-txt{ font-size:var(--t-lead); line-height:1.35; color:var(--wht); }
 .ask-txt b{ color:var(--wht); font-weight:700; }
 /* La regla superior separa el cierre del cuerpo y le da piso a la
-   firma, que antes flotaba al fondo de un hueco enorme.          */
+   firma. Bloque y no flex: desde que se fue el QR hay un solo hijo
+   y el space-between con un hijo no hacía nada.                   */
 .ronda-cierre{
-  display:flex; align-items:flex-end; justify-content:space-between;
-  gap:clamp(.8rem,2vw,2rem); flex-wrap:wrap; flex:none;
+  flex:none;
   padding-top:clamp(.7rem,2.2vh,1.5rem); padding-bottom:var(--m);
   border-top:1px solid rgba(255,255,255,.32);
 }
@@ -1494,8 +1497,11 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 <section class="slide" data-title="Equipo">
   <div class="slide-content">
     <header class="s-head">
-      <p class="eyebrow reveal">Equipo</p>
-      <h2 class="s-title reveal">Siete personas, <span class="vio">cero pasajeros.</span></h2>
+      <!-- Sin rótulo de sección: el título YA es el rótulo. Con el
+           "Equipo" arriba y "Equipo Deenex" abajo la slide
+           tartamudeaba. Es la única, junto a la portada, que no lo
+           lleva, y por el mismo motivo: se nombra sola.           -->
+      <h2 class="s-title reveal">Equipo <span class="vio">Deenex.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
     <!-- Arranca pegado al título en vez de centrarse: centrar dejaba
@@ -1584,14 +1590,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
                pleno #695EDE y sobre esta slide desaparecía.        -->
           <img class="firma-logo" src="assets/logo-wordmark-white.png" alt="Deenex">
           <p class="firma-slogan">El ecommerce que permite a los restaurantes transformar pedidos en clientes recurrentes.</p>
-        </div>
-        <div class="contact">
-          <img src="assets/qr.png" alt="Código QR para ver la demo">
-          <div>
-            <span class="contact-lbl">Escaneá para ver la demo</span>
-            <a href="mailto:alan@deenex.com">alan@deenex.com</a>
-            <a href="https://deenex.com">deenex.com</a>
-          </div>
         </div>
       </div>
     </div>
