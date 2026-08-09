@@ -972,46 +972,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 </section>
 
 
-<!-- ══ 10 · LA RONDA · VIOLETA A SANGRE ══════════════════════════
-     El disparador es la ATRIBUCIÓN DE ACTIVA (Q4 2026), no los
-     US$500K de run-rate: los 500K son el escenario CON inversión,
-     así que atarle la ronda la volvía circular. Este hito se
-     alcanza con el equipo actual y es el que más mueve la
-     valuación. Para cambiarlo se toca solo esta slide.          -->
-<section class="slide slate" data-track="live" data-title="La ronda">
-  <div class="slide-content">
-    <header class="s-head">
-      <p class="eyebrow reveal">La ronda</p>
-      <h2 class="s-title wipe">No estamos <span class="vio">levantando hoy.</span></h2>
-      <div class="s-rule reveal"></div>
-    </header>
-    <div class="s-body">
-      <p class="ronda-lead reveal">En Q4 medimos la atribución real de Activa —la hipótesis más grande del plan— y ahí abrimos la ronda.</p>
-
-      <!-- EL PEDIDO. La slide anterior no le pedía NADA al inversor:
-           declaraba una posición y daba un mail. Alguien que te quiere
-           seguir tiene que saber qué hacer el lunes, y el pedido tiene
-           que ser compatible con "no estamos levantando": no se pide
-           plata, se pide la conversación.                            -->
-      <div class="ask reveal">
-        <p class="ask-lbl">Lo que sí queremos ahora</p>
-        <p class="ask-txt">Tres o cuatro conversaciones abiertas, para que cuando salga ese número <b>no estemos empezando de cero.</b></p>
-      </div>
-
-      <div class="ronda-cierre reveal">
-        <p class="firma">Tus clientes<br>son tuyos.</p>
-        <div class="contact">
-          <img src="assets/qr.png" alt="Código QR para ver la demo">
-          <div>
-            <span class="contact-lbl">Escaneá para ver la demo</span>
-            <a href="mailto:alan@deenex.com">alan@deenex.com</a>
-            <a href="https://deenex.com">deenex.com</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 
 <!-- ══════════════════════════════════════════════════════════════
@@ -1290,6 +1250,48 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   <footer class="closer reveal">Un POS registra la venta y un ecommerce la procesa. <b>Nadie convierte el dato en la próxima venta.</b></footer>
 </section>
 
+
+<!-- ══ 10 · LA RONDA · VIOLETA A SANGRE ══════════════════════════
+     El disparador es la ATRIBUCIÓN DE ACTIVA (Q4 2026), no los
+     US$500K de run-rate: los 500K son el escenario CON inversión,
+     así que atarle la ronda la volvía circular. Este hito se
+     alcanza con el equipo actual y es el que más mueve la
+     valuación. Para cambiarlo se toca solo esta slide.          -->
+<section class="slide slate" data-track="live" data-title="La ronda">
+  <div class="slide-content">
+    <header class="s-head">
+      <p class="eyebrow reveal">La ronda</p>
+      <h2 class="s-title wipe">No estamos <span class="vio">levantando hoy.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body">
+      <p class="ronda-lead reveal">En Q4 medimos la atribución real de Activa —la hipótesis más grande del plan— y ahí abrimos la ronda.</p>
+
+      <!-- EL PEDIDO. La slide anterior no le pedía NADA al inversor:
+           declaraba una posición y daba un mail. Alguien que te quiere
+           seguir tiene que saber qué hacer el lunes, y el pedido tiene
+           que ser compatible con "no estamos levantando": no se pide
+           plata, se pide la conversación.                            -->
+      <div class="ask reveal">
+        <p class="ask-lbl">Lo que sí queremos ahora</p>
+        <p class="ask-txt">Tres o cuatro conversaciones abiertas, para que cuando salga ese número <b>no estemos empezando de cero.</b></p>
+      </div>
+
+      <div class="ronda-cierre reveal">
+        <p class="firma">Tus clientes<br>son tuyos.</p>
+        <div class="contact">
+          <img src="assets/qr.png" alt="Código QR para ver la demo">
+          <div>
+            <span class="contact-lbl">Escaneá para ver la demo</span>
+            <a href="mailto:alan@deenex.com">alan@deenex.com</a>
+            <a href="https://deenex.com">deenex.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <script>
@@ -1405,13 +1407,17 @@ class SlidePresentation{
 
   toggleBackup(){ document.body.classList.toggle('show-backup'); this.buildDots(); }
 
+  /* La numeración cuenta por track, no por posición en el DOM: La
+     ronda vive al final del documento para cerrar también el modo
+     respaldo, así que "índice del DOM menos cantidad de live" ya no
+     da el número correcto para ninguna de las dos listas.          */
   buildIndex(){
     const liveOl = document.getElementById('indexLive'), backOl = document.getElementById('indexBackup');
-    const liveCount = this.all.filter(s => s.dataset.track === 'live').length;
-    this.all.forEach((s, idx) => {
+    let nLive = 0, nBack = 0;
+    this.all.forEach(s => {
       const li = document.createElement('li'), b = document.createElement('button');
       const isBackup = s.dataset.track === 'backup';
-      b.innerHTML = '<i>'+(isBackup ? 'B'+(idx-liveCount+1) : String(idx+1).padStart(2,'0'))+'</i>'+(s.dataset.title||'');
+      b.innerHTML = '<i>'+(isBackup ? 'B'+(++nBack) : String(++nLive).padStart(2,'0'))+'</i>'+(s.dataset.title||'');
       b.addEventListener('click', () => {
         if(isBackup && !document.body.classList.contains('show-backup')) this.toggleBackup();
         this.closeIndex();
