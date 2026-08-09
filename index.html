@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deenex · Tus clientes son tuyos</title>
+<!-- El deck es público porque GitHub Pages gratis lo exige, pero no
+     tiene por qué ser indexable: contiene el monto de la ronda, el
+     cap de referencia y datos de facturación de clientes. Esto no es
+     seguridad —cualquiera con el link entra— es discreción. -->
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="description" content="Deenex · Pitch deck">
+<meta property="og:title" content="Deenex · Tus clientes son tuyos">
+<meta property="og:description" content="La infraestructura que convierte cada pedido en un cliente que vuelve.">
+<meta name="theme-color" content="#695EDE">
+
+<!-- Panchang (display) + Bespoke Sans (texto). Las dos son del manual de marca. -->
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=panchang@400,500,600,700,800&f[]=bespoke-sans@300,400,500,700&display=swap">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   DEENEX · PITCH DECK
+   ───────────────────────────────────────────────────────────────
+   CONCEPTO — "EL IMÁN".
+   El isotipo de Deenex es un imán de herradura. Eso no es un
+   adorno: es la tesis. Tus clientes vuelven a vos, no a las apps.
+   Todo el sistema visual sale de ahí — atracción, retorno, loop.
+
+   DECISIONES DE DISEÑO (tomadas en el rediseño de raíz)
+   1. Rail editorial a la izquierda con la sección rotada. Libera
+      el ancho completo para tipografía grande de verdad.
+   2. Panchang empujada mucho más grande que en el PPTX. En un
+      escenario los números tienen que leerse desde el fondo.
+   3. Fuera el chrome de tarjetas. Los datos cuelgan de reglas
+      hairline, no de pastillas lavanda. Menos ruido, más autoridad.
+   4. DOS slides violeta a sangre completa, en los dos únicos
+      golpes emocionales: la cita de Federico y la ronda. Es la
+      escalada de "bloques violeta plenos dentro de la slide
+      blanca" a slide entera — respeta la regla de no usar fondos
+      oscuros y da contraste real de proyector.
+   5. Las marcas de datos van TODAS en un solo violeta (#695EDE).
+      El validador de paleta da 1,15:1 / 1,67:1 / 2,37:1 para los
+      violetas claros contra blanco: abajo de 3:1 desaparecen en
+      un proyector con luz ambiente. El largo carga el dato; el
+      color no tiene que diferenciar nada.
+   6. Proporciones VERDADERAS en todo lo cuantitativo. El embudo
+      del deck viejo dibujaba el 15 al 42% y el 4 al 20%: eso es
+      una barra que miente sobre su propio número.
+
+   PROHIBIDO EL NARANJA, aunque figure en el manual original.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root{
+  /* — Paleta — */
+  --wht:#FFFFFF;
+  --vio:#695EDE;   /* violeta de marca · único color de datos     */
+  --vio-d:#4A3FBF; /* violeta profundo · hover y detalles         */
+  --ind:#2B0068;   /* índigo · tinta profunda                     */
+  --blk:#1B1B1B;
+  --gry:#6E6E73;
+  --tint:#F3F1FD;  /* superficie suave                            */
+  --tint2:#E7E3FB; /* superficie / texto claro sobre violeta      */
+  --lav:#A99BF0;
+  --pale:#C9BFF5;
+  --hair:#E2DFF0;
+  --grn:#1F8A4A;   /* semántico, uso escaso                       */
+
+  --font-d:'Panchang','Bespoke Sans',ui-sans-serif,-apple-system,'Segoe UI',sans-serif;
+  --font-b:'Bespoke Sans',ui-sans-serif,-apple-system,'Segoe UI',sans-serif;
+
+  /* — Escala tipográfica — */
+  --t-micro: clamp(.52rem, .64vw, .72rem);
+  --t-small: clamp(.66rem, .84vw, .92rem);
+  --t-body:  clamp(.78rem, 1.02vw, 1.12rem);
+  --t-lead:  clamp(.92rem, 1.35vw, 1.55rem);
+  --t-title: clamp(1.75rem, 4.15vw, 4.4rem);
+  --t-hero:  clamp(2.2rem, 5.6vw, 6rem);
+  --n-sm:    clamp(1.3rem, 2.1vw, 2.2rem);
+  --n-md:    clamp(1.9rem, 3.5vw, 3.7rem);
+  --n-lg:    clamp(2.6rem, 5.4vw, 5.8rem);
+  --n-xl:    clamp(3.4rem, 9.5vw, 10rem);
+
+  /* — Geometría — */
+  --m:    clamp(1.3rem, 4.2vw, 4.2rem);   /* margen de slide      */
+  --rail: clamp(26px, 3vw, 52px);         /* rail izquierdo       */
+  --gap:  clamp(.5rem, 1.5vh, 1.3rem);
+  --gap-s:clamp(.3rem, .8vw, .7rem);
+  --r:    clamp(.4rem, .8vw, .8rem);
+
+  --ease: cubic-bezier(.16,1,.3,1);
+  --dur: .7s;
+}
+
+/* ═══ VIEWPORT FITTING — base obligatoria ═══════════════════════
+   Cada slide entra EXACTA en el viewport. Nada scrollea adentro. */
+html,body{ height:100%; overflow-x:hidden; }
+html{ scroll-snap-type:y mandatory; scroll-behavior:smooth; }
+.slide{
+  width:100vw; height:100vh; height:100dvh;
+  overflow:hidden; scroll-snap-align:start;
+  display:flex; flex-direction:column; position:relative;
+  background:var(--wht);
+}
+.slide-content{
+  flex:1; min-height:0; display:flex; flex-direction:column;
+  overflow:hidden;
+  padding:var(--m) var(--m) 0 calc(var(--m) + var(--rail));
+}
+.grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr)); gap:clamp(.5rem,1.5vw,1rem); }
+img{ max-width:100%; max-height:min(50vh,400px); object-fit:contain; }
+
+/* Las media queries NO viven acá: van al final de la hoja.
+   Una media query no suma especificidad, así que si se declara
+   antes que el componente, el componente la pisa. Ver §RESPONSIVE. */
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{
+  background:var(--wht); color:var(--blk);
+  font-family:var(--font-b); font-size:var(--t-body);
+  font-weight:400; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+
+/* ═══ RAIL EDITORIAL ════════════════════════════════════════════
+   Marca de sección rotada + número. Es el elemento que le da al
+   deck su identidad de pieza editorial y no de plantilla SaaS.  */
+.rail{
+  position:absolute; left:0; top:0; bottom:0; width:calc(var(--m) + var(--rail));
+  display:flex; flex-direction:column; align-items:center; justify-content:space-between;
+  padding:var(--m) 0; z-index:3; pointer-events:none;
+}
+.rail::before{
+  content:''; position:absolute; left:calc(var(--m) + var(--rail) - 1px);
+  top:var(--m); bottom:var(--m); width:1px; background:var(--hair);
+}
+.rail-mark{ width:clamp(13px,1.5vw,22px); height:auto; max-height:none; }
+.rail-label{
+  writing-mode:vertical-rl; transform:rotate(180deg);
+  font-weight:700; font-size:var(--t-micro); letter-spacing:.28em;
+  text-transform:uppercase; color:var(--vio); white-space:nowrap;
+}
+.rail-num{ font-family:var(--font-d); font-weight:700; font-size:var(--t-small); color:var(--hair); letter-spacing:.05em; }
+
+/* Variante sobre slide violeta */
+.slide.slate .rail::before{ background:rgba(255,255,255,.28); }
+.slide.slate .rail-label{ color:var(--tint2); }
+.slide.slate .rail-num{ color:rgba(255,255,255,.45); }
+
+/* ═══ CABEZAL DE SLIDE ══════════════════════════════════════════ */
+.s-head{ flex:none; }
+.s-title{
+  font-family:var(--font-d); font-weight:700;
+  font-size:var(--t-title); line-height:1.02; letter-spacing:-.025em;
+  color:var(--blk); text-wrap:balance;
+}
+.s-title .vio{ color:var(--vio); }
+.s-rule{ height:1px; background:var(--hair); margin:clamp(.55rem,1.5vh,1.15rem) 0 clamp(.6rem,1.7vh,1.3rem); }
+
+/* Cuerpo: arranca pegado al título (el gap flotante del PPTX era
+   el defecto más visible) y empuja el resto hacia abajo.        */
+.s-body{ flex:1; min-height:0; display:flex; flex-direction:column; gap:var(--gap); }
+
+/* ═══ BANDA DE CIERRE ═══════════════════════════════════════════
+   A sangre en el borde inferior, no una pastilla flotante.
+   Solo aparece cuando hay una conclusión con información real.  */
+.closer{
+  flex:none; background:var(--tint2); color:var(--ind);
+  padding:clamp(.6rem,1.6vh,1.15rem) var(--m) clamp(.6rem,1.6vh,1.15rem) calc(var(--m) + var(--rail));
+  font-size:var(--t-body); line-height:1.4;
+}
+.closer b{ font-weight:700; }
+.closer .lead{ font-family:var(--font-d); font-weight:700; }
+
+/* ═══ NÚMEROS ═══════════════════════════════════════════════════ */
+/* nowrap es obligatorio: un número partido en dos líneas se lee
+   como dos números distintos y rompe la grilla de la fila.      */
+.n{ font-family:var(--font-d); font-weight:700; color:var(--vio); line-height:.92; letter-spacing:-.035em; font-variant-numeric:tabular-nums; white-space:nowrap; display:block; }
+.n .pre{ font-size:.42em; letter-spacing:.01em; vertical-align:.55em; margin-right:.06em; }
+/* .n se usa también para rótulos de palabra ("La Fábrica de
+   Sandwiches", "Por etapas"). Ahí el nowrap es contraproducente:
+   en un teléfono la frase se sale de la caja y queda recortada.  */
+.n.wrap{ white-space:normal; }
+.n.sm{ font-size:var(--n-sm) } .n.md{ font-size:var(--n-md) }
+.n.lg{ font-size:var(--n-lg) } .n.xl{ font-size:var(--n-xl) }
+.n.ink{ color:var(--ind) }
+
+.lbl{ font-weight:700; font-size:var(--t-micro); letter-spacing:.2em; text-transform:uppercase; color:var(--gry); }
+.lead{ font-size:var(--t-lead); line-height:1.28; }
+.note{ font-size:var(--t-small); color:var(--gry); font-style:italic; }
+.k{ font-size:var(--t-small); color:var(--blk); line-height:1.4; }
+.k b,.lead b{ color:var(--ind); font-weight:700; }
+
+/* Estadística que cuelga de una regla, sin caja */
+.stats{ display:grid; gap:clamp(.6rem,2vw,2.2rem); }
+.stat{ border-top:2px solid var(--vio); padding-top:clamp(.4rem,1.1vh,.8rem); }
+.stat .lbl{ margin-top:.5em; }
+.stat .k{ margin-top:.3em; }
+.stat.hair{ border-top-color:var(--hair); }
+
+/* Panel violeta pleno. Es el mismo recurso que las slides a sangre,
+   en dosis de bloque: da contraste de proyector sin recurrir a un
+   fondo oscuro.                                                   */
+.panel{
+  background:var(--vio); color:var(--wht); border-radius:var(--r);
+  padding:clamp(.9rem,2.4vh,1.7rem) clamp(1rem,2.2vw,1.9rem);
+}
+.panel .n{ color:var(--wht); }
+.panel .lbl{ color:var(--tint2); }
+.panel .k{ color:var(--tint2); }
+.panel .k b{ color:var(--wht); }
+
+/* ═══ EMBUDO · proporciones reales (100 / 15 / 4) ═══════════════
+   El deck viejo dibujaba el 15 al 42% y el 4 al 20%. Acá el
+   ancho ES el número. El track hairline deja ver el 100 de
+   referencia, que es lo que hace legible la caída.              */
+.funnel{ display:flex; flex-direction:column; gap:clamp(.5rem,1.8vh,1.25rem); }
+.f-row{ display:grid; grid-template-columns:minmax(2.6ch,auto) 1fr; gap:clamp(.6rem,1.6vw,1.5rem); align-items:center; }
+.f-num{ font-family:var(--font-d); font-weight:700; font-size:var(--n-md); color:var(--ind); line-height:.92; text-align:right; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
+/* El track claro es SUPERFICIE, no marca de dato: da el 100 de
+   referencia sin el que una barra del 3% no se lee como caída.
+   Por eso puede ir en un tinte que no pasaría el piso de 3:1.   */
+.f-lane{ position:relative; height:clamp(30px,5.8vh,64px); background:var(--tint); border-radius:var(--r); }
+.f-bar{ position:absolute; left:0; top:0; height:100%; background:var(--vio); border-radius:var(--r); transform-origin:left; }
+.f-txt{ position:absolute; top:50%; transform:translateY(-50%); white-space:nowrap; font-size:var(--t-small); color:var(--blk); }
+.f-txt b{ color:var(--ind); font-weight:700; }
+
+/* ═══ ESCALERA DE ARPA · proporciones reales (56/132/221) ═══════ */
+.stairs{ display:flex; align-items:stretch; gap:clamp(.4rem,1.2vw,1.1rem); height:clamp(120px,30vh,300px); }
+.stair-col{ flex:1; display:flex; flex-direction:column; gap:clamp(.25rem,.7vh,.5rem); }
+.stair-track{ flex:1; display:flex; align-items:flex-end; min-height:0; }
+.stair{ width:100%; background:var(--vio); border-radius:var(--r) var(--r) 0 0; display:flex; align-items:flex-start; justify-content:center; padding-top:clamp(.25rem,.8vh,.6rem); transform-origin:bottom; }
+.stair .n{ color:var(--wht); font-size:clamp(.95rem,2vw,2.05rem); }
+.stair-col .lbl{ text-align:center; }
+/* 56/221 = 25,3% · 132/221 = 59,7% · 221/221 = 100% */
+.st-1{ height:25.3% } .st-2{ height:59.7% } .st-3{ height:100% }
+
+/* ═══ BARRAS DE REVENUE · proporciones reales ═══════════════════
+   213K/7,52M = 2,8%. Se ve minúscula, y esa ES la historia.     */
+.bars{ display:flex; align-items:stretch; gap:clamp(.7rem,2.2vw,2.4rem); height:clamp(96px,21vh,215px); }
+.bar-col{ flex:1; display:flex; flex-direction:column; gap:clamp(.25rem,.7vh,.5rem); }
+.bar-track{ flex:1; display:flex; align-items:flex-end; min-height:0; }
+.bar{ width:100%; background:var(--vio); border-radius:var(--r) var(--r) 0 0; transform-origin:bottom; min-height:3px; }
+.bar-v{ font-family:var(--font-d); font-weight:700; font-size:clamp(.85rem,1.7vw,1.75rem); color:var(--ind); letter-spacing:-.02em; }
+.bar-col .lbl{ color:var(--gry); }
+/* 213K/7,52M = 2,8% · 2,17M/7,52M = 28,9% · 100% */
+.br-1{ height:2.8% } .br-2{ height:28.9% } .br-3{ height:100% }
+
+/* ═══ EL LOOP · la firma visual del deck ════════════════════════
+   Venta → Dato → Activación → Recompra. Es la tesis del producto
+   dibujada: el imán que devuelve al cliente al mismo circuito.  */
+.loop-wrap{ display:flex; align-items:center; justify-content:center; height:100%; min-height:0; }
+.loop{ width:auto; height:min(52vh,420px); max-height:100%; overflow:visible; }
+.loop-ring{ fill:none; stroke:var(--hair); stroke-width:1.5; }
+/* Circunferencia real del anillo: 2π × 100 = 628,3. Si el
+   dasharray no coincide, el trazo nunca cierra la vuelta.       */
+.loop-arc{ fill:none; stroke:var(--vio); stroke-width:3.5; stroke-linecap:round; stroke-dasharray:0 628; }
+.slide.visible .loop-arc{ animation:trace 3.6s var(--ease) infinite; }
+@keyframes trace{
+  0%   { stroke-dasharray:0 628;   stroke-dashoffset:0 }
+  55%  { stroke-dasharray:628 628; stroke-dashoffset:0 }
+  100% { stroke-dasharray:628 628; stroke-dashoffset:-628 }
+}
+.loop-node circle{ fill:var(--wht); stroke:var(--vio); stroke-width:2.5 }
+.loop-node .nm{ font-family:var(--font-d); font-weight:700; fill:var(--ind); font-size:14px; text-anchor:middle }
+.loop-node .step{ font-family:var(--font-b); font-weight:700; fill:var(--vio); font-size:10px; letter-spacing:.18em; text-anchor:middle }
+.loop-dot{ fill:var(--vio) }
+/* La rotación va en el <g>, que tiene transform-origin en el
+   centro del anillo. Sobre el <circle> giraría en torno a 0,0.  */
+.loop-dot-g{ transform-origin:175px 175px }
+.slide.visible .loop-dot-g{ animation:orbit 3.6s linear infinite }
+@keyframes orbit{ from{ transform:rotate(0deg) } to{ transform:rotate(360deg) } }
+
+/* ═══ SLIDE VIOLETA A SANGRE ════════════════════════════════════ */
+.slide.slate{ background:var(--vio); color:var(--wht); }
+.slide.slate .s-title{ color:var(--wht); }
+.slide.slate .s-title .vio{ color:var(--tint2); }
+.slide.slate .s-rule{ background:rgba(255,255,255,.3); }
+.slide.slate .lbl{ color:var(--tint2); }
+.slide.slate .n{ color:var(--wht); }
+.slide.slate .k,.slide.slate .lead{ color:var(--tint2); }
+.slide.slate .k b,.slide.slate .lead b{ color:var(--wht); }
+.slide.slate .stat{ border-top-color:rgba(255,255,255,.55); }
+
+.quote{
+  font-family:var(--font-d); font-weight:700;
+  font-size:clamp(1.4rem,4.4vw,4.4rem); line-height:1.06;
+  letter-spacing:-.03em; color:var(--wht); text-wrap:balance;
+}
+.quote-by{ margin-top:clamp(.9rem,2.6vh,2rem); font-size:var(--t-body); color:var(--tint2); }
+.quote-by b{ color:var(--wht); font-weight:700; }
+
+/* ═══ CHIPS DE CLIENTES ═════════════════════════════════════════ */
+.chips{ display:flex; flex-wrap:wrap; gap:var(--gap-s); }
+.chip{
+  border:1px solid var(--hair); border-radius:999px;
+  padding:clamp(.25rem,.65vh,.45rem) clamp(.5rem,1vw,.9rem);
+  font-weight:700; font-size:var(--t-micro); letter-spacing:.11em;
+  color:var(--ind); text-transform:uppercase; white-space:nowrap;
+}
+.chip .dot{ display:inline-block; width:.4em; height:.4em; border-radius:50%; background:var(--grn); margin-right:.5em; vertical-align:middle; }
+
+/* ═══ PRENSA ════════════════════════════════════════════════════ */
+.press{ display:flex; align-items:baseline; gap:clamp(.5rem,1.4vw,1.2rem); flex-wrap:wrap; }
+.press-name{ font-family:var(--font-d); font-weight:700; font-size:clamp(.7rem,1.1vw,1.05rem); color:var(--ind); white-space:nowrap; }
+.press-sep{ color:var(--hair); }
+
+/* ═══ ECUACIÓN ══════════════════════════════════════════════════ */
+.eq{ display:flex; align-items:flex-start; gap:clamp(.4rem,1.3vw,1.3rem); }
+.eq .stat{ flex:1; }
+/* Los operadores se alinean con los números, no con el centro de
+   la columna: si no, quedan flotando junto al texto chico.      */
+.eq-op{ display:flex; align-items:flex-start; padding-top:clamp(.5rem,1.5vh,1.1rem); font-family:var(--font-d); font-size:var(--n-sm); color:var(--lav); font-weight:700; }
+
+/* ═══ ARCO TEMPORAL ═════════════════════════════════════════════ */
+.arc{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(.5rem,1.6vw,1.6rem); }
+.arc-step{ border-top:2px solid rgba(255,255,255,.55); padding-top:clamp(.4rem,1.1vh,.8rem); }
+.arc-step.now{ border-top-color:var(--wht); }
+/* display:block — sin esto los tres spans corren en una sola
+   línea y el paso se lee como una frase suelta.                 */
+.arc-when{ display:block; font-weight:700; font-size:var(--t-micro); letter-spacing:.2em; text-transform:uppercase; color:var(--tint2); }
+.arc-what{ display:block; font-family:var(--font-d); font-weight:700; font-size:clamp(.88rem,1.6vw,1.45rem); color:var(--wht); line-height:1.12; margin-top:.35em; }
+.arc-why{ display:block; font-size:var(--t-small); color:var(--tint2); margin-top:.3em; }
+
+/* ═══ CONTACTO ══════════════════════════════════════════════════ */
+.contact{ display:flex; align-items:center; gap:clamp(.6rem,1.4vw,1.2rem); }
+.contact img{ width:clamp(44px,5.6vw,84px); height:auto; max-height:none; border-radius:6px; background:var(--wht); padding:4px; }
+.contact a{ color:var(--wht); font-weight:700; text-decoration:none; display:block; }
+
+/* ═══ EQUIPO ════════════════════════════════════════════════════ */
+.team{ display:grid; grid-template-columns:repeat(5,1fr); gap:clamp(.5rem,1.4vw,1.3rem); }
+.member{ display:flex; flex-direction:column; gap:.3em; }
+.member img{ width:clamp(42px,6vw,88px); height:clamp(42px,6vw,88px); max-height:none; border-radius:50%; object-fit:cover; margin-bottom:.25em; }
+.mn{ font-family:var(--font-d); font-weight:700; font-size:clamp(.66rem,.95vw,.92rem); color:var(--ind); line-height:1.15; }
+.mr{ font-weight:700; font-size:var(--t-micro); letter-spacing:.1em; text-transform:uppercase; color:var(--vio); }
+.md{ font-size:var(--t-micro); color:var(--gry); line-height:1.35; }
+.founders{ display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(.6rem,1.8vw,1.8rem); }
+.founder{ display:flex; align-items:flex-start; gap:clamp(.5rem,1.3vw,1.1rem); border-top:2px solid var(--vio); padding-top:clamp(.4rem,1.1vh,.8rem); }
+.founder img{ width:clamp(44px,5.4vw,76px); height:clamp(44px,5.4vw,76px); max-height:none; border-radius:50%; object-fit:cover; flex:none; }
+
+/* CHAPA — la credencial. Es lo que convierte la slide de equipo de
+   relleno en argumento: un rol dice qué hace la persona, una chapa
+   dice por qué puede hacerlo.                                     */
+.chapa{
+  display:block; font-size:var(--t-micro); line-height:1.35;
+  color:var(--ind); font-weight:700; margin-top:.3em;
+  padding-left:.7em; border-left:2px solid var(--vio);
+}
+
+/* Marca de maqueta. Existe para que un contenido de ejemplo NUNCA
+   pueda confundirse con datos reales ni terminar frente a un
+   inversor por accidente.                                        */
+.mock{
+  position:absolute; top:var(--m); right:var(--m); z-index:4;
+  font-size:var(--t-micro); font-weight:700; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--vio);
+  border:1.5px dashed var(--vio); border-radius:999px;
+  padding:.35em .9em; background:var(--wht);
+}
+.mock-txt{ color:var(--lav); font-style:italic; font-weight:400; }
+
+/* ═══ TABLA COMPETITIVA ═════════════════════════════════════════ */
+.ctable{ display:flex; flex-direction:column; }
+.crow{ display:grid; grid-template-columns:1.05fr 1fr 1.1fr 1.2fr; gap:clamp(.4rem,1.1vw,1.1rem); align-items:center; padding:clamp(.34rem,.95vh,.7rem) 0; border-bottom:1px solid var(--hair); }
+.crow.head{ padding-top:0; border-bottom:1px solid var(--ind); }
+.crow.head span{ font-weight:700; font-size:var(--t-micro); letter-spacing:.18em; text-transform:uppercase; color:var(--vio); }
+.crow.us{ background:var(--tint); border-bottom:0; padding-left:clamp(.4rem,.9vw,.8rem); padding-right:clamp(.4rem,.9vw,.8rem); margin-top:clamp(.2rem,.6vh,.45rem); border-radius:var(--r); }
+.cname{ font-family:var(--font-d); font-weight:700; font-size:clamp(.68rem,1vw,.95rem); color:var(--ind); line-height:1.15; }
+.cex{ display:block; font-family:var(--font-b); font-weight:400; font-size:var(--t-micro); color:var(--gry); margin-top:.15em; }
+.ccell{ font-size:var(--t-micro); color:var(--blk); line-height:1.35; }
+.ccell.win{ color:var(--ind); font-weight:700; }
+
+/* ═══ VIDEOS ════════════════════════════════════════════════════
+   Sin URL en data-video no hacen nada: mejor eso que un ▶ que
+   promete algo que todavía no existe.                           */
+.vids{ display:grid; grid-template-columns:repeat(2,1fr); gap:var(--gap-s); }
+.vid{ background:var(--vio); border-radius:var(--r); aspect-ratio:9/16; max-height:min(34vh,270px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.45em; color:var(--wht); }
+.vid[data-video]:not([data-video=""]){ cursor:pointer; transition:transform .3s var(--ease) }
+.vid[data-video]:not([data-video=""]):hover{ transform:translateY(-4px) }
+.vid .play{ width:clamp(24px,3.2vw,46px); height:clamp(24px,3.2vw,46px); border-radius:50%; background:var(--wht); display:flex; align-items:center; justify-content:center }
+.vid .play::after{ content:''; border-left:clamp(7px,.9vw,12px) solid var(--vio); border-top:clamp(4px,.55vw,8px) solid transparent; border-bottom:clamp(4px,.55vw,8px) solid transparent; margin-left:.16em }
+.vid .vn{ font-family:var(--font-d); font-weight:700; font-size:clamp(.7rem,1vw,.95rem) }
+.lightbox{ position:fixed; inset:0; background:rgba(27,27,27,.94); display:none; align-items:center; justify-content:center; z-index:11000 }
+.lightbox.open{ display:flex }
+.lightbox video,.lightbox iframe{ max-width:min(92vw,480px); max-height:88vh; width:100%; aspect-ratio:9/16; border:0; border-radius:var(--r) }
+
+/* ═══ DESTINO DE FONDOS ═════════════════════════════════════════ */
+.alloc{ display:flex; gap:2px; height:clamp(30px,5vh,54px); }
+.alloc div{ display:flex; align-items:center; justify-content:center; font-family:var(--font-d); font-weight:700; font-size:clamp(.66rem,1vw,1rem); border-radius:3px }
+.alloc-lbl{ display:flex; gap:2px; margin-top:.45em }
+.alloc-lbl span{ font-size:var(--t-micro); color:var(--gry); text-align:center }
+
+/* ═══ PORTADA ═══════════════════════════════════════════════════ */
+.cover .slide-content{ flex-direction:row; align-items:center; gap:clamp(1rem,3.2vw,3.4rem); padding-bottom:var(--m); }
+.cover-l{ flex:1 1 53%; min-width:0 }
+.cover-r{ flex:1 1 47%; min-width:0; display:flex; align-items:center; justify-content:center }
+.cover-r img{ max-height:min(74vh,640px); width:auto }
+.wordmark{ height:clamp(24px,3.1vw,50px); width:auto; max-height:none; margin-bottom:clamp(.8rem,2.4vh,1.9rem) }
+.hero{ font-family:var(--font-d); font-weight:700; font-size:var(--t-hero); line-height:.98; letter-spacing:-.035em }
+.hero .vio{ color:var(--vio); display:block }
+.cover-sub{ font-size:var(--t-lead); color:var(--gry); margin-top:clamp(.6rem,1.7vh,1.15rem); max-width:34ch }
+.cover-rule{ width:clamp(60px,8vw,130px); height:3px; background:var(--vio); border-radius:2px; margin:clamp(.85rem,2.3vh,1.6rem) 0 clamp(.45rem,1.3vh,.85rem) }
+.cover-meta{ font-weight:700; font-size:var(--t-micro); letter-spacing:.2em; text-transform:uppercase; color:var(--gry) }
+.cover-tr{ margin-top:clamp(.6rem,1.8vh,1.15rem); font-weight:700; font-size:var(--t-small); letter-spacing:.11em; text-transform:uppercase; color:var(--ind) }
+
+/* ═══ ANIMACIÓN ═════════════════════════════════════════════════
+   Un solo load orquestado por slide. Son ~11 s por slide: nada de
+   micro-interacciones dispersas. Los títulos entran con un wipe
+   de clip-path, no con el fade-up genérico.                     */
+.reveal{ opacity:0; transform:translateY(18px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease) }
+.slide.visible .reveal{ opacity:1; transform:none }
+.slide.visible .reveal:nth-child(1){ transition-delay:.04s }
+.slide.visible .reveal:nth-child(2){ transition-delay:.11s }
+.slide.visible .reveal:nth-child(3){ transition-delay:.18s }
+.slide.visible .reveal:nth-child(4){ transition-delay:.25s }
+.slide.visible .reveal:nth-child(5){ transition-delay:.32s }
+.slide.visible .reveal:nth-child(6){ transition-delay:.39s }
+
+.wipe{ clip-path:inset(0 100% 0 0); transition:clip-path 1s var(--ease) }
+.slide.visible .wipe{ clip-path:inset(0 0 0 0) }
+
+.f-bar,.stair,.bar{ transform:scaleX(0) }
+.stair,.bar{ transform:scaleY(0) }
+.slide.visible .f-bar{ transform:scaleX(1); transition:transform 1.05s var(--ease) }
+.slide.visible .stair,.slide.visible .bar{ transform:scaleY(1); transition:transform .85s var(--ease) }
+.f-row:nth-child(1) .f-bar{ transition-delay:.25s } .f-row:nth-child(2) .f-bar{ transition-delay:.45s } .f-row:nth-child(3) .f-bar{ transition-delay:.65s }
+.stair-col:nth-child(2) .stair{ transition-delay:.12s } .stair-col:nth-child(3) .stair{ transition-delay:.24s }
+.bar-col:nth-child(2) .bar{ transition-delay:.12s } .bar-col:nth-child(3) .bar{ transition-delay:.24s }
+
+/* ═══ CHROME ════════════════════════════════════════════════════ */
+.progress-bar{ position:fixed; top:0; left:0; height:2px; background:var(--vio); width:0; z-index:9000; transition:width .25s linear }
+.nav-dots{ position:fixed; right:clamp(7px,1vw,16px); top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:7px; z-index:9000 }
+.nav-dots button{ width:7px; height:7px; border-radius:50%; border:0; background:var(--hair); cursor:pointer; padding:0; transition:all .3s var(--ease) }
+.nav-dots button.active{ background:var(--vio); transform:scale(1.5) }
+.badge-backup{ position:absolute; top:var(--m); right:var(--m); font-size:var(--t-micro); font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--lav); z-index:3 }
+
+.slide[data-track="backup"]{ display:none }
+body.show-backup .slide[data-track="backup"]{ display:flex }
+
+.index{ position:fixed; inset:0; background:rgba(255,255,255,.985); z-index:10500; display:none; padding:clamp(1.2rem,4vw,3rem); overflow-y:auto }
+.index.open{ display:block }
+.index h3{ font-family:var(--font-d); font-size:var(--t-small); letter-spacing:.2em; text-transform:uppercase; color:var(--vio); margin:0 0 .8em }
+.index h3+ol{ margin-bottom:clamp(1rem,3vh,2rem) }
+.index ol{ list-style:none; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:.45rem }
+.index li button{ width:100%; text-align:left; cursor:pointer; font-family:var(--font-b); background:var(--tint); border:0; border-radius:var(--r); padding:clamp(.45rem,1.1vh,.8rem) clamp(.6rem,1.1vw,1rem); font-size:var(--t-small); color:var(--ind); font-weight:700; transition:background .2s var(--ease) }
+.index li button:hover{ background:var(--pale) }
+.index li button i{ font-style:normal; color:var(--lav); margin-right:.7em }
+
+.timer{ position:fixed; left:clamp(7px,1.1vw,18px); bottom:clamp(7px,1.1vw,18px); z-index:9500; display:none; font-family:var(--font-d); font-weight:700; font-size:clamp(.78rem,1.2vw,1.1rem); background:var(--tint); color:var(--ind); padding:.32em .7em; border-radius:999px }
+.timer.on{ display:block } .timer.over{ background:var(--vio); color:var(--wht) }
+.keyboard-hint{ position:fixed; left:50%; bottom:clamp(7px,1.3vw,16px); transform:translateX(-50%); z-index:9000; font-size:var(--t-micro); letter-spacing:.14em; text-transform:uppercase; color:var(--hair); pointer-events:none; transition:opacity .5s var(--ease) }
+.keyboard-hint.hide{ opacity:0 }
+
+/* ═══ EDICIÓN EN LÍNEA ══════════════════════════════════════════ */
+.edit-hotzone{ position:fixed; top:0; left:0; width:80px; height:80px; z-index:10000; cursor:pointer }
+.edit-toggle{ position:fixed; top:clamp(7px,1.1vw,16px); left:clamp(7px,1.1vw,16px); width:36px; height:36px; border-radius:50%; border:0; cursor:pointer; background:var(--vio); color:var(--wht); font-size:14px; line-height:1; opacity:0; pointer-events:none; transition:opacity .3s ease; z-index:10001 }
+.edit-toggle.show,.edit-toggle.active{ opacity:1; pointer-events:auto }
+.edit-banner{ position:fixed; top:0; left:0; right:0; z-index:10002; background:var(--ind); color:var(--wht); text-align:center; font-size:var(--t-micro); letter-spacing:.14em; text-transform:uppercase; padding:.5em; display:none }
+.edit-banner.active{ display:block }
+body.edit-active [contenteditable]{ outline:1px dashed var(--lav); outline-offset:3px; border-radius:3px }
+body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — SIEMPRE AL FINAL DE LA HOJA
+   Una media query no agrega especificidad: si se declara antes que
+   el componente, la regla del componente gana igual. Todo lo que
+   depende del viewport tiene que vivir acá abajo.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* — Proyectores y notebooks de poca altura — */
+@media (max-height:700px){
+  :root{ --m:clamp(.9rem,3.2vw,2.4rem); --gap:clamp(.35rem,1.1vh,.85rem);
+         --t-title:clamp(1.4rem,3.4vw,2.9rem); --t-hero:clamp(1.7rem,4.4vw,3.6rem);
+         --n-lg:clamp(2rem,4.2vw,3.6rem); --n-xl:clamp(2.6rem,7.4vw,6rem); --n-md:clamp(1.5rem,2.8vw,2.5rem); }
+}
+@media (max-height:600px){
+  :root{ --m:clamp(.65rem,2.4vw,1.6rem); --gap:clamp(.28rem,.85vh,.6rem);
+         --t-title:clamp(1.2rem,2.9vw,2.2rem); --t-hero:clamp(1.4rem,3.6vw,2.7rem);
+         --t-body:clamp(.72rem,.92vw,.95rem);
+         --n-lg:clamp(1.6rem,3.4vw,2.7rem); --n-xl:clamp(2rem,6vw,4.4rem); --n-md:clamp(1.2rem,2.3vw,1.9rem); }
+  .nav-dots,.keyboard-hint,.rail-label{ display:none; }
+}
+@media (max-height:500px){
+  :root{ --t-title:clamp(1rem,2.4vw,1.7rem); --n-xl:clamp(1.6rem,5vw,3.2rem); --t-body:clamp(.66rem,.82vw,.85rem); }
+}
+
+/* — Teléfono. El deck también se comparte por link, así que esto
+     no es opcional. Las grillas están escritas con style inline en
+     el HTML, y un atributo style solo lo gana !important.        — */
+@media (max-width:820px){
+  :root{ --t-title:clamp(1.3rem,5.4vw,2.2rem); --t-hero:clamp(1.9rem,8.4vw,3rem); --rail:0px;
+         --n-xl:clamp(1.7rem,10.5vw,3.4rem); --n-lg:clamp(1.4rem,7.4vw,2.8rem);
+         --n-md:clamp(1.2rem,5.6vw,2.1rem); --n-sm:clamp(1rem,4.4vw,1.6rem); }
+  /* Las filas de dos columnas escritas con style inline se apilan */
+  .split{ flex-direction:column !important; }
+  /* El tramo del 6% mide 20 px de ancho en un teléfono: el rótulo
+     tiene que achicarse o se sale de su propio segmento.         */
+  .alloc div{ font-size:clamp(.5rem,1.7vw,.7rem); }
+  .rail{ display:none !important; }
+  .slide-content{ padding-left:var(--m); }
+  .grid{ grid-template-columns:1fr; }
+
+  /* auto-fit en vez de un número fijo de columnas: así una grilla
+     de 4 cae a 2 y una que ya era de 1 se queda en 1. Forzar
+     repeat(2,1fr) rompía las listas de una sola columna.         */
+  .stats{ grid-template-columns:repeat(auto-fit,minmax(140px,1fr)) !important; gap:clamp(.5rem,3vw,1rem) !important; }
+  .team{ grid-template-columns:repeat(2,1fr) !important; }
+  .founders{ grid-template-columns:1fr !important; }
+  .arc{ grid-template-columns:1fr !important; }
+
+  /* La ecuación se apila y los operadores se centran entre filas */
+  .eq{ flex-direction:column; }
+  .eq-op{ justify-content:center; padding-top:0; }
+
+  /* La portada deja de ser dos columnas */
+  .cover .slide-content{ flex-direction:column; justify-content:center; }
+  .cover-r{ display:none; }
+
+  /* El loop y su lista pasan a una sola columna */
+  .s-body[style*="row"]{ flex-direction:column !important; }
+  .loop{ height:min(34vh,260px); }
+
+  /* La tabla competitiva se apila: en 375 px cuatro columnas son ilegibles */
+  .crow{ grid-template-columns:1fr !important; gap:.25rem !important; }
+  .crow.head{ display:none; }
+  .crow.us .ccell{ grid-column:auto !important; }
+
+  .vids{ grid-template-columns:repeat(2,1fr); }
+  .press{ gap:.5rem; }
+
+  /* La etiqueta del embudo baja debajo de la barra: al 3% de ancho
+     no hay lugar a la derecha en un teléfono.                    */
+  .funnel{ gap:clamp(1.6rem,7vw,2.4rem); }
+  .f-lane{ overflow:visible; height:26px; }
+  .f-txt{ left:0 !important; top:100%; transform:none !important; white-space:normal !important; margin-top:5px; }
+
+  /* Las capturas de prensa se envuelven en vez de desbordar */
+  .slide[data-title="Adquisición"] .s-body > div:last-child{ flex-wrap:wrap; }
+  .slide[data-title="Adquisición"] img{ max-height:min(15vh,110px) !important; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{ animation-duration:.01ms!important; transition-duration:.2s!important; }
+  html{ scroll-behavior:auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots" aria-label="Navegación de slides"></nav>
+<div class="timer" id="timer">0:00</div>
+<p class="keyboard-hint" id="hint">← → navegar · M índice · B respaldo · T cronómetro</p>
+
+<div class="edit-hotzone" aria-hidden="true"></div>
+<button class="edit-toggle" id="editToggle" title="Modo edición (E)" aria-label="Modo edición">✏️</button>
+<div class="edit-banner" id="editBanner">Modo edición · Clic en cualquier texto para editarlo · Ctrl+S para exportar</div>
+
+<div class="index" id="indexOverlay" role="dialog" aria-label="Índice de slides">
+  <h3>En vivo</h3><ol id="indexLive"></ol>
+  <h3>Respaldo · para Q&amp;A</h3><ol id="indexBackup"></ol>
+</div>
+
+<div class="lightbox" id="lightbox"><div id="lightboxInner"></div></div>
+
+<main>
+
+<!-- ══ 01 · PORTADA ══════════════════════════════════════════════ -->
+<section class="slide cover" data-track="live" data-title="Portada">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Deenex · 2026</span><span class="rail-num">01</span></aside>
+  <div class="slide-content">
+    <div class="cover-l">
+      <img class="wordmark reveal" src="assets/logo-wordmark.png" alt="Deenex">
+      <h1 class="hero wipe">Tus clientes<span class="vio">son tuyos.</span></h1>
+      <p class="cover-sub reveal">La infraestructura que convierte cada pedido en un cliente que vuelve.</p>
+      <div class="reveal">
+        <div class="cover-rule"></div>
+        <p class="cover-meta">Deenex Technologies SAS · Buenos Aires, Argentina</p>
+        <p class="cover-tr">8 marcas pagando · +145 locales operando · +US$ 10K de MRR</p>
+      </div>
+    </div>
+    <div class="cover-r reveal"><img src="assets/product-collage.png" alt="Producto Deenex: app de pedidos, panel de clientes y checkout"></div>
+  </div>
+</section>
+
+<!-- ══ 02 · EL PROBLEMA ══════════════════════════════════════════
+     Los dos números cuelgan de una regla violeta, sin caja. Es la
+     diferencia entre una pastilla de plantilla y un dato con peso. -->
+<section class="slide" data-track="live" data-title="El problema">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">El problema</span><span class="rail-num">02</span></aside>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title reveal">El restaurante <span class="vio">alquila a sus propios clientes.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="justify-content:center;">
+      <div class="stats reveal" style="grid-template-columns:repeat(2,1fr);">
+        <div class="stat">
+          <span class="n lg">15–35%</span>
+          <p class="lbl">La comisión</p>
+          <p class="k">del ticket se lo lleva la app en cada pedido. Y algunos quedan atrapados por cláusulas de cuota mínima.</p>
+        </div>
+        <div class="stat">
+          <span class="n lg">0</span>
+          <p class="lbl">Los datos</p>
+          <p class="k">datos del cliente vuelven a la marca: ni nombre, ni teléfono, ni frecuencia. El cliente queda registrado en la app, no en su base.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="closer reveal">Pagan por un cliente <b>que nunca van a volver a ver.</b></footer>
+</section>
+
+<!-- ══ 03 · LA CITA · VIOLETA A SANGRE ═══════════════════════════
+     Slide propia. En el deck viejo esta cita vivía apretada abajo
+     de dos tarjetas; es lo mejor que tiene el pitch y necesita
+     silencio alrededor. Primera de las dos slates violeta.        -->
+<section class="slide slate" data-track="live" data-title="La cita">
+  <aside class="rail"><span class="rail-label">El problema</span><span class="rail-num">03</span></aside>
+  <div class="slide-content" style="justify-content:center;">
+    <blockquote class="quote wipe">“Las apps son un gusano que te funde: 25.000 pedidos por mes y ni un cliente es mío.”</blockquote>
+    <p class="quote-by reveal"><b>Federico</b> · CEO y fundador de Monti, bar de pasta</p>
+  </div>
+</section>
+
+<!-- ══ 04 · LA PRUEBA DEL PROBLEMA ═══════════════════════════════ -->
+<section class="slide" data-track="live" data-title="La prueba del problema">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">La prueba</span><span class="rail-num">04</span></aside>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title reveal">Nos pagaron <span class="vio">para resolverlo.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="justify-content:center;">
+      <div class="reveal">
+        <span class="n xl"><span class="pre">+US$</span><span data-count="60000" data-format="es">60.000</span></span>
+        <p class="lead" style="margin-top:.5em;max-width:46ch;">Seis marcas pusieron capital por adelantado para cocrear la plataforma, <b>antes de que el producto existiera.</b></p>
+      </div>
+      <div class="stats reveal" style="grid-template-columns:repeat(3,1fr);margin-top:var(--gap);">
+        <div class="stat hair"><p class="lbl">6 marcas</p><p class="k">pusieron el capital por adelantado</p></div>
+        <div class="stat hair"><p class="lbl">US$ 0 de capital externo</p><p class="k">sin fondos, aceleradoras ni capital de riesgo</p></div>
+        <div class="stat hair"><p class="lbl">100% del desarrollo</p><p class="k">pagado por clientes</p></div>
+      </div>
+    </div>
+  </div>
+  <footer class="closer reveal">Ningún fondo ni inversor financió este proyecto: <b>lo financiaron las marcas que necesitaban resolverlo.</b></footer>
+</section>
+
+<!-- ══ 05 · EL INSIGHT ═══════════════════════════════════════════
+     Barras a proporción real. El track hairline es el 100 de
+     referencia: sin él, una barra del 4% no se lee como caída.    -->
+<section class="slide" data-track="live" data-title="El insight">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">El insight</span><span class="rail-num">05</span></aside>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title reveal">El dato ya existe. <span class="vio">Nadie lo usa.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="justify-content:center;">
+      <div class="funnel reveal">
+        <div class="f-row">
+          <span class="f-num">100</span>
+          <div class="f-lane"><div class="f-bar" style="width:78%"></div><span class="f-txt" style="left:calc(78% + 14px)">pedidos por mes</span></div>
+        </div>
+        <div class="f-row">
+          <span class="f-num">15</span>
+          <div class="f-lane"><div class="f-bar" style="width:11.7%"></div><span class="f-txt" style="left:calc(11.7% + 14px)">dejan <b>algún dato</b> del cliente</span></div>
+        </div>
+        <div class="f-row">
+          <span class="f-num">4</span>
+          <div class="f-lane"><div class="f-bar" style="width:3.12%"></div><span class="f-txt" style="left:calc(3.12% + 14px)">vuelven a comprar</span></div>
+        </div>
+      </div>
+      <p class="note reveal">Datos reales de Palta · +16.000 registros en 8 meses · las barras están a escala</p>
+    </div>
+  </div>
+  <footer class="closer reveal">En una sola marca eso son <b>~12.000 clientes registrados que nunca volvieron</b>, con el CAC ya pagado.</footer>
+</section>
+
+<!-- ══ 06 · LA SOLUCIÓN · EL LOOP ════════════════════════════════
+     La firma visual del deck. El isotipo de Deenex es un imán y
+     el producto es un circuito cerrado: acá se dibujan juntos.    -->
+<section class="slide" data-track="live" data-title="La solución">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">La solución</span><span class="rail-num">06</span></aside>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title reveal">Un sistema que <span class="vio">cierra el loop.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="flex-direction:row;align-items:center;gap:clamp(.8rem,2.6vw,2.6rem);">
+      <div class="loop-wrap reveal" style="flex:1 1 44%;min-width:0;">
+        <!-- Geometría: centro 175,175 · anillo r=100 · nodos r=58.
+             Los nodos tienen que dar 2r−8 ≥ 98 px, que es lo que
+             mide "Activación" a 12,5 px. Con r=46 no entraba.     -->
+        <svg class="loop" viewBox="0 0 350 350" role="img" aria-label="Loop: venta, dato, activación, recompra">
+          <circle class="loop-ring" cx="175" cy="175" r="100"/>
+          <circle class="loop-arc"  cx="175" cy="175" r="100" transform="rotate(-90 175 175)"/>
+          <g class="loop-dot-g"><circle class="loop-dot" cx="175" cy="75" r="7"/></g>
+          <g class="loop-node"><circle cx="175" cy="75"  r="58"/><text class="step" x="175" y="68">01</text><text class="nm" x="175" y="89">Venta</text></g>
+          <g class="loop-node"><circle cx="275" cy="175" r="58"/><text class="step" x="275" y="168">02</text><text class="nm" x="275" y="189">Dato</text></g>
+          <g class="loop-node"><circle cx="175" cy="275" r="58"/><text class="step" x="175" y="268">03</text><text class="nm" x="175" y="289" style="font-size:12.5px">Activación</text></g>
+          <g class="loop-node"><circle cx="75"  cy="175" r="58"/><text class="step" x="75" y="168">04</text><text class="nm" x="75" y="189" style="font-size:12.5px">Recompra</text></g>
+        </svg>
+      </div>
+      <div class="stats reveal" style="flex:1 1 56%;min-width:0;grid-template-columns:1fr;gap:clamp(.5rem,1.7vh,1.2rem);">
+        <div class="stat"><p class="lbl">01 · Captura</p><p class="k">Canal propio: salón, take away y delivery, sin intermediarios.</p></div>
+        <div class="stat"><p class="lbl">02 · Dato</p><p class="k">Cada pedido estructura cliente, frecuencia y canal. <b>Es de la marca.</b></p></div>
+        <div class="stat"><p class="lbl">03 · Activación</p><p class="k">Deenex Activa: IA que recupera clientes por WhatsApp, con atribución.</p></div>
+        <!-- Declarar el estado real de Activa, en tono de ejecución y no
+             de disculpa. Sin esto, el loop da a entender que las cuatro
+             capas están entregadas en las 8 cuentas — y Activa es la
+             hipótesis del 55% del revenue del año 3. Que el inversor lo
+             descubra después cuesta mucho más que decirlo acá.        -->
+        <p class="note" style="font-style:normal;">Captura y dato corren en las <b style="color:var(--ind);font-weight:700;">8 cuentas</b>. Activa ya está en producción en las primeras y <b style="color:var(--ind);font-weight:700;">se está abriendo al resto</b>.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="closer reveal">El delivery es el gancho. <b>La activación del dato es el negocio.</b></footer>
+</section>
+
+<!-- ══ 07 · TRACCIÓN ═════════════════════════════════════════════ -->
+<section class="slide" data-track="live" data-title="Tracción">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Tracción</span><span class="rail-num">07</span></aside>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title reveal">Ya está funcionando <span class="vio">y lo pagan los clientes.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <!-- space-evenly: son tres bloques de alturas muy distintas
+         (stats, chips, prensa) y centrarlos los amontona.        -->
+    <div class="s-body" style="justify-content:space-evenly;">
+      <div class="stats reveal" style="grid-template-columns:repeat(4,1fr);">
+        <div class="stat"><span class="n md" data-count="10" data-prefix="+$" data-suffix="K">+$10K</span><p class="lbl">MRR mensual</p></div>
+        <div class="stat"><span class="n md" data-count="8">8</span><p class="lbl">Marcas pagando</p></div>
+        <div class="stat"><span class="n md" data-count="145" data-prefix="+">+145</span><p class="lbl">Locales operando</p></div>
+        <div class="stat"><span class="n md" data-count="70" data-prefix="+$" data-suffix="K">+$70K</span><p class="lbl">Facturado</p></div>
+      </div>
+      <div class="chips reveal">
+        <span class="chip"><span class="dot"></span>QUEM</span><span class="chip"><span class="dot"></span>Palta</span>
+        <span class="chip"><span class="dot"></span>La Fábrica</span><span class="chip"><span class="dot"></span>Hatsu</span>
+        <span class="chip"><span class="dot"></span>Monti</span><span class="chip"><span class="dot"></span>Pannus</span>
+        <span class="chip"><span class="dot"></span>Konex</span><span class="chip"><span class="dot"></span>UTE</span>
+      </div>
+      <div class="reveal">
+        <div class="press">
+          <span class="press-name">iProUP</span><span class="press-sep">·</span>
+          <span class="press-name">Forbes</span><span class="press-sep">·</span>
+          <span class="press-name">El Cronista</span>
+        </div>
+        <p class="k" style="color:var(--gry);margin-top:.4em;">Una sola nota, sin inversión, generó <b>+40 leads y 20 cuentas en pipeline.</b></p>
+      </div>
+    </div>
+  </div>
+  <!-- El plazo es la única dimensión que faltaba: el deck tenía
+       niveles y ninguna derivada. Primer MRR recurrente en Q1 2026;
+       "menos de 8 meses" es cierto tanto si fue enero como marzo.
+       Con el mes exacto se puede afilar a "en 6 meses".          -->
+  <footer class="closer reveal">De cero a +US$10K de MRR <b>en menos de 8 meses</b>, sin un peso de capital externo. <b>Las 8 marcas están operando y no se cayó ninguna.</b></footer>
+</section>
+
+<!-- ══ 08 · MODELO DE INGRESOS ═══════════════════════════════════
+     La escalera va a proporción real (56/132/221). Y la
+     reconciliación Legacy vs ICP va en el cuerpo, no al pie: con
+     +US$10K y 8 marcas la división da ~US$1.250 por cuenta contra
+     los $221 del modelo. Si no lo explicamos, lo encuentra él.   -->
+<section class="slide" data-track="live" data-title="Modelo de ingresos">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Modelo</span><span class="rail-num">08</span></aside>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title reveal">Cada cuenta <span class="vio">crece sola.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="justify-content:center;">
+      <!-- Contraste precio / valor. La escalera dice lo que COBRAMOS;
+           el panel violeta dice lo que la cuenta GENERA. Sin el
+           segundo lado, un inversor no puede juzgar si $221 es caro
+           o regalado, y un vendedor no tiene con qué cerrar.       -->
+      <div class="reveal split" style="display:flex;align-items:stretch;gap:clamp(.8rem,2.4vw,2.2rem);">
+        <div style="flex:1 1 57%;min-width:0;display:flex;flex-direction:column;gap:var(--gap-s);">
+          <p class="lbl">Lo que cobramos · por cuenta / mes · ICP de 1 a 20 locales</p>
+          <div class="stairs" style="flex:1;">
+            <div class="stair-col"><div class="stair-track"><div class="stair st-1"><span class="n">$56</span></div></div><span class="lbl">Suscripción</span></div>
+            <div class="stair-col"><div class="stair-track"><div class="stair st-2"><span class="n">$132</span></div></div><span class="lbl">+ Delivery y POS</span></div>
+            <div class="stair-col"><div class="stair-track"><div class="stair st-3"><span class="n">$221</span></div></div><span class="lbl">+ Deenex Activa</span></div>
+          </div>
+        </div>
+        <!-- Dato del BP p17, confirmado por Alan: canal propio Deenex,
+             enero–mayo 2026, demanda mayormente NUEVA. Por eso el
+             titular dice "vendidos", no "ahorrados": el ahorro sería
+             un contrafactual y acá la venta es un hecho.            -->
+        <div class="panel" style="flex:1 1 43%;min-width:0;display:flex;flex-direction:column;justify-content:center;">
+          <p class="lbl" style="color:var(--tint2);">Lo que genera · una sola cuenta</p>
+          <span class="n md" style="margin-top:.25em;"><span class="pre">US$</span>200.000</span>
+          <p style="margin-top:.4em;font-size:var(--t-body);color:var(--tint2);">vendidos por <b style="color:#fff;">canal propio</b> en 5 meses, sin comisión de marketplace y con el cliente registrado en la base de la marca.</p>
+          <p style="margin-top:.55em;font-size:var(--t-small);color:rgba(255,255,255,.72);line-height:1.35;">El mismo volumen por una app habría dejado <b style="color:rgba(255,255,255,.92);font-weight:700;">~US$&nbsp;50.000</b> en comisiones.<br><span style="font-style:italic;">Palta · enero a mayo 2026</span></p>
+        </div>
+      </div>
+      <div class="reveal" style="display:flex;align-items:flex-start;gap:clamp(.8rem,2.4vw,2.4rem);margin-top:var(--gap);">
+        <p class="k" style="flex:1;">Nuestras 8 cuentas de hoy promedian <b>18 locales</b> cada una y facturan <b>~US$1.250/mes</b>. La escalera es el ICP nuevo —marcas de 1 a 20 locales— que es el que escala: <b>menos revenue por cuenta, muchas más cuentas, cero venta enterprise.</b></p>
+        <div class="stat" style="flex:0 0 auto;min-width:clamp(110px,12vw,170px);"><span class="n sm">81,5%</span><p class="lbl">De margen bruto</p></div>
+      </div>
+    </div>
+  </div>
+  <footer class="closer reveal">La expansión no cuesta CAC adicional. <b>Ese es el foso.</b></footer>
+</section>
+
+<!-- ══ 09 · OBJETIVO Y CAMINO ════════════════════════════════════
+     Fusiona las viejas 12 y 13. Fuera "sin depender de capital
+     externo" (contradecía al plan) y fuera la comparación con/sin
+     inversión (expone la contradicción y no tiene función si no
+     estamos pidiendo plata).                                     -->
+<section class="slide" data-track="live" data-title="Objetivo y camino">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">El objetivo</span><span class="rail-num">09</span></aside>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title reveal">200 cuentas y <span class="vio">US$&nbsp;500K de run-rate.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="justify-content:center;">
+      <div class="eq reveal">
+        <div class="stat"><span class="n sm" data-count="200">200</span><p class="lbl">Cuentas operativas</p><p class="k">ICP de 1 a 20 locales</p></div>
+        <div class="eq-op">×</div>
+        <div class="stat"><span class="n sm wrap">~US$&nbsp;210</span><p class="lbl">Por cuenta / mes</p><p class="k">suscripción + delivery + Activa</p></div>
+        <div class="eq-op">=</div>
+        <div class="stat"><span class="n sm wrap">~US$&nbsp;500K</span><p class="lbl">De run-rate anual</p><p class="k">con EBITDA positivo sostenido</p></div>
+      </div>
+      <!-- Dos velocidades, declaradas. El deck prometía 15–20 cierres
+           por mes sin decir qué los hace posibles, cuando el ritmo
+           real es 2–3 y el propio BP ubica los 15–20 en el escenario
+           CON inversión. Decirlo así no debilita el pitch: contesta
+           "¿para qué querés la plata?", que hasta ahora no se
+           contestaba en ninguna slide del flujo en vivo.           -->
+      <div class="reveal" style="margin-top:var(--gap);">
+        <p class="lbl" style="color:var(--vio);margin-bottom:calc(var(--gap) * .6);">Cómo llegamos</p>
+        <div class="split" style="display:flex;align-items:stretch;gap:clamp(.5rem,1.6vw,1.5rem);">
+          <div class="stat hair" style="flex:1 1 38%;min-width:0;">
+            <span class="n sm ink">2–3</span>
+            <p class="lbl">Cierres por mes, hoy</p>
+            <p class="k">Founder-led, sin SDR y sin un peso en paid media.</p>
+          </div>
+          <div class="panel" style="flex:1 1 62%;min-width:0;">
+            <p class="lbl">Cierres por mes, con la ronda</p>
+            <span class="n sm" style="margin-top:.15em;">15–20</span>
+            <p class="k" style="margin-top:.4em;">Lo compran tres palancas concretas: <b>onboarding productizado</b> para que activar una cuenta no consuma horas de founder, <b>referidos sistematizados</b> —4 de nuestras 8 cuentas ya llegaron así, sin sistema— y un <b>SDR</b>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="closer reveal">El plan es <b>default-alive</b>: sin la ronda seguimos creciendo, solo que más lento. El peor punto de caja del escenario base es <b>US$ 73K</b>.</footer>
+</section>
+
+<!-- ══ 10 · LA RONDA · VIOLETA A SANGRE ══════════════════════════
+     El disparador es la ATRIBUCIÓN DE ACTIVA (Q4 2026), no los
+     US$500K de run-rate: los 500K son el escenario CON inversión,
+     así que atarle la ronda la volvía circular. Este hito se
+     alcanza con el equipo actual y es el que más mueve la
+     valuación. Para cambiarlo se toca solo esta slide.          -->
+<section class="slide slate" data-track="live" data-title="La ronda">
+  <aside class="rail"><span class="rail-label">La ronda</span><span class="rail-num">10</span></aside>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title wipe">No estamos <span class="vio">levantando hoy.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="justify-content:center;">
+      <p class="lead reveal" style="max-width:52ch;font-family:var(--font-d);font-weight:700;font-size:clamp(1rem,2.1vw,2rem);line-height:1.15;color:#fff;">En Q4 medimos la atribución real de Activa. Ese número convierte la hipótesis más grande del plan —el 55% del revenue del año 3— en un dato.</p>
+      <div class="arc reveal" style="margin-top:var(--gap);">
+        <div class="arc-step now"><span class="arc-when">Hoy</span><span class="arc-what">8 marcas · +US$&nbsp;10K de MRR</span><span class="arc-why">Default-alive: crecemos sin capital externo.</span></div>
+        <div class="arc-step"><span class="arc-when">Q4 2026</span><span class="arc-what">Activa medida con atribución real</span><span class="arc-why">La hipótesis más cara del plan, resuelta.</span></div>
+        <div class="arc-step"><span class="arc-when">Entonces</span><span class="arc-what">Abrimos la ronda</span><span class="arc-why">Desde la fuerza, no desde la necesidad.</span></div>
+      </div>
+      <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(.8rem,2vw,2rem);flex-wrap:wrap;margin-top:auto;padding-bottom:var(--m);">
+        <p style="font-family:var(--font-d);font-weight:700;font-size:clamp(1rem,2.2vw,2.1rem);color:#fff;line-height:1.1;">Por eso construimos el vínculo hoy,<br>y no después.</p>
+        <div class="contact">
+          <img src="assets/qr.png" alt="Código QR para ver la demo">
+          <div style="font-size:var(--t-small);color:var(--tint2);">Escaneá para ver la demo
+            <a href="mailto:alan@deenex.com">alan@deenex.com</a>
+            <a href="https://deenex.com">deenex.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     ██ SLIDES DE RESPALDO ██
+     Fuera del flujo de 3 minutos. B las activa; M salta directo a
+     una durante el Q&A.
+     ══════════════════════════════════════════════════════════════ -->
+
+<!-- B1 · CASOS DE ÉXITO -->
+<section class="slide" data-track="backup" data-title="Casos de éxito">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Casos</span><span class="rail-num">B1</span></aside>
+  <span class="badge-backup">Respaldo</span>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title reveal">Ya son dueñas <span class="vio">de sus clientes.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="flex-direction:row;align-items:center;gap:clamp(.8rem,2.4vw,2.2rem);">
+      <div class="stats reveal" style="flex:1 1 62%;min-width:0;grid-template-columns:1fr;gap:clamp(.6rem,2vh,1.4rem);">
+        <div class="stat"><span class="n sm ink wrap">Palta</span><p class="k">15 locales y +4.000 pedidos por mes sin saber quién compraba. En 8 meses de canal propio: <b>+16.000 clientes registrados</b>. Hoy es la cuenta piloto donde corre Activa.</p></div>
+        <div class="stat"><span class="n sm ink wrap">La Fábrica de Sandwiches</span><p class="k">80 locales. Pusieron <b>+US$ 25K</b> para cocrear la plataforma antes de lanzar y operan sobre canal propio Deenex desde junio.</p></div>
+      </div>
+      <!-- Para activar: poné la URL en data-video, ej. data-video="assets/testimonio-palta.mp4" -->
+      <div class="vids reveal" style="flex:1 1 38%;min-width:0;">
+        <div class="vid" data-video=""><span class="play"></span><span class="vn">Palta</span><span class="lbl" style="color:var(--tint2)">Testimonio</span></div>
+        <div class="vid" data-video=""><span class="play"></span><span class="vn">La Fábrica</span><span class="lbl" style="color:var(--tint2)">Testimonio</span></div>
+      </div>
+    </div>
+  </div>
+  <footer class="closer reveal">El dato no se compra: se construye pedido a pedido. <b>Y después se activa.</b></footer>
+</section>
+
+<!-- B2 · MERCADO -->
+<section class="slide" data-track="backup" data-title="Mercado">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Mercado</span><span class="rail-num">B2</span></aside>
+  <span class="badge-backup">Respaldo</span>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title reveal">2,6 millones de puntos de venta <span class="vio">en LATAM.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="justify-content:center;">
+      <div class="funnel reveal">
+        <div class="f-row"><span class="f-num" style="font-size:var(--n-sm)">~410K</span>
+          <div class="f-lane"><div class="f-bar" style="width:70%"></div><span class="f-txt" style="left:calc(70% + 14px)">cuentas · marcas de 1 a 20 locales: <b>mercado servible</b></span></div></div>
+        <div class="f-row"><span class="f-num" style="font-size:var(--n-sm)">~52K</span>
+          <div class="f-lane"><div class="f-bar" style="width:8.9%"></div><span class="f-txt" style="left:calc(8.9% + 14px)">cuentas · sin canal propio efectivo: <b>el foco de 3 años</b></span></div></div>
+      </div>
+      <p class="k reveal" style="color:var(--vio);font-weight:700;">2.000 cuentas al año 3 = 0,5% del mercado servible.</p>
+      <div class="reveal">
+        <p class="lbl" style="color:var(--vio);margin-bottom:calc(var(--gap) * .6);">Por qué ahora</p>
+        <div class="stats" style="grid-template-columns:repeat(3,1fr);">
+          <div class="stat hair"><p class="k"><b>Fatiga de comisiones</b><br>15–35% por pedido erosiona el margen.</p></div>
+          <div class="stat hair"><p class="k"><b>Giro al canal propio</b><br>el dato propio pasa a ser activo estratégico.</p></div>
+          <div class="stat hair"><p class="k"><b>Commerce agéntico</b><br>redefine quién intermedia la relación.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="closer reveal">Un POS registra la venta y un ecommerce la procesa. <b>Nadie convierte el dato en la próxima venta.</b></footer>
+</section>
+
+<!-- B3 · PROYECCIÓN FINANCIERA -->
+<section class="slide" data-track="backup" data-title="Proyección financiera">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Financiero</span><span class="rail-num">B3</span></aside>
+  <span class="badge-backup">Respaldo</span>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title reveal">US$ 7,5M de revenue <span class="vio">al año 3.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="flex-direction:row;align-items:center;gap:clamp(.9rem,2.6vw,2.4rem);">
+      <div class="bars reveal" style="flex:1 1 55%;min-width:0;">
+        <div class="bar-col"><div class="bar-track"><div class="bar br-1"></div></div><span class="bar-v">$213K</span><span class="lbl">Año 1</span></div>
+        <div class="bar-col"><div class="bar-track"><div class="bar br-2"></div></div><span class="bar-v">$2,17M</span><span class="lbl">Año 2</span></div>
+        <div class="bar-col"><div class="bar-track"><div class="bar br-3"></div></div><span class="bar-v">$7,52M</span><span class="lbl">Año 3</span></div>
+      </div>
+      <div class="stats reveal" style="flex:1 1 45%;min-width:0;grid-template-columns:1fr;gap:clamp(.45rem,1.4vh,1rem);">
+        <div class="stat hair"><p class="k"><b>EBITDA positivo</b> desde el mes 12</p></div>
+        <div class="stat hair"><p class="k"><b>22% de margen</b> al año 3</p></div>
+        <div class="stat hair"><p class="k"><b>Gap máximo US$ 73K</b> · el plan es default-alive</p></div>
+      </div>
+    </div>
+    <p class="note reveal" style="flex:none;">Las barras están a escala: el año 1 es el 2,8% del año 3.</p>
+  </div>
+  <footer class="closer reveal">Activa sostiene el <b>55% del revenue del año 3</b>. Es nuestra hipótesis más grande y la validamos con atribución real este trimestre.</footer>
+</section>
+
+<!-- B4 · ADQUISICIÓN -->
+<section class="slide" data-track="backup" data-title="Adquisición">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Adquisición</span><span class="rail-num">B4</span></aside>
+  <span class="badge-backup">Respaldo</span>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title reveal">Tenemos producto, <span class="vio">tenemos ventas.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="justify-content:center;">
+      <div class="stats reveal" style="grid-template-columns:repeat(4,1fr);">
+        <div class="stat"><span class="n md" data-count="31">31</span><p class="lbl">Deals abiertos</p><p class="k">en pipeline hoy</p></div>
+        <div class="stat"><span class="n md" data-count="3">3</span><p class="lbl">Cierres documentados</p><p class="k">en canales distintos</p></div>
+        <div class="stat"><span class="n md wrap">4 de 8</span><p class="lbl">Cuentas actuales</p><p class="k">llegaron por referido</p></div>
+        <div class="stat"><span class="n md" data-count="40" data-prefix="+">+40</span><p class="lbl">Leads</p><p class="k">de una sola nota de prensa</p></div>
+      </div>
+      <div class="reveal" style="display:flex;gap:clamp(.4rem,1.1vw,.9rem);align-items:center;justify-content:center;min-height:0;">
+        <img src="assets/prensa/iproup.png"   alt="Nota en iProUP"     style="max-height:min(23vh,180px);border-radius:8px;">
+        <img src="assets/prensa/forbes-1.png" alt="Mención en Forbes"  style="max-height:min(23vh,180px);border-radius:8px;">
+        <img src="assets/prensa/forbes-2.png" alt="Mención en Forbes"  style="max-height:min(23vh,180px);border-radius:8px;">
+        <img src="assets/prensa/cronista.png" alt="Nota en El Cronista" style="max-height:min(23vh,180px);border-radius:8px;">
+      </div>
+    </div>
+  </div>
+  <footer class="closer reveal">Todo esto sin un peso en paid media y sin un SDR: <b>eso es exactamente lo que compra la ronda.</b></footer>
+</section>
+
+<!-- B5 · EQUIPO -->
+<section class="slide" data-track="backup" data-title="Equipo">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Equipo</span><span class="rail-num">B5</span></aside>
+  <span class="badge-backup">Respaldo</span>
+  <span class="mock">Maqueta · contenido de ejemplo</span>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title reveal">Siete personas, <span class="vio">cero pasajeros.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="justify-content:center;">
+      <!-- ⚠️ TODO EL TEXTO ENTRE CORCHETES ES PLANTILLA, NO DATO.
+           Está así a propósito: escribir credenciales verosímiles
+           sobre personas reales es exactamente como una invención
+           termina frente a un inversor. Se reemplaza con lo real y
+           se borra el cartel .mock.                                -->
+      <p class="reveal lead mock-txt" style="margin-bottom:var(--gap);">[Acá va la credencial más fuerte del equipo entero — la línea que hace que un inversor diga "estos pueden".]</p>
+
+      <div class="founders reveal">
+        <div class="founder">
+          <img src="assets/equipo/alan.png" alt="Alan Tapia">
+          <div>
+            <p class="mn" style="font-size:clamp(.8rem,1.2vw,1.1rem)">Alan Tapia</p>
+            <p class="mr">Founder &amp; CEO / CPO</p>
+            <span class="chapa mock-txt">[Antes fundó EMPRESA · AÑO–AÑO · resultado]</span>
+            <p class="md" style="margin-top:.35em;">Producto y tecnología. Dev AI y back-end. Lidera visión y ventas.</p>
+          </div>
+        </div>
+        <div class="founder">
+          <img src="assets/equipo/joaquin.png" alt="Joaquín Lombardi">
+          <div>
+            <p class="mn" style="font-size:clamp(.8rem,1.2vw,1.1rem)">Joaquín Lombardi</p>
+            <p class="mr">Founder &amp; COO</p>
+            <span class="chapa mock-txt">[Antes fundó EMPRESA · AÑO–AÑO · resultado]</span>
+            <p class="md" style="margin-top:.35em;">Estrategia y operación. Lidera la implementación de cada cuenta.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="reveal mock-txt" style="font-size:var(--t-small);margin-top:calc(var(--gap) * .7);">[X] años construyendo juntos antes de Deenex.</p>
+
+      <div class="team reveal" style="margin-top:var(--gap);">
+        <div class="member"><img src="assets/equipo/iara.png" alt="Iara Gallardo"><span class="mn">Iara Gallardo</span><span class="mr">Head of Marketing</span><span class="chapa mock-txt">[MBA en UNIVERSIDAD · antes en STARTUP]</span></div>
+        <div class="member"><img src="assets/equipo/thaina.png" alt="Thainá Messina"><span class="mn">Thainá Messina</span><span class="mr">Head Commercial Ops</span><span class="chapa mock-txt">[Credencial · idiomas · logro]</span></div>
+        <div class="member"><img src="assets/equipo/leandro.png" alt="Leandro Rebequi"><span class="mn">Leandro Rebequi</span><span class="mr">Tech Lead</span><span class="chapa mock-txt">[Construyó QUÉ para QUIÉN]</span></div>
+        <div class="member"><img src="assets/equipo/santiago.png" alt="Santiago Brito"><span class="mn">Santiago Brito</span><span class="mr">Dev Full Stack</span><span class="chapa mock-txt">[Antes en EMPRESA · construyó QUÉ]</span></div>
+        <div class="member"><img src="assets/equipo/agustin.png" alt="Agustín Friadenrich"><span class="mn">Agustín Friadenrich</span><span class="mr">Dev Full Stack</span><span class="chapa mock-txt">[Enseña QUÉ en DÓNDE desde los X]</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- B6 · LA RONDA EN DETALLE
+     Vive acá y no en la slide 10 a propósito: poner el monto en
+     escena justo después de decir "no estamos levantando hoy" es
+     contradecirse en la misma respiración. Si preguntan, aparece. -->
+<section class="slide" data-track="backup" data-title="La ronda en detalle">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">La ronda</span><span class="rail-num">B6</span></aside>
+  <span class="badge-backup">Respaldo</span>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title reveal">USD 250.000 <span class="vio">pre-seed, SAFE.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="justify-content:center;">
+      <div class="reveal">
+        <p class="lbl" style="color:var(--vio);margin-bottom:calc(var(--gap) * .6);">Destino de los fondos</p>
+        <div class="alloc">
+          <div style="width:28%;background:var(--vio);color:#fff">28%</div>
+          <div style="width:28%;background:var(--lav);color:var(--ind)">28%</div>
+          <div style="width:18%;background:var(--pale);color:var(--ind)">18%</div>
+          <div style="width:6%;background:var(--tint2);color:var(--ind)">6%</div>
+          <div style="width:20%;background:var(--tint);color:var(--ind)">20%</div>
+        </div>
+        <div class="alloc-lbl">
+          <span style="width:28%">Producto &amp; AI</span><span style="width:28%">Comercial &amp; growth</span>
+          <span style="width:18%">Operaciones &amp; CS</span><span style="width:6%">Legal</span><span style="width:20%">Reserva</span>
+        </div>
+      </div>
+      <div class="stats reveal" style="grid-template-columns:repeat(4,1fr);margin-top:var(--gap);">
+        <div class="stat"><span class="n sm">+200</span><p class="lbl">Cuentas operativas</p></div>
+        <div class="stat"><span class="n sm wrap">Activa</span><p class="lbl">Con atribución real</p></div>
+        <div class="stat"><span class="n sm wrap">EBITDA+</span><p class="lbl">Sostenido</p></div>
+        <div class="stat"><span class="n sm wrap">Seed 2027</span><p class="lbl">Cap table limpio</p></div>
+      </div>
+    </div>
+  </div>
+  <footer class="closer reveal">El downside ya está cubierto por diseño: el gasto está gateado por tracción y el piso es default-alive. <b>El capital acelera el camino, no lo sostiene.</b></footer>
+</section>
+
+<!-- B7 · PANORAMA COMPETITIVO
+     La slide que faltaba. "¿Por qué no lo hace Fudo o Rappi?" es
+     la primera pregunta de cualquier inversor. -->
+<section class="slide" data-track="backup" data-title="Competencia">
+  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Competencia</span><span class="rail-num">B7</span></aside>
+  <span class="badge-backup">Respaldo</span>
+  <div class="slide-content">
+    <header class="s-head">
+      <h2 class="s-title reveal">Nadie cierra <span class="vio">el loop completo.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="justify-content:center;">
+      <div class="ctable reveal">
+        <div class="crow head"><span>Categoría</span><span>Qué resuelven</span><span>Qué no resuelven</span><span>Deenex</span></div>
+        <div class="crow">
+          <span class="cname">Marketplaces<span class="cex">Rappi, PedidosYa, Uber Eats</span></span>
+          <span class="ccell">Generan demanda, hábito y logística</span>
+          <span class="ccell">El restaurante no es dueño ni del cliente ni del dato</span>
+          <span class="ccell win">Le devuelve el canal propio y la relación</span>
+        </div>
+        <div class="crow">
+          <span class="cname">POS / gestión<span class="cex">Fudo, Bistrosoft, Justo, Olakick</span></span>
+          <span class="ccell">Ordenan operación, ventas e inventario</span>
+          <span class="ccell">Pensados para operar, no para activar clientes</span>
+          <span class="ccell win">Convierte el dato transaccional en activación comercial</span>
+        </div>
+        <div class="crow">
+          <span class="cname">Ecommerce propio<span class="cex">Tucán, Másdelivery, menús digitales</span></span>
+          <span class="ccell">Venden por canal propio y bajan dependencia</span>
+          <span class="ccell">Terminan en la transacción; no activan la base</span>
+          <span class="ccell win">Conecta pedidos, datos y recompra automática</span>
+        </div>
+        <div class="crow">
+          <span class="cname">CRM horizontal<span class="cex">Email, SMS y CRM genéricos</span></span>
+          <span class="ccell">Permiten segmentar y enviar</span>
+          <span class="ccell">No entienden comportamiento gastronómico ni frecuencia</span>
+          <span class="ccell win">Verticalizado en recurrencia gastronómica</span>
+        </div>
+        <div class="crow us">
+          <span class="cname" style="color:var(--vio)">DEENEX<span class="cex">Canal propio + dato + activación</span></span>
+          <span class="ccell" style="grid-column:span 3;color:var(--ind);font-weight:700">Integra el loop completo: vender → capturar el dato → activar → generar recompra. La única contra es que requiere adopción inicial.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="closer reveal">Un POS registra la venta y un ecommerce la procesa. <b>Nadie convierte el dato en la próxima venta.</b></footer>
+</section>
+
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   CONTROLADOR
+   ═══════════════════════════════════════════════════════════════ */
+class SlidePresentation{
+  constructor(){
+    this.all      = Array.from(document.querySelectorAll('.slide'));
+    this.progress = document.getElementById('progressBar');
+    this.dotsWrap = document.getElementById('navDots');
+    this.hint     = document.getElementById('hint');
+    this.current  = 0;
+    this.observe(); this.buildDots(); this.keyboard(); this.touch();
+    this.scrollTracking(); this.buildIndex(); this.videos(); this.timer(); this.fadeHint();
+  }
+
+  /* Slides que hoy están en el flujo (las de respaldo salen si se ocultan) */
+  get live(){ return this.all.filter(s => s.offsetParent !== null); }
+
+  observe(){
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('visible'); this.count(e.target); }
+    }), {threshold:.25});
+    this.all.forEach(s => io.observe(s));
+  }
+
+  /* Contadores: los números suben al entrar la slide. Se corre una
+     sola vez por slide para que no "rebote" al volver atrás.      */
+  count(slide){
+    if(slide.dataset.counted) return;
+    slide.dataset.counted = '1';
+    slide.querySelectorAll('[data-count]').forEach(el => {
+      const target = parseFloat(el.dataset.count);
+      const pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+      const fmt = el.dataset.format === 'es'
+        ? v => Math.round(v).toLocaleString('es-AR')
+        : v => String(Math.round(v));
+      const t0 = performance.now(), dur = 1100;
+      const tick = now => {
+        const p = Math.min(1, (now - t0)/dur);
+        const eased = 1 - Math.pow(1 - p, 3);        // easeOutCubic
+        el.textContent = pre + fmt(target * eased) + suf;
+        if(p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }
+
+  /* Siempre limpiar antes de construir: si se exportó el archivo con
+     los puntos ya renderizados, reabrirlo duplicaría el set.       */
+  buildDots(){
+    this.dotsWrap.innerHTML = '';
+    this.live.forEach((s,i) => {
+      const b = document.createElement('button');
+      b.setAttribute('aria-label', s.dataset.title || ('Slide '+(i+1)));
+      b.addEventListener('click', () => this.goTo(i));
+      this.dotsWrap.appendChild(b);
+    });
+    this.syncDots();
+  }
+  syncDots(){ Array.from(this.dotsWrap.children).forEach((d,i) => d.classList.toggle('active', i === this.current)); }
+
+  goTo(i){
+    const list = this.live;
+    this.current = Math.max(0, Math.min(i, list.length-1));
+    list[this.current].scrollIntoView({behavior:'smooth'});
+    this.syncDots();
+  }
+  next(){ this.goTo(this.current+1) } prev(){ this.goTo(this.current-1) }
+
+  keyboard(){
+    document.addEventListener('keydown', e => {
+      if(e.target.getAttribute('contenteditable')) return;
+      const idxOpen = document.getElementById('indexOverlay').classList.contains('open');
+      if(idxOpen && !['m','M','Escape'].includes(e.key)) return;
+      switch(e.key){
+        case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown': e.preventDefault(); this.next(); break;
+        case 'ArrowLeft':  case 'ArrowUp':   case 'PageUp':             e.preventDefault(); this.prev(); break;
+        case 'Home': e.preventDefault(); this.goTo(0); break;
+        case 'End':  e.preventDefault(); this.goTo(this.live.length-1); break;
+        case 'b': case 'B': this.toggleBackup(); break;
+        case 'm': case 'M': this.toggleIndex(); break;
+        case 'Escape': this.closeIndex(); this.closeLightbox(); break;
+      }
+    });
+  }
+
+  touch(){
+    let y0 = null;
+    document.addEventListener('touchstart', e => { y0 = e.touches[0].clientY }, {passive:true});
+    document.addEventListener('touchend', e => {
+      if(y0 === null) return;
+      const dy = y0 - e.changedTouches[0].clientY;
+      if(Math.abs(dy) > 60) dy > 0 ? this.next() : this.prev();
+      y0 = null;
+    }, {passive:true});
+  }
+
+  scrollTracking(){
+    let raf = null;
+    window.addEventListener('scroll', () => {
+      if(raf) return;
+      raf = requestAnimationFrame(() => {
+        const list = this.live;
+        this.current = Math.max(0, Math.min(Math.round(window.scrollY/window.innerHeight), list.length-1));
+        this.progress.style.width = (list.length > 1 ? (this.current/(list.length-1))*100 : 100) + '%';
+        this.syncDots();
+        raf = null;
+      });
+    }, {passive:true});
+  }
+
+  toggleBackup(){ document.body.classList.toggle('show-backup'); this.buildDots(); }
+
+  buildIndex(){
+    const liveOl = document.getElementById('indexLive'), backOl = document.getElementById('indexBackup');
+    const liveCount = this.all.filter(s => s.dataset.track === 'live').length;
+    this.all.forEach((s, idx) => {
+      const li = document.createElement('li'), b = document.createElement('button');
+      const isBackup = s.dataset.track === 'backup';
+      b.innerHTML = '<i>'+(isBackup ? 'B'+(idx-liveCount+1) : String(idx+1).padStart(2,'0'))+'</i>'+(s.dataset.title||'');
+      b.addEventListener('click', () => {
+        if(isBackup && !document.body.classList.contains('show-backup')) this.toggleBackup();
+        this.closeIndex();
+        requestAnimationFrame(() => s.scrollIntoView({behavior:'smooth'}));
+      });
+      li.appendChild(b); (isBackup ? backOl : liveOl).appendChild(li);
+    });
+  }
+  toggleIndex(){ document.getElementById('indexOverlay').classList.toggle('open') }
+  closeIndex(){  document.getElementById('indexOverlay').classList.remove('open') }
+
+  videos(){
+    const lb = document.getElementById('lightbox'), inner = document.getElementById('lightboxInner');
+    document.querySelectorAll('.vid').forEach(v => v.addEventListener('click', () => {
+      const src = v.dataset.video; if(!src) return;
+      inner.innerHTML = /youtu|vimeo/.test(src)
+        ? '<iframe src="'+src+'" allow="autoplay; fullscreen" allowfullscreen></iframe>'
+        : '<video src="'+src+'" controls autoplay playsinline></video>';
+      lb.classList.add('open');
+    }));
+    lb.addEventListener('click', () => this.closeLightbox());
+  }
+  closeLightbox(){ const lb=document.getElementById('lightbox'); lb.classList.remove('open'); document.getElementById('lightboxInner').innerHTML=''; }
+
+  /* Cronómetro de escenario (T). El pitch son 3 minutos: pasado ese
+     punto el reloj se pone violeta pleno.                          */
+  timer(){
+    const el = document.getElementById('timer'); let t = 0, id = null;
+    document.addEventListener('keydown', e => {
+      if(e.target.getAttribute('contenteditable') || (e.key !== 't' && e.key !== 'T')) return;
+      if(id){ clearInterval(id); id=null; el.classList.remove('on','over'); t=0; el.textContent='0:00'; return; }
+      el.classList.add('on');
+      id = setInterval(() => { t++; el.textContent = Math.floor(t/60)+':'+String(t%60).padStart(2,'0'); el.classList.toggle('over', t>=180); }, 1000);
+    });
+  }
+
+  fadeHint(){ setTimeout(() => this.hint.classList.add('hide'), 6000) }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EDICIÓN EN LÍNEA · E para entrar · Ctrl+S exporta
+   ═══════════════════════════════════════════════════════════════ */
+class InlineEditor{
+  constructor(){ this.isActive=false; this.restore(); this.wire(); }
+  get els(){
+    return Array.from(document.querySelectorAll('.slide h1,.slide h2,.slide p,.slide blockquote,.slide .ccell,.slide .f-txt,.slide .arc-what,.slide .arc-why,.slide .lbl,.slide .k'))
+      .filter(el => !el.querySelector('div,section,ol,ul'));
+  }
+  toggleEditMode(){
+    this.isActive = !this.isActive;
+    document.body.classList.toggle('edit-active', this.isActive);
+    const t = document.getElementById('editToggle'), b = document.getElementById('editBanner');
+    t.classList.toggle('active', this.isActive); b.classList.toggle('active', this.isActive);
+    t.textContent = this.isActive ? '✓' : '✏️';
+    this.els.forEach(el => this.isActive ? el.setAttribute('contenteditable','true') : el.removeAttribute('contenteditable'));
+    if(!this.isActive) this.save();
+  }
+  save(){ const d={}; this.els.forEach((el,i)=>d[i]=el.innerHTML); try{ localStorage.setItem('deenex-pitch-copy',JSON.stringify(d)); }catch(e){} }
+  restore(){
+    try{
+      const raw = localStorage.getItem('deenex-pitch-copy'); if(!raw) return;
+      const d = JSON.parse(raw);
+      this.els.forEach((el,i)=>{ if(d[i]!==undefined) el.innerHTML=d[i]; });
+    }catch(e){}
+  }
+  /* Limpiar el estado de edición ANTES de capturar outerHTML: si no,
+     el archivo guardado abre con los contenteditable puestos y los
+     bordes punteados, como trabado en modo edición.               */
+  exportFile(){
+    const eds = Array.from(document.querySelectorAll('[contenteditable]'));
+    eds.forEach(el => el.removeAttribute('contenteditable'));
+    document.body.classList.remove('edit-active');
+    const t = document.getElementById('editToggle'), b = document.getElementById('editBanner');
+    t?.classList.remove('active','show'); b?.classList.remove('active','show');
+
+    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+    document.body.classList.add('edit-active');
+    eds.forEach(el => el.setAttribute('contenteditable','true'));
+    t?.classList.add('active'); b?.classList.add('active');
+
+    const blob = new Blob([html],{type:'text/html'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'deenex-pitch.html'; a.click();
+    URL.revokeObjectURL(a.href);
+  }
+  wire(){
+    const hz = document.querySelector('.edit-hotzone'), tg = document.getElementById('editToggle');
+    let hide = null;
+    tg.addEventListener('click', () => this.toggleEditMode());
+    hz.addEventListener('click', () => this.toggleEditMode());
+    hz.addEventListener('mouseenter', () => { clearTimeout(hide); tg.classList.add('show'); });
+    hz.addEventListener('mouseleave', () => { hide = setTimeout(() => { if(!this.isActive) tg.classList.remove('show'); }, 400); });
+    tg.addEventListener('mouseenter', () => clearTimeout(hide));
+    tg.addEventListener('mouseleave', () => { hide = setTimeout(() => { if(!this.isActive) tg.classList.remove('show'); }, 400); });
+    document.addEventListener('keydown', e => {
+      if((e.key==='e'||e.key==='E') && !e.target.getAttribute('contenteditable')) this.toggleEditMode();
+      if((e.ctrlKey||e.metaKey) && (e.key==='s'||e.key==='S')){ e.preventDefault(); this.save(); this.exportFile(); }
+    });
+    document.addEventListener('input', () => { if(this.isActive) this.save(); });
+  }
+}
+
+const deck = new SlidePresentation();
+const editor = new InlineEditor();
+</script>
+</body>
+</html>
