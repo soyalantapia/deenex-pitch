@@ -205,6 +205,42 @@ body{
 .panel .k{ color:var(--tint2); }
 .panel .k b{ color:var(--wht); }
 
+/* ═══ LÍNEA DE TIEMPO ═══════════════════════════════════════════
+   La línea va LLENA hasta hoy y PUNTEADA después. El gráfico separa
+   solo lo que ya pasó de lo que se proyecta, sin que haga falta un
+   asterisco: nadie confunde un tramo punteado con un hecho.
+   ═══════════════════════════════════════════════════════════════ */
+.camino{ position:relative; display:grid; grid-template-columns:repeat(6,1fr); gap:clamp(.5rem,1.4vw,1.4rem); }
+/* El corte cae en el centro del 4º de 6 hitos: (3,5/6) = 58,33% */
+.camino::before,.camino::after{ content:''; position:absolute; top:0; height:0; }
+.camino::before{ left:0; width:58.33%; border-top:2px solid var(--vio); }
+.camino::after{ left:58.33%; right:0; border-top:2px dashed var(--lav); }
+
+.hito{ position:relative; padding-top:clamp(.9rem,2.4vh,1.6rem); }
+.hito::before{
+  content:''; position:absolute; top:0; left:0;
+  width:clamp(9px,.95vw,14px); height:clamp(9px,.95vw,14px);
+  border-radius:50%; background:var(--wht); border:2px solid var(--vio);
+  transform:translateY(-50%);
+}
+.hito.futuro::before{ border-color:var(--lav); }
+.hito.ahora::before{
+  background:var(--vio);
+  width:clamp(15px,1.6vw,24px); height:clamp(15px,1.6vw,24px);
+  box-shadow:0 0 0 clamp(3px,.4vw,6px) var(--tint2);
+}
+.hito-cuando{ display:block; font-weight:700; font-size:var(--t-micro); letter-spacing:.18em; text-transform:uppercase; color:var(--gry); }
+.hito.ahora .hito-cuando{ color:var(--vio); }
+.hito-que{ display:block; font-family:var(--font-d); font-weight:700; font-size:clamp(.85rem,1.55vw,1.55rem); line-height:1.12; color:var(--ind); margin-top:.3em; }
+.hito.ahora .hito-que{ color:var(--vio); }
+.hito.futuro .hito-que{ color:var(--lav); }
+.hito-det{ display:block; font-size:var(--t-small); color:var(--gry); line-height:1.35; margin-top:.35em; }
+.hito-ronda{
+  display:inline-block; margin-top:.5em;
+  font-weight:700; font-size:var(--t-micro); letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ind); border:1.5px solid var(--vio); border-radius:999px; padding:.3em .7em;
+}
+
 /* ═══ SLIDE DEL PROBLEMA ════════════════════════════════════════
    Las dos pérdidas se cuentan como una sola: cada pedido cobra en
    plata y cobra en cliente. Antes eran dos números sin relación
@@ -660,6 +696,20 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   .team{ grid-template-columns:repeat(2,1fr) !important; }
   /* 158 px de columna no alcanzan para el número más la barra */
   .perdidas{ grid-template-columns:1fr !important; gap:clamp(.9rem,4vw,1.6rem) !important; }
+
+  /* La línea de tiempo se para: seis columnas no entran en 375 px.
+     Cada hito lleva su propio tramo de línea, así el corte entre
+     lleno y punteado cae exacto y no en un porcentaje aproximado. */
+  .camino{ grid-template-columns:1fr !important; gap:0 !important; }
+  .camino::before,.camino::after{ display:none; }
+  .hito{
+    padding:0 0 clamp(.75rem,3.4vw,1.3rem) clamp(.9rem,4.5vw,1.5rem);
+    border-left:2px solid var(--vio);
+  }
+  .hito.futuro{ border-left:2px dashed var(--lav); }
+  .hito::before{ top:.3em; left:0; transform:translate(-50%,0); }
+  .hito-que{ font-size:clamp(.9rem,4.4vw,1.3rem); }
+  .hito-det{ margin-top:.2em; }
   .founders{ grid-template-columns:1fr !important; }
   .arc{ grid-template-columns:1fr !important; }
 
@@ -960,7 +1010,59 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   <footer class="closer reveal">De cero a <b>US$ 15K de CMRR en menos de 8 meses</b>, sin un peso de capital externo. Ocho marcas operando, siete lanzando este trimestre, <b>cero bajas desde que arrancamos.</b></footer>
 </section>
 
-<!-- ══ 08 · MODELO DE INGRESOS ═══════════════════════════════════
+<!-- ══ 08 · EL CAMINO ════════════════════════════════════════════
+     Tracción da la foto de hoy; esta la pone en movimiento. El +3
+     meses cae en noviembre, o sea dentro de Q4: la atribución de
+     Activa y los US$15K son el mismo hito, y por eso el pre-seed
+     cuelga de ahí sin forzar nada.                                -->
+<section class="slide" data-track="live" data-title="El camino">
+  <div class="slide-content">
+    <header class="s-head">
+      <p class="eyebrow reveal">El camino</p>
+      <h2 class="s-title reveal">Lo que ya hicimos <span class="vio">y lo que sigue.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="justify-content:center;">
+      <div class="camino reveal">
+        <div class="hito">
+          <span class="hito-cuando">2024 · 2025</span>
+          <span class="hito-que">Producto y confianza</span>
+          <span class="hito-det">Menos de 20 locales, cocreando con las primeras marcas.</span>
+        </div>
+        <div class="hito">
+          <span class="hito-cuando">Q4 2025</span>
+          <span class="hito-que">Los primeros que pagan</span>
+          <span class="hito-det">Arranca el recurrente, de a una cuenta por vez.</span>
+        </div>
+        <div class="hito">
+          <span class="hito-cuando">2026</span>
+          <span class="hito-que">150 locales activados</span>
+          <span class="hito-det">El canal propio empieza a operar en serio.</span>
+        </div>
+        <div class="hito ahora">
+          <span class="hito-cuando">Hoy</span>
+          <span class="hito-que">250 locales<br>US$&nbsp;10K de MRR</span>
+          <span class="hito-det">15 marcas contratadas, 8 ya operando.</span>
+        </div>
+        <div class="hito futuro">
+          <span class="hito-cuando">+3 meses</span>
+          <span class="hito-que">US$&nbsp;15K de MRR</span>
+          <span class="hito-det">Cuando lance todo lo que ya está firmado. Y Activa, medida.</span>
+          <span class="hito-ronda">Pre-seed</span>
+        </div>
+        <div class="hito futuro">
+          <span class="hito-cuando">+6 meses</span>
+          <span class="hito-que">US$&nbsp;30–40K de MRR</span>
+          <span class="hito-det">México, Brasil y España.</span>
+          <span class="hito-ronda">Seed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="closer reveal">La línea llena es lo que ya pasó; la punteada, el plan. <b>Los US$15K de los próximos tres meses no son proyección: ya están firmados.</b></footer>
+</section>
+
+<!-- ══ 09 · MODELO DE INGRESOS ═══════════════════════════════════
      La escalera va a proporción real (56/132/221). Y la
      reconciliación Legacy vs ICP va en el cuerpo, no al pie: con
      US$15K y 15 marcas la división da ~US$1.000 por cuenta contra
