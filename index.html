@@ -83,7 +83,6 @@
 
   /* — Geometría — */
   --m:    clamp(1.3rem, 4.2vw, 4.2rem);   /* margen de slide      */
-  --rail: clamp(26px, 3vw, 52px);         /* rail izquierdo       */
   --gap:  clamp(.5rem, 1.5vh, 1.3rem);
   --gap-s:clamp(.3rem, .8vw, .7rem);
   --r:    clamp(.4rem, .8vw, .8rem);
@@ -105,7 +104,7 @@ html{ scroll-snap-type:y mandatory; scroll-behavior:smooth; }
 .slide-content{
   flex:1; min-height:0; display:flex; flex-direction:column;
   overflow:hidden;
-  padding:var(--m) var(--m) 0 calc(var(--m) + var(--rail));
+  padding:var(--m) var(--m) 0 var(--m);
 }
 .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr)); gap:clamp(.5rem,1.5vw,1rem); }
 img{ max-width:100%; max-height:min(50vh,400px); object-fit:contain; }
@@ -121,30 +120,18 @@ body{
   font-weight:400; line-height:1.5; -webkit-font-smoothing:antialiased;
 }
 
-/* ═══ RAIL EDITORIAL ════════════════════════════════════════════
-   Marca de sección rotada + número. Es el elemento que le da al
-   deck su identidad de pieza editorial y no de plantilla SaaS.  */
-.rail{
-  position:absolute; left:0; top:0; bottom:0; width:calc(var(--m) + var(--rail));
-  display:flex; flex-direction:column; align-items:center; justify-content:space-between;
-  padding:var(--m) 0; z-index:3; pointer-events:none;
+/* ═══ EYEBROW ══════════════════════════════════════════════════
+   El nombre de sección vive arriba del título, que es donde lo
+   pone la jerarquía del brief: eyebrow → título bicolor →
+   contenido → cierre. Antes vivía rotado en un rail a la
+   izquierda, y ese rail obligaba a todas las slides a arrancar
+   38 px más adentro que la portada.
+   ═══════════════════════════════════════════════════════════════ */
+.eyebrow{
+  font-weight:700; font-size:var(--t-micro); letter-spacing:.24em;
+  text-transform:uppercase; color:var(--vio);
+  margin-bottom:clamp(.3rem,.85vh,.65rem);
 }
-.rail::before{
-  content:''; position:absolute; left:calc(var(--m) + var(--rail) - 1px);
-  top:var(--m); bottom:var(--m); width:1px; background:var(--hair);
-}
-.rail-mark{ width:clamp(13px,1.5vw,22px); height:auto; max-height:none; }
-.rail-label{
-  writing-mode:vertical-rl; transform:rotate(180deg);
-  font-weight:700; font-size:var(--t-micro); letter-spacing:.28em;
-  text-transform:uppercase; color:var(--vio); white-space:nowrap;
-}
-.rail-num{ font-family:var(--font-d); font-weight:700; font-size:var(--t-small); color:var(--hair); letter-spacing:.05em; }
-
-/* Variante sobre slide violeta */
-.slide.slate .rail::before{ background:rgba(255,255,255,.28); }
-.slide.slate .rail-label{ color:var(--tint2); }
-.slide.slate .rail-num{ color:rgba(255,255,255,.45); }
 
 /* ═══ CABEZAL DE SLIDE ══════════════════════════════════════════ */
 .s-head{ flex:none; }
@@ -165,7 +152,7 @@ body{
    Solo aparece cuando hay una conclusión con información real.  */
 .closer{
   flex:none; background:var(--tint2); color:var(--ind);
-  padding:clamp(.6rem,1.6vh,1.15rem) var(--m) clamp(.6rem,1.6vh,1.15rem) calc(var(--m) + var(--rail));
+  padding:clamp(.6rem,1.6vh,1.15rem) var(--m);
   font-size:var(--t-body); line-height:1.4;
 }
 .closer b{ font-weight:700; }
@@ -272,6 +259,7 @@ body{
 
 /* ═══ SLIDE VIOLETA A SANGRE ════════════════════════════════════ */
 .slide.slate{ background:var(--vio); color:var(--wht); }
+.slide.slate .eyebrow{ color:var(--tint2); }
 .slide.slate .s-title{ color:var(--wht); }
 .slide.slate .s-title .vio{ color:var(--tint2); }
 .slide.slate .s-rule{ background:rgba(255,255,255,.3); }
@@ -390,11 +378,8 @@ body{
 .alloc-lbl span{ font-size:var(--t-micro); color:var(--gry); text-align:center }
 
 /* ═══ PORTADA ═══════════════════════════════════════════════════ */
-/* La portada es la única slide sin rail. El wordmark ya está en el
-   contenido, así que la vertical rotada sería redundante y lo único
-   que hace es empujar el título hacia adentro. Sin rail, la
-   tipografía arranca en el margen y la slide gana peso.          */
-.cover .rail{ display:none; }
+/* La portada es la única sin banda de cierre, así que lleva padding
+   en los cuatro lados. El resto abre abajo contra la banda.     */
 .cover .slide-content{ flex-direction:row; align-items:center; gap:clamp(1rem,3.2vw,3.4rem); padding:var(--m); }
 .cover-l{ flex:1 1 53%; min-width:0 }
 .cover-r{ flex:1 1 47%; min-width:0; display:flex; align-items:center; justify-content:center }
@@ -482,7 +467,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
          --t-title:clamp(1.2rem,2.9vw,2.2rem); --t-hero:clamp(1.4rem,3.6vw,2.7rem);
          --t-body:clamp(.72rem,.92vw,.95rem);
          --n-lg:clamp(1.6rem,3.4vw,2.7rem); --n-xl:clamp(2rem,6vw,4.4rem); --n-md:clamp(1.2rem,2.3vw,1.9rem); }
-  .nav-dots,.keyboard-hint,.rail-label{ display:none; }
+  .nav-dots,.keyboard-hint{ display:none; }
 }
 @media (max-height:500px){
   :root{ --t-title:clamp(1rem,2.4vw,1.7rem); --n-xl:clamp(1.6rem,5vw,3.2rem); --t-body:clamp(.66rem,.82vw,.85rem); }
@@ -492,7 +477,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      no es opcional. Las grillas están escritas con style inline en
      el HTML, y un atributo style solo lo gana !important.        — */
 @media (max-width:820px){
-  :root{ --t-title:clamp(1.3rem,5.4vw,2.2rem); --t-hero:clamp(1.9rem,8.4vw,3rem); --rail:0px;
+  :root{ --t-title:clamp(1.3rem,5.4vw,2.2rem); --t-hero:clamp(1.9rem,8.4vw,3rem);
          --n-xl:clamp(1.7rem,10.5vw,3.4rem); --n-lg:clamp(1.4rem,7.4vw,2.8rem);
          --n-md:clamp(1.2rem,5.6vw,2.1rem); --n-sm:clamp(1rem,4.4vw,1.6rem); }
   /* Las filas de dos columnas escritas con style inline se apilan */
@@ -500,7 +485,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   /* El tramo del 6% mide 20 px de ancho en un teléfono: el rótulo
      tiene que achicarse o se sale de su propio segmento.         */
   .alloc div{ font-size:clamp(.5rem,1.7vw,.7rem); }
-  .rail{ display:none !important; }
   .slide-content{ padding-left:var(--m); }
   .grid{ grid-template-columns:1fr; }
 
@@ -571,7 +555,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 
 <!-- ══ 01 · PORTADA ══════════════════════════════════════════════ -->
 <section class="slide cover" data-track="live" data-title="Portada">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Deenex · 2026</span><span class="rail-num">01</span></aside>
   <div class="slide-content">
     <div class="cover-l">
       <img class="wordmark reveal" src="assets/logo-wordmark.png" alt="Deenex">
@@ -591,9 +574,9 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      Los dos números cuelgan de una regla violeta, sin caja. Es la
      diferencia entre una pastilla de plantilla y un dato con peso. -->
 <section class="slide" data-track="live" data-title="El problema">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">El problema</span><span class="rail-num">02</span></aside>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">El problema</p>
       <h2 class="s-title reveal">El restaurante <span class="vio">alquila a sus propios clientes.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
@@ -620,8 +603,8 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      de dos tarjetas; es lo mejor que tiene el pitch y necesita
      silencio alrededor. Primera de las dos slates violeta.        -->
 <section class="slide slate" data-track="live" data-title="La cita">
-  <aside class="rail"><span class="rail-label">El problema</span><span class="rail-num">03</span></aside>
   <div class="slide-content" style="justify-content:center;">
+    <p class="eyebrow reveal">El problema</p>
     <blockquote class="quote wipe">“Las apps son un gusano que te funde: 25.000 pedidos por mes y ni un cliente es mío.”</blockquote>
     <p class="quote-by reveal"><b>Federico</b> · CEO y fundador de Monti, bar de pasta</p>
   </div>
@@ -629,9 +612,9 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 
 <!-- ══ 04 · LA PRUEBA DEL PROBLEMA ═══════════════════════════════ -->
 <section class="slide" data-track="live" data-title="La prueba del problema">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">La prueba</span><span class="rail-num">04</span></aside>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">La prueba</p>
       <h2 class="s-title reveal">Nos pagaron <span class="vio">para resolverlo.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
@@ -654,9 +637,9 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      Barras a proporción real. El track hairline es el 100 de
      referencia: sin él, una barra del 4% no se lee como caída.    -->
 <section class="slide" data-track="live" data-title="El insight">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">El insight</span><span class="rail-num">05</span></aside>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">El insight</p>
       <h2 class="s-title reveal">El dato ya existe. <span class="vio">Nadie lo usa.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
@@ -685,9 +668,9 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      La firma visual del deck. El isotipo de Deenex es un imán y
      el producto es un circuito cerrado: acá se dibujan juntos.    -->
 <section class="slide" data-track="live" data-title="La solución">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">La solución</span><span class="rail-num">06</span></aside>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">La solución</p>
       <h2 class="s-title reveal">Un sistema que <span class="vio">cierra el loop.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
@@ -724,9 +707,9 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 
 <!-- ══ 07 · TRACCIÓN ═════════════════════════════════════════════ -->
 <section class="slide" data-track="live" data-title="Tracción">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Tracción</span><span class="rail-num">07</span></aside>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">Tracción</p>
       <h2 class="s-title reveal">Ya está funcionando <span class="vio">y lo pagan los clientes.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
@@ -768,9 +751,9 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      +US$10K y 8 marcas la división da ~US$1.250 por cuenta contra
      los $221 del modelo. Si no lo explicamos, lo encuentra él.   -->
 <section class="slide" data-track="live" data-title="Modelo de ingresos">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Modelo</span><span class="rail-num">08</span></aside>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">Modelo</p>
       <h2 class="s-title reveal">Cada cuenta <span class="vio">crece sola.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
@@ -814,9 +797,9 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      inversión (expone la contradicción y no tiene función si no
      estamos pidiendo plata).                                     -->
 <section class="slide" data-track="live" data-title="Objetivo y camino">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">El objetivo</span><span class="rail-num">09</span></aside>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">El objetivo</p>
       <h2 class="s-title reveal">200 cuentas y <span class="vio">US$&nbsp;500K de run-rate.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
@@ -861,9 +844,9 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      alcanza con el equipo actual y es el que más mueve la
      valuación. Para cambiarlo se toca solo esta slide.          -->
 <section class="slide slate" data-track="live" data-title="La ronda">
-  <aside class="rail"><span class="rail-label">La ronda</span><span class="rail-num">10</span></aside>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">La ronda</p>
       <h2 class="s-title wipe">No estamos <span class="vio">levantando hoy.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
@@ -897,10 +880,10 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 
 <!-- B1 · CASOS DE ÉXITO -->
 <section class="slide" data-track="backup" data-title="Casos de éxito">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Casos</span><span class="rail-num">B1</span></aside>
   <span class="badge-backup">Respaldo</span>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">Casos</p>
       <h2 class="s-title reveal">Ya son dueñas <span class="vio">de sus clientes.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
@@ -921,10 +904,10 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 
 <!-- B2 · MERCADO -->
 <section class="slide" data-track="backup" data-title="Mercado">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Mercado</span><span class="rail-num">B2</span></aside>
   <span class="badge-backup">Respaldo</span>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">Mercado</p>
       <h2 class="s-title reveal">2,6 millones de puntos de venta <span class="vio">en LATAM.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
@@ -951,10 +934,10 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 
 <!-- B3 · PROYECCIÓN FINANCIERA -->
 <section class="slide" data-track="backup" data-title="Proyección financiera">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Financiero</span><span class="rail-num">B3</span></aside>
   <span class="badge-backup">Respaldo</span>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">Financiero</p>
       <h2 class="s-title reveal">US$ 7,5M de revenue <span class="vio">al año 3.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
@@ -977,10 +960,10 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 
 <!-- B4 · ADQUISICIÓN -->
 <section class="slide" data-track="backup" data-title="Adquisición">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Adquisición</span><span class="rail-num">B4</span></aside>
   <span class="badge-backup">Respaldo</span>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">Adquisición</p>
       <h2 class="s-title reveal">Tenemos producto, <span class="vio">tenemos ventas.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
@@ -1004,11 +987,11 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 
 <!-- B5 · EQUIPO -->
 <section class="slide" data-track="backup" data-title="Equipo">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Equipo</span><span class="rail-num">B5</span></aside>
   <span class="badge-backup">Respaldo</span>
   <span class="mock">Maqueta · contenido de ejemplo</span>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">Equipo</p>
       <h2 class="s-title reveal">Siete personas, <span class="vio">cero pasajeros.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
@@ -1059,10 +1042,10 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      escena justo después de decir "no estamos levantando hoy" es
      contradecirse en la misma respiración. Si preguntan, aparece. -->
 <section class="slide" data-track="backup" data-title="La ronda en detalle">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">La ronda</span><span class="rail-num">B6</span></aside>
   <span class="badge-backup">Respaldo</span>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">La ronda</p>
       <h2 class="s-title reveal">USD 250.000 <span class="vio">pre-seed, SAFE.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
@@ -1096,10 +1079,10 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      La slide que faltaba. "¿Por qué no lo hace Fudo o Rappi?" es
      la primera pregunta de cualquier inversor. -->
 <section class="slide" data-track="backup" data-title="Competencia">
-  <aside class="rail"><img class="rail-mark" src="assets/logo-mark.png" alt=""><span class="rail-label">Competencia</span><span class="rail-num">B7</span></aside>
   <span class="badge-backup">Respaldo</span>
   <div class="slide-content">
     <header class="s-head">
+      <p class="eyebrow reveal">Competencia</p>
       <h2 class="s-title reveal">Nadie cierra <span class="vio">el loop completo.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
