@@ -571,6 +571,23 @@ body.show-backup .slide[data-track="backup"]{ display:flex }
 .keyboard-hint{ position:fixed; left:50%; bottom:clamp(7px,1.3vw,16px); transform:translateX(-50%); z-index:9000; font-size:var(--t-micro); letter-spacing:.14em; text-transform:uppercase; color:var(--hair); pointer-events:none; transition:opacity .5s var(--ease) }
 .keyboard-hint.hide{ opacity:0 }
 
+/* ═══ CONTROL DE RESPALDO ═══════════════════════════════════════
+   Las 7 de respaldo estaban ocultas y la única pista era el cartel
+   de teclas, que se desvanece a los 6 segundos. Quien abre el link
+   nunca sabía que existían. Este control queda siempre a la vista.
+   ═══════════════════════════════════════════════════════════════ */
+.backup-toggle{
+  position:fixed; right:clamp(7px,1.1vw,18px); bottom:clamp(7px,1.1vw,18px);
+  z-index:9500; cursor:pointer; font-family:var(--font-b);
+  background:var(--wht); color:var(--ind);
+  border:1px solid var(--hair); border-radius:999px;
+  padding:.5em 1em; font-size:var(--t-micro); font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase;
+  transition:border-color .25s var(--ease), color .25s var(--ease);
+}
+.backup-toggle:hover{ border-color:var(--vio); color:var(--vio); }
+.backup-toggle.on{ background:var(--vio); border-color:var(--vio); color:var(--wht); }
+
 /* ═══ EDICIÓN EN LÍNEA ══════════════════════════════════════════ */
 .edit-hotzone{ position:fixed; top:0; left:0; width:80px; height:80px; z-index:10000; cursor:pointer }
 .edit-toggle{ position:fixed; top:clamp(7px,1.1vw,16px); left:clamp(7px,1.1vw,16px); width:36px; height:36px; border-radius:50%; border:0; cursor:pointer; background:var(--vio); color:var(--wht); font-size:14px; line-height:1; opacity:0; pointer-events:none; transition:opacity .3s ease; z-index:10001 }
@@ -672,7 +689,8 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 <div class="progress-bar" id="progressBar"></div>
 <nav class="nav-dots" id="navDots" aria-label="Navegación de slides"></nav>
 <div class="timer" id="timer">0:00</div>
-<p class="keyboard-hint" id="hint">← → navegar · M índice · B respaldo · T cronómetro</p>
+<p class="keyboard-hint" id="hint">← → navegar · M índice · T cronómetro</p>
+<button class="backup-toggle" id="backupToggle" aria-pressed="false">+7 de respaldo</button>
 
 <div class="edit-hotzone" aria-hidden="true"></div>
 <button class="edit-toggle" id="editToggle" title="Modo edición (E)" aria-label="Modo edición">✏️</button>
@@ -1307,6 +1325,10 @@ class SlidePresentation{
     this.current  = 0;
     this.observe(); this.buildDots(); this.keyboard(); this.touch();
     this.scrollTracking(); this.buildIndex(); this.videos(); this.timer(); this.fadeHint();
+    // El botón lleva la cuenta real de slides de respaldo, no un número fijo
+    const bt = document.getElementById('backupToggle');
+    bt.textContent = '+' + this.all.filter(s => s.dataset.track === 'backup').length + ' de respaldo';
+    bt.addEventListener('click', () => this.toggleBackup());
   }
 
   /* Slides que hoy están en el flujo (las de respaldo salen si se ocultan) */
@@ -1365,7 +1387,7 @@ class SlidePresentation{
 
   keyboard(){
     document.addEventListener('keydown', e => {
-      if(e.target.getAttribute('contenteditable')) return;
+      if(e.target.getAttribute?.('contenteditable')) return;
       const idxOpen = document.getElementById('indexOverlay').classList.contains('open');
       if(idxOpen && !['m','M','Escape'].includes(e.key)) return;
       switch(e.key){
@@ -1405,7 +1427,14 @@ class SlidePresentation{
     }, {passive:true});
   }
 
-  toggleBackup(){ document.body.classList.toggle('show-backup'); this.buildDots(); }
+  toggleBackup(){
+    const on = document.body.classList.toggle('show-backup');
+    const b = document.getElementById('backupToggle');
+    b.classList.toggle('on', on);
+    b.setAttribute('aria-pressed', String(on));
+    b.textContent = on ? 'Ocultar respaldo' : ('+' + this.all.filter(s => s.dataset.track === 'backup').length + ' de respaldo');
+    this.buildDots();
+  }
 
   /* La numeración cuenta por track, no por posición en el DOM: La
      ronda vive al final del documento para cerrar también el modo
@@ -1447,7 +1476,7 @@ class SlidePresentation{
   timer(){
     const el = document.getElementById('timer'); let t = 0, id = null;
     document.addEventListener('keydown', e => {
-      if(e.target.getAttribute('contenteditable') || (e.key !== 't' && e.key !== 'T')) return;
+      if(e.target.getAttribute?.('contenteditable') || (e.key !== 't' && e.key !== 'T')) return;
       if(id){ clearInterval(id); id=null; el.classList.remove('on','over'); t=0; el.textContent='0:00'; return; }
       el.classList.add('on');
       id = setInterval(() => { t++; el.textContent = Math.floor(t/60)+':'+String(t%60).padStart(2,'0'); el.classList.toggle('over', t>=180); }, 1000);
@@ -1514,7 +1543,7 @@ class InlineEditor{
     tg.addEventListener('mouseenter', () => clearTimeout(hide));
     tg.addEventListener('mouseleave', () => { hide = setTimeout(() => { if(!this.isActive) tg.classList.remove('show'); }, 400); });
     document.addEventListener('keydown', e => {
-      if((e.key==='e'||e.key==='E') && !e.target.getAttribute('contenteditable')) this.toggleEditMode();
+      if((e.key==='e'||e.key==='E') && !e.target.getAttribute?.('contenteditable')) this.toggleEditMode();
       if((e.ctrlKey||e.metaKey) && (e.key==='s'||e.key==='S')){ e.preventDefault(); this.save(); this.exportFile(); }
     });
     document.addEventListener('input', () => { if(this.isActive) this.save(); });
