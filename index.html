@@ -457,7 +457,10 @@ body{
 .wordmark{ height:clamp(24px,3.1vw,50px); width:auto; max-height:none; margin-bottom:clamp(.8rem,2.4vh,1.9rem) }
 .hero{ font-family:var(--font-d); font-weight:700; font-size:var(--t-hero); line-height:.98; letter-spacing:-.035em }
 .hero .vio{ color:var(--vio); display:block }
-.cover-sub{ font-size:var(--t-lead); color:var(--gry); margin-top:clamp(.6rem,1.7vh,1.15rem); max-width:34ch }
+/* La bajada pasó de una línea de posicionamiento a una definición de
+   categoría de ~200 caracteres. Con la medida vieja (34ch) caía en
+   seis líneas angostas; con el ancho de la columna entra en tres.  */
+.cover-sub{ font-size:clamp(.82rem,1.2vw,1.32rem); line-height:1.45; color:var(--gry); margin-top:clamp(.6rem,1.7vh,1.15rem); max-width:100% }
 .cover-rule{ width:clamp(60px,8vw,130px); height:3px; background:var(--vio); border-radius:2px; margin:clamp(.85rem,2.3vh,1.6rem) 0 clamp(.45rem,1.3vh,.85rem) }
 .cover-meta{ font-weight:700; font-size:var(--t-micro); letter-spacing:.2em; text-transform:uppercase; color:var(--gry) }
 .cover-tr{ margin-top:clamp(.6rem,1.8vh,1.15rem); font-weight:700; font-size:var(--t-small); letter-spacing:.11em; text-transform:uppercase; color:var(--ind) }
@@ -631,7 +634,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
     <div class="cover-l">
       <img class="wordmark reveal" src="assets/logo-wordmark.png" alt="Deenex">
       <h1 class="hero wipe">Tus clientes<span class="vio">son tuyos.</span></h1>
-      <p class="cover-sub reveal">La infraestructura que convierte cada pedido en un cliente que vuelve.</p>
+      <p class="cover-sub reveal">Somos el ecommerce que permite a los restaurantes transformar pedidos en clientes recurrentes, capturando datos en cada transacción y activándolos a través de campañas con IA para generar recompra.</p>
       <div class="reveal">
         <div class="cover-rule"></div>
         <p class="cover-meta">Deenex Technologies SAS · Buenos Aires, Argentina</p>
