@@ -336,13 +336,35 @@ body{
 .f-txt{ position:absolute; top:50%; transform:translateY(-50%); white-space:nowrap; font-size:var(--t-small); color:var(--blk); }
 .f-txt b{ color:var(--ind); font-weight:700; }
 
+/* ═══ SLIDE DE MERCADO ══════════════════════════════════════════
+   Dos columnas: a la izquierda cuánto mide la oportunidad, a la
+   derecha por qué es ahora. Apilado en vertical el contenido no
+   alcanzaba para llenar la slide y quedaba un agujero de ~270 px
+   en el medio; en columnas cada argumento ocupa su lado.
+
+   Las barras van con el rótulo DEBAJO y no al costado, así usan
+   todo el ancho de la columna y pueden ir a proporción real:
+   52/410 = 12,68%. Con el rótulo al lado había que achicarlas al
+   50% para dejarle lugar.
+   ═══════════════════════════════════════════════════════════════ */
+.mercado{ display:grid; grid-template-columns:1.1fr 1px .9fr; gap:clamp(1rem,3.2vw,3rem); flex:1; min-height:0; align-items:center; }
+.mercado-div{ background:var(--hair); align-self:stretch; }
+.mb{ display:flex; flex-direction:column; gap:clamp(.8rem,2.4vh,1.7rem); min-width:0; }
+.mb-track{ height:clamp(24px,4.4vh,48px); background:var(--tint); border-radius:var(--r); margin:.35em 0; }
+.mb-bar{ height:100%; background:var(--vio); border-radius:var(--r); transform-origin:left; transform:scaleX(0); }
+.slide.visible .mb-bar{ transform:scaleX(1); transition:transform 1.05s var(--ease); }
+.mb-item:nth-child(2) .mb-bar{ transition-delay:.18s }
+.mb-cierre{ font-weight:700; color:var(--vio); font-size:var(--t-body); }
+
 /* ═══ ZONA "POR QUÉ AHORA" ══════════════════════════════════════
    Se va al pie de la slide y arranca con su propia regla violeta.
    Antes venía pegado al dato del mercado y las dos cosas se leían
    como un mismo bloque; son argumentos distintos: uno dimensiona
    la oportunidad y el otro explica el timing.
    ═══════════════════════════════════════════════════════════════ */
-.porque{ margin-top:auto; border-top:2px solid var(--vio); padding-top:clamp(.6rem,1.7vh,1.2rem); }
+/* Ya no necesita margin-top:auto ni regla propia: la separación la
+   hace la columna. El divisor vertical es el que marca el corte.  */
+.porque-col{ min-width:0; }
 .porque-lbl{
   font-weight:700; font-size:var(--t-small); letter-spacing:.2em;
   text-transform:uppercase; color:var(--vio);
@@ -477,17 +499,22 @@ body{
    Se rehízo alrededor del pedido. Antes declaraba una posición y
    daba un mail; ahora dice qué queremos del inversor esta semana.
    El arco Hoy → Q4 → Ronda se mudó a la de respaldo.            */
+/* Dos columnas: el porqué a la izquierda, el pedido a la derecha.
+   Antes iban apilados contra el borde izquierdo y dejaban media
+   slide vacía más 500 px muertos en el medio.                    */
+.ronda-grid{
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:clamp(1rem,3.4vw,3.4rem); align-items:start;
+  flex:1; align-content:center; min-height:0;
+}
 .ronda-lead{
   font-family:var(--font-d); font-weight:700;
   font-size:clamp(1rem,2.15vw,2.05rem); line-height:1.16;
-  color:var(--wht); max-width:34ch;
+  color:var(--wht);
 }
 .ask{
   border:2px solid rgba(255,255,255,.55); border-radius:var(--r);
   padding:clamp(.7rem,1.9vh,1.35rem) clamp(.9rem,2vw,1.7rem);
-  /* En ch se calculaba sobre la tipografía del padre (13 px), no
-     sobre la del texto del pedido, y la caja quedaba angosta.   */
-  margin-top:var(--gap); max-width:min(100%,clamp(320px,55vw,760px));
 }
 .ask-lbl{
   font-weight:700; font-size:var(--t-small); letter-spacing:.2em;
@@ -515,10 +542,6 @@ body{
 .member img{ width:clamp(52px,8.4vw,124px); height:clamp(52px,8.4vw,124px); max-height:none; border-radius:50%; object-fit:cover; margin-bottom:.35em; }
 .mn{ font-family:var(--font-d); font-weight:700; font-size:clamp(.66rem,.95vw,.92rem); color:var(--ind); line-height:1.15; }
 .mr{ font-weight:700; font-size:var(--t-micro); letter-spacing:.1em; text-transform:uppercase; color:var(--vio); }
-/* Se llamaba .md y chocaba con el modificador de tamaño .n.md de los
-   números: declarada después, les pisaba el violeta y los dejaba en
-   gris. Nueve números arruinados por dos biografías.              */
-.bio{ font-size:var(--t-micro); color:var(--gry); line-height:1.35; }
 .founders{ display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(.6rem,1.8vw,1.8rem); }
 .founder{ display:flex; align-items:flex-start; gap:clamp(.5rem,1.3vw,1.1rem); border-top:2px solid var(--vio); padding-top:clamp(.4rem,1.1vh,.8rem); }
 .founder img{ width:clamp(50px,6.6vw,98px); height:clamp(50px,6.6vw,98px); max-height:none; border-radius:50%; object-fit:cover; flex:none; }
@@ -735,10 +758,8 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   /* Las fotos grandes y el aire entre grupos son para proyector: en
      un teléfono desbordaban la slide 107 px. Siete personas con
      credencial es contenido genuinamente alto, así que en pantalla
-     chica va más denso y se cae la bio de los founders, que repite
-     lo que la chapa ya dice mejor.                                */
+     chica va más denso.                                          */
   .founder img{ width:clamp(42px,12vw,64px); height:clamp(42px,12vw,64px); }
-  .founder .bio{ display:none; }
   .team[style]{ margin-top:clamp(.6rem,2vh,1.1rem) !important; }
   .team{ gap:clamp(.35rem,1.8vw,.75rem) !important; }
   .chapa{ line-height:1.25; padding-left:.55em; margin-top:.22em; }
@@ -746,6 +767,12 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   .member .chapa{ margin-top:.15em; }
   /* 158 px de columna no alcanzan para el número más la barra */
   .perdidas{ grid-template-columns:1fr !important; gap:clamp(.9rem,4vw,1.6rem) !important; }
+
+  /* Mercado se apila y el divisor vertical desaparece: en columna
+     el "por qué ahora" ya queda separado por el orden de lectura. */
+  .mercado{ grid-template-columns:1fr !important; gap:clamp(.8rem,3.5vw,1.4rem) !important; align-items:start; }
+  .mercado-div{ display:none; }
+  .mb{ gap:clamp(.6rem,2.5vw,1rem); }
 
   /* La punchline baja debajo del texto: en dos columnas la
      descripción quedaba estrangulada en cuatro líneas angostas. */
@@ -1236,28 +1263,34 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <h2 class="s-title reveal">2,6 millones de puntos de venta <span class="vio">en LATAM.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
-    <!-- Sin justify-content:center: centrar dejaba ~140 px muertos
-         entre la regla del título y la primera barra. Ahora el gráfico
-         arranca pegado al título y el "por qué ahora" se va al pie con
-         margin-top:auto, que además lo separa como zona propia.     -->
     <div class="s-body">
-      <div class="funnel reveal">
-        <!-- Las barras se achicaron de 70% a 50% para dejarle lugar al
-             rótulo con la tipografía nueva. La proporción entre ambas
-             se mantiene, que es lo que dice el dato: 50 × 52/410 = 6,34 -->
-        <div class="f-row"><span class="f-num" style="font-size:var(--n-sm)">~410K</span>
-          <div class="f-lane"><div class="f-bar" style="width:50%"></div><span class="f-txt" style="left:calc(50% + 14px)">cuentas · marcas de 1 a 20 locales: <b>mercado servible</b></span></div></div>
-        <div class="f-row"><span class="f-num" style="font-size:var(--n-sm)">~52K</span>
-          <div class="f-lane"><div class="f-bar" style="width:6.34%"></div><span class="f-txt" style="left:calc(6.34% + 14px)">cuentas · sin canal propio efectivo: <b>el foco de 3 años</b></span></div></div>
-      </div>
-      <p class="k reveal" style="color:var(--vio);font-weight:700;">2.000 cuentas al año 3 = 0,5% del mercado servible.</p>
+      <div class="mercado reveal">
+        <!-- Barras a proporción REAL: 52/410 = 12,68%. Con el rótulo al
+             costado había que achicarlas al 50% para que entrara el
+             texto; con el rótulo debajo usan todo el ancho.          -->
+        <div class="mb">
+          <div class="mb-item">
+            <span class="n sm ink">~410K</span>
+            <div class="mb-track"><div class="mb-bar" style="width:100%"></div></div>
+            <p class="k">cuentas · marcas de 1 a 20 locales: <b>nuestro mercado servible</b></p>
+          </div>
+          <div class="mb-item">
+            <span class="n sm ink">~52K</span>
+            <div class="mb-track"><div class="mb-bar" style="width:12.68%"></div></div>
+            <p class="k">cuentas · sin canal propio efectivo: <b>el foco de los próximos 3 años</b></p>
+          </div>
+          <p class="mb-cierre">2.000 cuentas al año 3 = 0,5% del mercado servible.</p>
+        </div>
 
-      <div class="reveal porque">
-        <p class="porque-lbl">Por qué ahora</p>
-        <div class="stats" style="grid-template-columns:repeat(3,1fr);">
-          <div class="stat hair"><p class="k"><b>Fatiga de comisiones</b><br>15–35% por pedido erosiona el margen.</p></div>
-          <div class="stat hair"><p class="k"><b>Giro al canal propio</b><br>el dato propio pasa a ser activo estratégico.</p></div>
-          <div class="stat hair"><p class="k"><b>Commerce agéntico</b><br>redefine quién intermedia la relación.</p></div>
+        <div class="mercado-div"></div>
+
+        <div class="porque-col">
+          <p class="porque-lbl">Por qué ahora</p>
+          <div class="stats" style="grid-template-columns:1fr;gap:clamp(.5rem,1.7vh,1.2rem);">
+            <div class="stat hair"><p class="k"><b>Fatiga de comisiones</b><br>15–35% por pedido erosiona el margen.</p></div>
+            <div class="stat hair"><p class="k"><b>Giro al canal propio</b><br>el dato propio pasa a ser activo estratégico.</p></div>
+            <div class="stat hair"><p class="k"><b>Commerce agéntico</b><br>redefine quién intermedia la relación.</p></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1434,7 +1467,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
             <p class="mn" style="font-size:clamp(.8rem,1.2vw,1.1rem)">Alan Tapia</p>
             <p class="mr">Founder &amp; CEO / CPO</p>
             <span class="chapa">Fundador de startups. Antes, agencia de marketing con marcas globales y desarrollo de producto en varios países.</span>
-            <p class="bio" style="margin-top:.35em;">Producto y tecnología. Dev AI y back-end. Lidera visión y ventas.</p>
           </div>
         </div>
         <div class="founder">
@@ -1443,7 +1475,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
             <p class="mn" style="font-size:clamp(.8rem,1.2vw,1.1rem)">Joaquín Lombardi</p>
             <p class="mr">Founder &amp; COO</p>
             <span class="chapa">Fundó Cheetah, agencia de marcas y talento (La Bresh). Becado un año en la TUM de Múnich.</span>
-            <p class="bio" style="margin-top:.35em;">Estrategia y operación. Lidera la implementación de cada cuenta.</p>
           </div>
         </div>
       </div>
