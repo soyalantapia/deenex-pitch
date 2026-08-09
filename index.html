@@ -257,18 +257,21 @@ body{
 }
 .canal:last-child{ border-bottom:0; padding-bottom:0; }
 .canal:first-child{ padding-top:0; }
+/* Nombre y número en la misma línea: gana una línea por fila (las
+   tres no entraban en la slide) y se lee "REFERIDOS 50%" de un saque. */
+.canal-cab{ grid-column:1; display:flex; align-items:baseline; gap:clamp(.5rem,1.2vw,1rem); flex-wrap:wrap; }
 .canal-nombre{
-  grid-column:1; font-weight:700; font-size:var(--t-micro);
+  font-weight:700; font-size:var(--t-micro);
   letter-spacing:.2em; text-transform:uppercase; color:var(--gry);
 }
-.canal .n{ grid-column:1; margin-top:.1em; }
+.canal .n{ display:inline-block; }
 /* Medida ancha a propósito: con 46ch cada descripción caía en dos
    líneas y las tres filas no entraban en la slide.                */
 .canal-det{ grid-column:1; font-size:var(--t-body); color:var(--blk); line-height:1.35; margin-top:.2em; max-width:64ch; }
 /* La punchline de cada fila: ocupa las tres filas de la izquierda y
    queda alineada a la derecha, para que las tres se lean en columna. */
 .canal-falta{
-  grid-column:2; grid-row:1 / span 3; justify-self:end; text-align:right;
+  grid-column:2; grid-row:1 / span 2; justify-self:end; text-align:right;
   font-family:var(--font-d); font-weight:700;
   font-size:clamp(.85rem,1.6vw,1.6rem); line-height:1.15;
   color:var(--vio); max-width:11ch;
@@ -729,6 +732,11 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   .team{ grid-template-columns:repeat(2,1fr) !important; }
   /* 158 px de columna no alcanzan para el número más la barra */
   .perdidas{ grid-template-columns:1fr !important; gap:clamp(.9rem,4vw,1.6rem) !important; }
+
+  /* La punchline baja debajo del texto: en dos columnas la
+     descripción quedaba estrangulada en cuatro líneas angostas. */
+  .canal{ grid-template-columns:1fr; }
+  .canal-falta{ grid-column:1; grid-row:auto; justify-self:start; text-align:left; max-width:none; margin-top:.35em; }
 
   /* Cinco columnas dan 48 px en un teléfono: "La Fábrica de
      Sandwiches" no entra ni partida. Pasan a dos.               */
@@ -1286,20 +1294,17 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <p class="prob-lead reveal">Cada canal ya trae clientes. <span class="vio">Ninguno está construido.</span></p>
       <div class="canales reveal">
         <div class="canal">
-          <span class="canal-nombre">Referidos</span>
-          <span class="n md" data-count="50" data-suffix="%">50%</span>
+          <div class="canal-cab"><span class="canal-nombre">Referidos</span><span class="n md" data-count="50" data-suffix="%">50%</span></div>
           <span class="canal-det">de los clientes actuales llegó por recomendación de otro cliente</span>
           <span class="canal-falta">sin sistema de referidos</span>
         </div>
         <div class="canal">
-          <span class="canal-nombre">Prensa</span>
-          <span class="n md" data-count="40" data-prefix="+">+40</span>
+          <div class="canal-cab"><span class="canal-nombre">Prensa</span><span class="n md" data-count="40" data-prefix="+">+40</span></div>
           <span class="canal-det">leads de una sola nota, la de iProUP</span>
           <span class="canal-falta">sin un peso invertido</span>
         </div>
         <div class="canal">
-          <span class="canal-nombre">Outbound</span>
-          <span class="n md" data-count="31">31</span>
+          <div class="canal-cab"><span class="canal-nombre">Outbound</span><span class="n md" data-count="31">31</span></div>
           <span class="canal-det">leads abiertos en el pipeline de hoy</span>
           <span class="canal-falta">sin un SDR</span>
         </div>
@@ -1417,7 +1422,10 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <h2 class="s-title reveal">Siete personas, <span class="vio">cero pasajeros.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
-    <div class="s-body" style="justify-content:center;">
+    <!-- El cuerpo arranca pegado al título en vez de centrarse: con
+         siete tarjetas cortas, centrar dejaba un hueco arriba y otro
+         abajo, y ninguno de los dos hacía nada.                     -->
+    <div class="s-body">
       <!-- Cada chapa arranca por el dato duro y verificable: un nombre
            propio que el inversor reconoce, un número, una institución.
            "Lideró equipos" no dice nada; "construyó el sitio de River"
@@ -1452,6 +1460,9 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       </div>
     </div>
   </div>
+  <!-- Era la única slide de respaldo sin banda de cierre, y esa
+       ausencia dejaba el borde inferior vacío. -->
+  <footer class="closer reveal">Todo lo que viste lo construyó este equipo, <b>sin un peso de capital externo.</b></footer>
 </section>
 
 <!-- ══ 10 · LA RONDA · VIOLETA A SANGRE ══════════════════════════
