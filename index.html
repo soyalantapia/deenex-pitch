@@ -740,6 +740,11 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      dos filas escondía 6 de 10 clientes. Ahí el sangrado deja de ser
      efecto y pasa a ser información perdida.                       */
   .wall{ max-height:calc(4 * clamp(1.5rem,3.4vw,3rem) + 3 * clamp(.4rem,1.1vw,1rem)); }
+  /* El muro protagonista vuelve al cuerpo base: con la tipografía
+     grande de escenario entraban 4 de 10 nombres en un teléfono, y
+     ahí el tamaño no compra nada — se lee a 30 cm.                */
+  .wall-hero{ max-height:calc(5 * clamp(1.5rem,3.4vw,3rem) + 4 * clamp(.4rem,1.1vw,1rem)); }
+  .wall-hero .wall-item{ font-size:clamp(.95rem,4.4vw,1.6rem); line-height:clamp(1.5rem,3.4vw,3rem); }
 
   /* La etiqueta del embudo baja debajo de la barra: al 3% de ancho
      no hay lugar a la derecha en un teléfono.                    */
@@ -998,7 +1003,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
           <span class="wall-item">Emplatame</span>
         </div>
       </div>
-      <div class="press reveal">
+      <div class="press reveal" style="margin-bottom:clamp(.5rem,1.6vh,1.2rem);">
         <span class="press-name">iProUP</span><span class="press-sep">·</span>
         <span class="press-name">Forbes</span><span class="press-sep">·</span>
         <span class="press-name">El Cronista</span>
