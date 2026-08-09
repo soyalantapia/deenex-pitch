@@ -69,11 +69,17 @@
   --font-d:'Panchang','Bespoke Sans',ui-sans-serif,-apple-system,'Segoe UI',sans-serif;
   --font-b:'Bespoke Sans',ui-sans-serif,-apple-system,'Segoe UI',sans-serif;
 
-  /* — Escala tipográfica — */
-  --t-micro: clamp(.52rem, .64vw, .72rem);
-  --t-small: clamp(.66rem, .84vw, .92rem);
-  --t-body:  clamp(.78rem, 1.02vw, 1.12rem);
-  --t-lead:  clamp(.92rem, 1.35vw, 1.55rem);
+  /* — Escala tipográfica —
+     Los techos van altos a propósito. Con techos en rem el texto se
+     topaba mientras los números seguían creciendo con vw: a 1280 los
+     rótulos quedaban en 8,3 px y a 1920 en 11,5 px, o sea que cuanto
+     más grande la pantalla, MENOS proporción de la slide ocupaban.
+     Ahora la relación con la altura se mantiene: ~1,6% los rótulos,
+     ~2,3% el cuerpo, ~2,9% la bajada.                             */
+  --t-micro: clamp(.62rem, .9vw, 1.15rem);
+  --t-small: clamp(.75rem, 1.1vw, 1.45rem);
+  --t-body:  clamp(.85rem, 1.3vw, 1.75rem);
+  --t-lead:  clamp(1rem, 1.65vw, 2.3rem);
   --t-title: clamp(1.75rem, 4.15vw, 4.4rem);
   --t-hero:  clamp(2.2rem, 5.6vw, 6rem);
   --n-sm:    clamp(1.3rem, 2.1vw, 2.2rem);
@@ -152,7 +158,10 @@ body{
    Solo aparece cuando hay una conclusión con información real.  */
 .closer{
   flex:none; background:var(--tint2); color:var(--ind);
-  padding:clamp(.6rem,1.6vh,1.15rem) var(--m);
+  /* El padding derecho reserva la huella del botón de respaldo, que
+     es fijo y vive justo encima de esta banda. Sin la reserva, un
+     cierre largo se le mete debajo.                               */
+  padding:clamp(.6rem,1.6vh,1.15rem) clamp(120px,12vw,200px) clamp(.6rem,1.6vh,1.15rem) var(--m);
   font-size:var(--t-body); line-height:1.4;
 }
 .closer b{ font-weight:700; }
@@ -437,7 +446,10 @@ body{
 .member img{ width:clamp(42px,6vw,88px); height:clamp(42px,6vw,88px); max-height:none; border-radius:50%; object-fit:cover; margin-bottom:.25em; }
 .mn{ font-family:var(--font-d); font-weight:700; font-size:clamp(.66rem,.95vw,.92rem); color:var(--ind); line-height:1.15; }
 .mr{ font-weight:700; font-size:var(--t-micro); letter-spacing:.1em; text-transform:uppercase; color:var(--vio); }
-.md{ font-size:var(--t-micro); color:var(--gry); line-height:1.35; }
+/* Se llamaba .md y chocaba con el modificador de tamaño .n.md de los
+   números: declarada después, les pisaba el violeta y los dejaba en
+   gris. Nueve números arruinados por dos biografías.              */
+.bio{ font-size:var(--t-micro); color:var(--gry); line-height:1.35; }
 .founders{ display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(.6rem,1.8vw,1.8rem); }
 .founder{ display:flex; align-items:flex-start; gap:clamp(.5rem,1.3vw,1.1rem); border-top:2px solid var(--vio); padding-top:clamp(.4rem,1.1vh,.8rem); }
 .founder img{ width:clamp(44px,5.4vw,76px); height:clamp(44px,5.4vw,76px); max-height:none; border-radius:50%; object-fit:cover; flex:none; }
@@ -633,6 +645,11 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   /* El tramo del 6% mide 20 px de ancho en un teléfono: el rótulo
      tiene que achicarse o se sale de su propio segmento.         */
   .alloc div{ font-size:clamp(.5rem,1.7vw,.7rem); }
+  /* Y los rótulos dejan de seguir la proporción de los segmentos:
+     en 20 px no entra "Legal". Pasan a leyenda con su porcentaje. */
+  .alloc-lbl{ flex-wrap:wrap; gap:.25em .9em; }
+  .alloc-lbl span{ width:auto !important; text-align:left; }
+  .alloc-lbl span::after{ content:' ' attr(data-pct); color:var(--ind); font-weight:700; }
   .slide-content{ padding-left:var(--m); }
   .grid{ grid-template-columns:1fr; }
 
@@ -1047,10 +1064,13 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
     </header>
     <div class="s-body" style="justify-content:center;">
       <div class="funnel reveal">
+        <!-- Las barras se achicaron de 70% a 50% para dejarle lugar al
+             rótulo con la tipografía nueva. La proporción entre ambas
+             se mantiene, que es lo que dice el dato: 50 × 52/410 = 6,34 -->
         <div class="f-row"><span class="f-num" style="font-size:var(--n-sm)">~410K</span>
-          <div class="f-lane"><div class="f-bar" style="width:70%"></div><span class="f-txt" style="left:calc(70% + 14px)">cuentas · marcas de 1 a 20 locales: <b>mercado servible</b></span></div></div>
+          <div class="f-lane"><div class="f-bar" style="width:50%"></div><span class="f-txt" style="left:calc(50% + 14px)">cuentas · marcas de 1 a 20 locales: <b>mercado servible</b></span></div></div>
         <div class="f-row"><span class="f-num" style="font-size:var(--n-sm)">~52K</span>
-          <div class="f-lane"><div class="f-bar" style="width:8.9%"></div><span class="f-txt" style="left:calc(8.9% + 14px)">cuentas · sin canal propio efectivo: <b>el foco de 3 años</b></span></div></div>
+          <div class="f-lane"><div class="f-bar" style="width:6.34%"></div><span class="f-txt" style="left:calc(6.34% + 14px)">cuentas · sin canal propio efectivo: <b>el foco de 3 años</b></span></div></div>
       </div>
       <p class="k reveal" style="color:var(--vio);font-weight:700;">2.000 cuentas al año 3 = 0,5% del mercado servible.</p>
       <div class="reveal">
@@ -1144,7 +1164,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
             <p class="mn" style="font-size:clamp(.8rem,1.2vw,1.1rem)">Alan Tapia</p>
             <p class="mr">Founder &amp; CEO / CPO</p>
             <span class="chapa mock-txt">[Antes fundó EMPRESA · AÑO–AÑO · resultado]</span>
-            <p class="md" style="margin-top:.35em;">Producto y tecnología. Dev AI y back-end. Lidera visión y ventas.</p>
+            <p class="bio" style="margin-top:.35em;">Producto y tecnología. Dev AI y back-end. Lidera visión y ventas.</p>
           </div>
         </div>
         <div class="founder">
@@ -1153,7 +1173,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
             <p class="mn" style="font-size:clamp(.8rem,1.2vw,1.1rem)">Joaquín Lombardi</p>
             <p class="mr">Founder &amp; COO</p>
             <span class="chapa mock-txt">[Antes fundó EMPRESA · AÑO–AÑO · resultado]</span>
-            <p class="md" style="margin-top:.35em;">Estrategia y operación. Lidera la implementación de cada cuenta.</p>
+            <p class="bio" style="margin-top:.35em;">Estrategia y operación. Lidera la implementación de cada cuenta.</p>
           </div>
         </div>
       </div>
@@ -1194,8 +1214,8 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
           <div style="width:20%;background:var(--tint);color:var(--ind)">20%</div>
         </div>
         <div class="alloc-lbl">
-          <span style="width:28%">Producto &amp; AI</span><span style="width:28%">Comercial &amp; growth</span>
-          <span style="width:18%">Operaciones &amp; CS</span><span style="width:6%">Legal</span><span style="width:20%">Reserva</span>
+          <span style="width:28%" data-pct="28%">Producto &amp; AI</span><span style="width:28%" data-pct="28%">Comercial &amp; growth</span>
+          <span style="width:18%" data-pct="18%">Operaciones &amp; CS</span><span style="width:6%" data-pct="6%">Legal</span><span style="width:20%" data-pct="20%">Reserva</span>
         </div>
       </div>
       <div class="stats reveal" style="grid-template-columns:repeat(4,1fr);margin-top:var(--gap);">
