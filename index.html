@@ -522,15 +522,20 @@ body{
 }
 .ask-txt{ font-size:var(--t-lead); line-height:1.35; color:var(--wht); }
 .ask-txt b{ color:var(--wht); font-weight:700; }
+/* La regla superior separa el cierre del cuerpo y le da piso a la
+   firma, que antes flotaba al fondo de un hueco enorme.          */
 .ronda-cierre{
   display:flex; align-items:flex-end; justify-content:space-between;
-  gap:clamp(.8rem,2vw,2rem); flex-wrap:wrap;
-  margin-top:auto; padding-bottom:var(--m);
+  gap:clamp(.8rem,2vw,2rem); flex-wrap:wrap; flex:none;
+  padding-top:clamp(.7rem,2.2vh,1.5rem); padding-bottom:var(--m);
+  border-top:1px solid rgba(255,255,255,.32);
 }
+/* Al mismo tamaño que el hero de la portada: es su eco, y a 43 px
+   contra 72 px el eco no se escuchaba.                           */
 .firma{
   font-family:var(--font-d); font-weight:700;
-  font-size:clamp(1.3rem,3.4vw,3.4rem); line-height:1; color:var(--wht);
-  letter-spacing:-.03em;
+  font-size:clamp(1.5rem,4.5vw,4.4rem); line-height:.98; color:var(--wht);
+  letter-spacing:-.035em;
 }
 
 /* ═══ EQUIPO ════════════════════════════════════════════════════ */
@@ -773,6 +778,10 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   .mercado{ grid-template-columns:1fr !important; gap:clamp(.8rem,3.5vw,1.4rem) !important; align-items:start; }
   .mercado-div{ display:none; }
   .mb{ gap:clamp(.6rem,2.5vw,1rem); }
+
+  /* El porqué y el pedido se apilan: en 375 px dos columnas dejan
+     ambas ilegibles.                                             */
+  .ronda-grid{ grid-template-columns:1fr; gap:clamp(.8rem,3.5vw,1.4rem); }
 
   /* La punchline baja debajo del texto: en dos columnas la
      descripción quedaba estrangulada en cuatro líneas angostas. */
@@ -1484,7 +1493,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
         <div class="member"><img src="assets/equipo/thaina.png" alt="Thainá Messina"><span class="mn">Thainá Messina</span><span class="mr">Head Commercial Ops</span><span class="chapa">Economía con promedio 9,5. La eligieron para estudiar en Italia y se quedó por Deenex.</span></div>
         <div class="member"><img src="assets/equipo/leandro.png" alt="Leandro Rebequi"><span class="mn">Leandro Rebequi</span><span class="mr">CTO</span><span class="chapa">Construyó los sitios de River y de Bizarrap. Lideró equipos y proyectos grandes.</span></div>
         <div class="member"><img src="assets/equipo/santiago.png" alt="Santiago Brito"><span class="mn">Santiago Brito</span><span class="mr">Dev Full Stack</span><span class="chapa">Viene de proyectos de IA e integraciones con sistemas POS.</span></div>
-        <div class="member"><img src="assets/equipo/agustin.png" alt="Agustín Friadenrich"><span class="mn">Agustín Friadenrich</span><span class="mr">Dev Full Stack</span><span class="chapa">22 años y ya da clase: una materia de desarrollo a +30 alumnos en la UDN. Antes, tecnología en el Estado.</span></div>
+        <div class="member"><img src="assets/equipo/agustin.png" alt="Agustín Friadenrich"><span class="mn">Agustín Friadenrich</span><span class="mr">Dev Full Stack</span><span class="chapa">22 años y ya da clase: una materia de desarrollo a +30 alumnos en la UTN. Antes, tecnología en el Estado.</span></div>
       </div>
     </div>
   </div>
@@ -1507,16 +1516,18 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <div class="s-rule reveal"></div>
     </header>
     <div class="s-body">
-      <p class="ronda-lead reveal">En Q4 medimos la atribución real de Activa —la hipótesis más grande del plan— y ahí abrimos la ronda.</p>
+      <div class="ronda-grid reveal">
+        <p class="ronda-lead">En Q4 medimos la atribución real de Activa —la hipótesis más grande del plan— y ahí abrimos la ronda.</p>
 
-      <!-- EL PEDIDO. La slide anterior no le pedía NADA al inversor:
-           declaraba una posición y daba un mail. Alguien que te quiere
-           seguir tiene que saber qué hacer el lunes, y el pedido tiene
-           que ser compatible con "no estamos levantando": no se pide
-           plata, se pide la conversación.                            -->
-      <div class="ask reveal">
-        <p class="ask-lbl">Lo que sí queremos ahora</p>
-        <p class="ask-txt">Tres o cuatro conversaciones abiertas, para que cuando salga ese número <b>no estemos empezando de cero.</b></p>
+        <!-- EL PEDIDO. La slide anterior no le pedía NADA al inversor:
+             declaraba una posición y daba un mail. Alguien que te quiere
+             seguir tiene que saber qué hacer el lunes, y el pedido tiene
+             que ser compatible con "no estamos levantando": no se pide
+             plata, se pide la conversación.                            -->
+        <div class="ask">
+          <p class="ask-lbl">Lo que sí queremos ahora</p>
+          <p class="ask-txt">Tres o cuatro conversaciones abiertas, para que cuando salga ese número <b>no estemos empezando de cero.</b></p>
+        </div>
       </div>
 
       <div class="ronda-cierre reveal">
