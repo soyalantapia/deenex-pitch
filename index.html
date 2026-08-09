@@ -377,41 +377,26 @@ body{
 .quote-by{ margin-top:clamp(.9rem,2.6vh,2rem); font-size:var(--t-body); color:var(--tint2); }
 .quote-by b{ color:var(--wht); font-weight:700; }
 
-/* ═══ MURO DE CLIENTES ══════════════════════════════════════════
-   El muro se corta contra el borde derecho a propósito: una lista
-   que termina prolija se lee como "estos son todos", y una que se
-   sale del cuadro se lee como "hay más". El sangrado llega justo
-   al borde de la slide (no más allá), así que no genera scroll; el
-   efecto lo hace la máscara, que desvanece los últimos nombres.
-   Cuando lleguen los logos, se reemplaza el contenido de .wall y
-   la mecánica queda igual.
+/* ═══ CLIENTES ══════════════════════════════════════════════════
+   Grilla tranquila, no un muro. La versión anterior usaba Panchang
+   —la tipografía de titulares y números— para diez nombres seguidos:
+   es ancha y pesada, y en bloque grita. Acá va la tipografía de
+   texto, chica, colgando de reglas finas. Los nombres se leen sin
+   competir con el título ni con los números.
+   Cuando lleguen los logos entran en estas mismas celdas.
    ═══════════════════════════════════════════════════════════════ */
-.wall{
-  display:flex; flex-wrap:wrap;
-  gap:clamp(.4rem,1.1vw,1rem) clamp(.8rem,2.2vw,2.2rem);
-  width:calc(100% + var(--m));
-  /* Dos filas EXACTAS: dos cajas de línea más el hueco entre ellas.
-     Si se corta a media caja, un nombre queda partido al medio y eso
-     se lee como error, no como sangrado. Una tercera fila queda
-     oculta entera, que es el efecto buscado.                      */
-  max-height:calc(2 * clamp(1.5rem,3.4vw,3rem) + clamp(.4rem,1.1vw,1rem));
-  overflow:hidden;
-  -webkit-mask-image:linear-gradient(to right,#000 72%,transparent 99%);
-          mask-image:linear-gradient(to right,#000 72%,transparent 99%);
+.clientes{
+  display:grid; grid-template-columns:repeat(5,1fr);
+  gap:clamp(.7rem,2vh,1.5rem) clamp(.5rem,1.6vw,1.7rem);
 }
-.wall-item{
-  font-family:var(--font-d); font-weight:700;
-  font-size:clamp(.95rem,2.05vw,1.95rem); line-height:clamp(1.5rem,3.4vw,3rem);
-  letter-spacing:-.015em; color:var(--ind); white-space:nowrap;
+.cliente{
+  border-top:1px solid var(--hair);
+  padding-top:clamp(.35rem,1vh,.7rem);
+  font-family:var(--font-b); font-weight:500;
+  font-size:var(--t-body); letter-spacing:.005em;
+  line-height:1.3; color:var(--ind);
 }
-.wall img{ height:clamp(1.1rem,2.4vw,2.2rem); width:auto; max-height:none; object-fit:contain; }
-
-/* Variante protagonista: en Tracción el muro dejó de ser una banda
-   entre otros bloques y pasó a ser el argumento de la slide. Si el
-   título dice "lo pagan los clientes", lo que sigue tienen que ser
-   los clientes, en grande.                                        */
-.wall-hero{ max-height:calc(3 * clamp(2rem,4.6vw,4rem) + 2 * clamp(.4rem,1.1vw,1rem)); }
-.wall-hero .wall-item{ font-size:clamp(1.25rem,2.85vw,2.7rem); line-height:clamp(2rem,4.6vw,4rem); }
+.cliente img{ height:clamp(1rem,2vw,1.9rem); width:auto; max-height:none; object-fit:contain; object-position:left; display:block; }
 
 /* ═══ CHIPS DE CLIENTES ═════════════════════════════════════════ */
 .chips{ display:flex; flex-wrap:wrap; gap:var(--gap-s); }
@@ -532,6 +517,25 @@ body{
 /* ═══ VIDEOS ════════════════════════════════════════════════════
    Sin URL en data-video no hacen nada: mejor eso que un ▶ que
    promete algo que todavía no existe.                           */
+/* ═══ CASOS PARTIDOS AL MEDIO ═══════════════════════════════════
+   Una marca por mitad, con el video contra el borde exterior. Antes
+   las dos tarjetas compartían el 38% de la slide y quedaban de ~130
+   px de ancho; ahora cada una tiene su mitad y el video pasa a ser
+   el protagonista, que es lo que un testimonio merece.
+   ═══════════════════════════════════════════════════════════════ */
+.casos{ display:grid; grid-template-columns:1fr 1px 1fr; gap:clamp(.8rem,2.6vw,2.4rem); flex:1; min-height:0; align-items:center; }
+.casos-div{ background:var(--hair); align-self:stretch; }
+.caso{ display:flex; align-items:center; gap:clamp(.7rem,1.9vw,1.6rem); min-width:0; }
+.caso.der{ flex-direction:row-reverse; }
+.caso .vid{ flex:0 0 auto; height:min(46vh,390px); width:auto; max-height:none; }
+/* La duración va al pie: centrada quedaba sobre la cara de quien
+   habla, que es justo lo que la tarjeta tiene para mostrar.      */
+.caso .vid .vid-lbl{ position:absolute; left:0; right:0; bottom:clamp(.5rem,1.4vh,1rem); text-align:center; }
+.caso-txt{ flex:1; min-width:0; }
+.caso-logo{ height:clamp(24px,3.4vw,50px); width:auto; max-height:none; margin-bottom:.6em; display:block }
+.caso.der .caso-logo{ margin-left:auto }
+.caso.der .caso-txt{ text-align:right }
+
 .vids{ display:grid; grid-template-columns:repeat(2,1fr); gap:var(--gap-s); }
 /* Logo del cliente en lugar del nombre escrito: en una slide de casos
    la marca se reconoce antes de leerse.                            */
@@ -704,6 +708,10 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   /* 158 px de columna no alcanzan para el número más la barra */
   .perdidas{ grid-template-columns:1fr !important; gap:clamp(.9rem,4vw,1.6rem) !important; }
 
+  /* Cinco columnas dan 48 px en un teléfono: "La Fábrica de
+     Sandwiches" no entra ni partida. Pasan a dos.               */
+  .clientes{ grid-template-columns:repeat(2,1fr) !important; }
+
   /* La línea de tiempo se para: seis columnas no entran en 375 px.
      Cada hito lleva su propio tramo de línea, así el corte entre
      lleno y punteado cae exacto y no en un porcentaje aproximado. */
@@ -736,15 +744,16 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   .vids{ grid-template-columns:repeat(2,1fr); }
   .press{ gap:.5rem; }
 
-  /* En un teléfono el deck se lee, no se proyecta: cortar el muro en
-     dos filas escondía 6 de 10 clientes. Ahí el sangrado deja de ser
-     efecto y pasa a ser información perdida.                       */
-  .wall{ max-height:calc(4 * clamp(1.5rem,3.4vw,3rem) + 3 * clamp(.4rem,1.1vw,1rem)); }
-  /* El muro protagonista vuelve al cuerpo base: con la tipografía
-     grande de escenario entraban 4 de 10 nombres en un teléfono, y
-     ahí el tamaño no compra nada — se lee a 30 cm.                */
-  .wall-hero{ max-height:calc(5 * clamp(1.5rem,3.4vw,3rem) + 4 * clamp(.4rem,1.1vw,1rem)); }
-  .wall-hero .wall-item{ font-size:clamp(.95rem,4.4vw,1.6rem); line-height:clamp(1.5rem,3.4vw,3rem); }
+  /* Los casos se apilan y el divisor desaparece: partir la pantalla
+     al medio en 375 px deja dos columnas de 165 px, donde el video
+     no llega ni a 90 px de ancho.                                 */
+  .casos{ grid-template-columns:1fr !important; gap:clamp(.8rem,3.5vw,1.4rem) !important; }
+  .casos-div{ display:none; }
+  .caso.der{ flex-direction:row; }
+  .caso.der .caso-logo{ margin-left:0; }
+  .caso.der .caso-txt{ text-align:left; }
+  .caso .vid{ height:min(26vh,190px); }
+
 
   /* La etiqueta del embudo baja debajo de la barra: al 3% de ancho
      no hay lugar a la derecha en un teléfono.                    */
@@ -977,8 +986,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
     <!-- La slide se descargó cuando "El camino" pasó a dibujar la
          trayectoria: los +250 locales, el MRR y el "de cero a X en 8
          meses" viven allá. Acá queda lo único que solo esta slide
-         hace — quiénes pagan y que no se fue ninguno — y el muro de
-         marcas pasa de banda lateral a protagonista.               -->
+         hace: quiénes pagan y que no se fue ninguno.               -->
     <div class="s-body">
       <div class="stats reveal" style="grid-template-columns:repeat(3,1fr);">
         <div class="stat"><span class="n md" data-count="15">15</span><p class="lbl">Marcas contratadas</p></div>
@@ -990,17 +998,17 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
            "en operación". Marcarlas todas en verde sería decir que las
            15 ya facturan, que es justo lo que evita el cierre.       -->
       <div class="reveal" style="margin-top:auto;margin-bottom:auto;">
-        <div class="wall wall-hero">
-          <span class="wall-item">QUEM</span>
-          <span class="wall-item">QUEM Central</span>
-          <span class="wall-item">Palta</span>
-          <span class="wall-item">La Fábrica de Sandwiches</span>
-          <span class="wall-item">Hatsu</span>
-          <span class="wall-item">Papanatos</span>
-          <span class="wall-item">Monti</span>
-          <span class="wall-item">Pannus</span>
-          <span class="wall-item">CC Konex</span>
-          <span class="wall-item">Emplatame</span>
+        <div class="clientes">
+          <span class="cliente">QUEM</span>
+          <span class="cliente">QUEM Central</span>
+          <span class="cliente">Palta</span>
+          <span class="cliente">La Fábrica de Sandwiches</span>
+          <span class="cliente">Hatsu</span>
+          <span class="cliente">Papanatos</span>
+          <span class="cliente">Monti</span>
+          <span class="cliente">Pannus</span>
+          <span class="cliente">CC Konex</span>
+          <span class="cliente">Emplatame</span>
         </div>
       </div>
       <div class="press reveal" style="margin-bottom:clamp(.5rem,1.6vh,1.2rem);">
@@ -1133,28 +1141,34 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <h2 class="s-title reveal">Ya son dueñas <span class="vio">de sus clientes.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
-    <div class="s-body" style="flex-direction:row;align-items:center;gap:clamp(.8rem,2.4vw,2.2rem);">
-      <!-- Los dos casos son los que tienen testimonio filmado. Un caso
-           con la cara del dueño contándolo pesa más que uno escrito, y
-           Monti además cierra el círculo con la cita de Federico que
-           abre el deck: el mismo hombre que dice "ni un cliente es
-           mío" aparece acá contando cómo lo resolvió.               -->
-      <div class="stats reveal" style="flex:1 1 62%;min-width:0;grid-template-columns:1fr;gap:clamp(.6rem,2vh,1.4rem);">
-        <div class="stat">
-          <img class="caso-logo" src="assets/clientes/palta.png" alt="Palta">
-          <p class="k">15 locales y +4.000 pedidos por mes sin saber quién compraba. En 8 meses de canal propio: <b>+16.000 clientes registrados</b>. Hoy es la cuenta piloto donde corre Activa.</p>
+    <!-- Una marca por mitad, con el video contra el borde exterior.
+         Monti va primero porque cierra el círculo con la cita que abre
+         el deck: el mismo hombre que dice "ni un cliente es mío"
+         aparece acá contando cómo lo resolvió. Y Palta queda del lado
+         derecho, que es el último que se lee, porque es la del dato
+         —16.000 registros— y es la que arma el cierre.             -->
+    <div class="s-body">
+      <div class="casos reveal">
+        <div class="caso">
+          <div class="vid" data-video="https://player.vimeo.com/video/1215627170?autoplay=1" style="background-image:url('assets/clientes/thumb-monti.jpg')">
+            <span class="play"></span><span class="vid-lbl">Testimonio · 0:51</span>
+          </div>
+          <div class="caso-txt">
+            <img class="caso-logo" src="assets/clientes/monti.png" alt="Monti · bar de pastas y café">
+            <p class="k">10 locales y <b>25.000 pedidos por mes</b> que no dejaban un solo cliente propio —son las palabras de su fundador. Hoy operan sobre canal propio Deenex.</p>
+          </div>
         </div>
-        <div class="stat">
-          <img class="caso-logo" src="assets/clientes/monti.png" alt="Monti · bar de pastas y café">
-          <p class="k">10 locales y <b>25.000 pedidos por mes</b> que no dejaban un solo cliente propio —son las palabras de su fundador. Hoy operan sobre canal propio Deenex.</p>
-        </div>
-      </div>
-      <div class="vids reveal" style="flex:1 1 38%;min-width:0;">
-        <div class="vid" data-video="https://player.vimeo.com/video/1215628999?autoplay=1" style="background-image:url('assets/clientes/thumb-palta.jpg')">
-          <span class="play"></span><span class="vn">Palta</span><span class="vid-lbl">Testimonio · 1:17</span>
-        </div>
-        <div class="vid" data-video="https://player.vimeo.com/video/1215627170?autoplay=1" style="background-image:url('assets/clientes/thumb-monti.jpg')">
-          <span class="play"></span><span class="vn">Monti</span><span class="vid-lbl">Testimonio · 0:51</span>
+
+        <div class="casos-div"></div>
+
+        <div class="caso der">
+          <div class="vid" data-video="https://player.vimeo.com/video/1215628999?autoplay=1" style="background-image:url('assets/clientes/thumb-palta.jpg')">
+            <span class="play"></span><span class="vid-lbl">Testimonio · 1:17</span>
+          </div>
+          <div class="caso-txt">
+            <img class="caso-logo" src="assets/clientes/palta.png" alt="Palta">
+            <p class="k">15 locales y +4.000 pedidos por mes sin saber quién compraba. En 8 meses de canal propio: <b>+16.000 clientes registrados</b>. Hoy es la cuenta piloto donde corre Activa.</p>
+          </div>
         </div>
       </div>
     </div>
