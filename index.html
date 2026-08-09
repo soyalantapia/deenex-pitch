@@ -473,22 +473,6 @@ body{
 .press-name{ font-family:var(--font-d); font-weight:700; font-size:clamp(.7rem,1.1vw,1.05rem); color:var(--ind); white-space:nowrap; }
 .press-sep{ color:var(--hair); }
 
-/* ═══ ARCO TEMPORAL ═════════════════════════════════════════════ */
-.arc{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(.5rem,1.6vw,1.6rem); }
-/* El arco vive en una slide BLANCA (la de respaldo). Los colores
-   base son de tinta; la variante para violeta va abajo.          */
-.arc-step{ border-top:2px solid var(--hair); padding-top:clamp(.4rem,1.1vh,.8rem); }
-.arc-step.now{ border-top-color:var(--vio); }
-/* display:block — sin esto los tres spans corren en una sola
-   línea y el paso se lee como una frase suelta.                 */
-.arc-when{ display:block; font-weight:700; font-size:var(--t-micro); letter-spacing:.2em; text-transform:uppercase; color:var(--vio); }
-.arc-what{ display:block; font-family:var(--font-d); font-weight:700; font-size:clamp(.88rem,1.6vw,1.45rem); color:var(--ind); line-height:1.12; margin-top:.35em; }
-.arc-why{ display:block; font-size:var(--t-small); color:var(--gry); margin-top:.3em; }
-.slide.slate .arc-step{ border-top-color:rgba(255,255,255,.55); }
-.slide.slate .arc-step.now{ border-top-color:var(--wht); }
-.slide.slate .arc-when,.slide.slate .arc-why{ color:var(--tint2); }
-.slide.slate .arc-what{ color:var(--wht); }
-
 /* ═══ CONTACTO ══════════════════════════════════════════════════ */
 .contact{ display:flex; align-items:center; gap:clamp(.6rem,1.4vw,1.2rem); }
 .contact img{ width:clamp(52px,6.4vw,96px); height:auto; max-height:none; border-radius:var(--r); background:var(--wht); padding:5px; }
@@ -615,12 +599,6 @@ body{
 .lightbox.open{ display:flex }
 .lightbox video,.lightbox iframe{ max-width:min(92vw,480px); max-height:88vh; width:100%; aspect-ratio:9/16; border:0; border-radius:var(--r) }
 
-/* ═══ DESTINO DE FONDOS ═════════════════════════════════════════ */
-.alloc{ display:flex; gap:2px; height:clamp(30px,5vh,54px); }
-.alloc div{ display:flex; align-items:center; justify-content:center; font-family:var(--font-d); font-weight:700; font-size:clamp(.66rem,1vw,1rem); border-radius:3px }
-.alloc-lbl{ display:flex; gap:2px; margin-top:.45em }
-.alloc-lbl span{ font-size:var(--t-micro); color:var(--gry); text-align:center }
-
 /* ═══ PORTADA ═══════════════════════════════════════════════════ */
 /* La portada es la única sin banda de cierre, así que lleva padding
    en los cuatro lados. El resto abre abajo contra la banda.     */
@@ -731,14 +709,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
          --n-md:clamp(1.2rem,5.6vw,2.1rem); --n-sm:clamp(1rem,4.4vw,1.6rem); }
   /* Las filas de dos columnas escritas con style inline se apilan */
   .split{ flex-direction:column !important; }
-  /* El tramo del 6% mide 20 px de ancho en un teléfono: el rótulo
-     tiene que achicarse o se sale de su propio segmento.         */
-  .alloc div{ font-size:clamp(.5rem,1.7vw,.7rem); }
-  /* Y los rótulos dejan de seguir la proporción de los segmentos:
-     en 20 px no entra "Legal". Pasan a leyenda con su porcentaje. */
-  .alloc-lbl{ flex-wrap:wrap; gap:.25em .9em; }
-  .alloc-lbl span{ width:auto !important; text-align:left; }
-  .alloc-lbl span::after{ content:' ' attr(data-pct); color:var(--ind); font-weight:700; }
   .slide-content{ padding-left:var(--m); }
   .grid{ grid-template-columns:1fr; }
 
@@ -806,7 +776,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   .hito-que{ font-size:clamp(.9rem,4.4vw,1.3rem); }
   .hito-det{ margin-top:.2em; }
   .founders{ grid-template-columns:1fr !important; }
-  .arc{ grid-template-columns:1fr !important; }
 
   /* La portada deja de ser dos columnas */
   .cover .slide-content{ flex-direction:column; justify-content:center; }
@@ -1353,54 +1322,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 
 <!-- B5 · EQUIPO -->
 
-<!-- B6 · LA RONDA EN DETALLE
-     Vive acá y no en la slide 10 a propósito: poner el monto en
-     escena justo después de decir "no estamos levantando hoy" es
-     contradecirse en la misma respiración. Si preguntan, aparece. -->
-<section class="slide" data-track="backup" data-title="La ronda en detalle">
-  <span class="badge-backup">Respaldo</span>
-  <div class="slide-content">
-    <header class="s-head">
-      <p class="eyebrow reveal">La ronda</p>
-      <h2 class="s-title reveal">USD 250.000 <span class="vio">pre-seed, SAFE.</span></h2>
-      <div class="s-rule reveal"></div>
-    </header>
-    <div class="s-body" style="justify-content:center;">
-      <div class="reveal">
-        <p class="lbl" style="color:var(--vio);margin-bottom:calc(var(--gap) * .6);">Destino de los fondos</p>
-        <div class="alloc">
-          <div style="width:28%;background:var(--vio);color:#fff">28%</div>
-          <div style="width:28%;background:var(--lav);color:var(--ind)">28%</div>
-          <div style="width:18%;background:var(--pale);color:var(--ind)">18%</div>
-          <div style="width:6%;background:var(--tint2);color:var(--ind)">6%</div>
-          <div style="width:20%;background:var(--tint);color:var(--ind)">20%</div>
-        </div>
-        <div class="alloc-lbl">
-          <span style="width:28%" data-pct="28%">Producto &amp; AI</span><span style="width:28%" data-pct="28%">Comercial &amp; growth</span>
-          <span style="width:18%" data-pct="18%">Operaciones &amp; CS</span><span style="width:6%" data-pct="6%">Legal</span><span style="width:20%" data-pct="20%">Reserva</span>
-        </div>
-      </div>
-      <div class="stats reveal" style="grid-template-columns:repeat(4,1fr);margin-top:var(--gap);">
-        <div class="stat"><span class="n sm">+200</span><p class="lbl">Cuentas operativas</p></div>
-        <div class="stat"><span class="n sm wrap">Activa</span><p class="lbl">Con atribución real</p></div>
-        <div class="stat"><span class="n sm wrap">EBITDA+</span><p class="lbl">Sostenido</p></div>
-        <div class="stat"><span class="n sm wrap">Seed 2027</span><p class="lbl">Cap table limpio</p></div>
-      </div>
-      <!-- El arco vivía en la slide en vivo. Bajó acá cuando la de
-           Ronda se rehizo alrededor del pedido: la secuencia es
-           detalle de Q&A, no argumento de escenario.               -->
-      <div class="reveal" style="margin-top:var(--gap);">
-        <p class="lbl" style="color:var(--vio);margin-bottom:calc(var(--gap) * .6);">Cuándo se abre</p>
-        <div class="arc">
-          <div class="arc-step now"><span class="arc-when">Hoy</span><span class="arc-what">15 marcas contratadas · US$&nbsp;15K de CMRR</span><span class="arc-why">Default-alive: crecemos sin capital externo.</span></div>
-          <div class="arc-step"><span class="arc-when">Q4 2026</span><span class="arc-what">Activa medida con atribución real</span><span class="arc-why">La hipótesis más cara del plan, resuelta.</span></div>
-          <div class="arc-step"><span class="arc-when">Entonces</span><span class="arc-what">Abrimos la ronda</span><span class="arc-why">Desde la fuerza, no desde la necesidad.</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <footer class="closer reveal">El downside ya está cubierto por diseño: el gasto está gateado por tracción y el piso es default-alive. <b>El capital acelera el camino, no lo sostiene.</b></footer>
-</section>
 
 <!-- B7 · PANORAMA COMPETITIVO
      La slide que faltaba. "¿Por qué no lo hace Fudo o Rappi?" es
@@ -1512,12 +1433,15 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">La ronda</p>
-      <h2 class="s-title wipe">No estamos <span class="vio">levantando hoy.</span></h2>
+      <h2 class="s-title wipe">No estamos <span class="vio">levantando ronda hoy.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
     <div class="s-body">
       <div class="ronda-grid reveal">
-        <p class="ronda-lead">En Q4 medimos la atribución real de Activa —la hipótesis más grande del plan— y ahí abrimos la ronda.</p>
+        <!-- El disparador de la ronda pasa a ser la expansión a otros
+             países, no la atribución de Activa en Q4. Queda alineado
+             con El camino, que ya marca la seed en la expansión.    -->
+        <p class="ronda-lead">Hoy el foco está en el <span class="vio">bootstrapping</span>: entender dónde está el negocio y qué falta para llegar a nuestros objetivos. La ronda llega cuando salgamos a otros países.</p>
 
         <!-- EL PEDIDO. La slide anterior no le pedía NADA al inversor:
              declaraba una posición y daba un mail. Alguien que te quiere
@@ -1525,8 +1449,8 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
              que ser compatible con "no estamos levantando": no se pide
              plata, se pide la conversación.                            -->
         <div class="ask">
-          <p class="ask-lbl">Lo que sí queremos ahora</p>
-          <p class="ask-txt">Tres o cuatro conversaciones abiertas, para que cuando salga ese número <b>no estemos empezando de cero.</b></p>
+          <p class="ask-lbl">Para qué estamos acá</p>
+          <p class="ask-txt">Para construir la relación desde hoy. Que cuando abramos la ronda, <b>esta no sea la primera conversación.</b></p>
         </div>
       </div>
 
