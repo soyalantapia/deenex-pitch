@@ -158,10 +158,7 @@ body{
    Solo aparece cuando hay una conclusión con información real.  */
 .closer{
   flex:none; background:var(--tint2); color:var(--ind);
-  /* El padding derecho reserva la huella del botón de respaldo, que
-     es fijo y vive justo encima de esta banda. Sin la reserva, un
-     cierre largo se le mete debajo.                               */
-  padding:clamp(.6rem,1.6vh,1.15rem) clamp(120px,12vw,200px) clamp(.6rem,1.6vh,1.15rem) var(--m);
+  padding:clamp(.6rem,1.6vh,1.15rem) var(--m);
   font-size:var(--t-body); line-height:1.4;
 }
 .closer b{ font-weight:700; }
@@ -339,6 +336,19 @@ body{
 .f-txt{ position:absolute; top:50%; transform:translateY(-50%); white-space:nowrap; font-size:var(--t-small); color:var(--blk); }
 .f-txt b{ color:var(--ind); font-weight:700; }
 
+/* ═══ ZONA "POR QUÉ AHORA" ══════════════════════════════════════
+   Se va al pie de la slide y arranca con su propia regla violeta.
+   Antes venía pegado al dato del mercado y las dos cosas se leían
+   como un mismo bloque; son argumentos distintos: uno dimensiona
+   la oportunidad y el otro explica el timing.
+   ═══════════════════════════════════════════════════════════════ */
+.porque{ margin-top:auto; border-top:2px solid var(--vio); padding-top:clamp(.6rem,1.7vh,1.2rem); }
+.porque-lbl{
+  font-weight:700; font-size:var(--t-small); letter-spacing:.2em;
+  text-transform:uppercase; color:var(--vio);
+  margin-bottom:clamp(.5rem,1.4vh,1rem);
+}
+
 /* ═══ ESCALERA DE ARPA · proporciones reales (56/132/221) ═══════ */
 .stairs{ display:flex; align-items:stretch; gap:clamp(.4rem,1.2vw,1.1rem); height:clamp(120px,30vh,300px); }
 .stair-col{ flex:1; display:flex; flex-direction:column; gap:clamp(.25rem,.7vh,.5rem); }
@@ -348,17 +358,6 @@ body{
 .stair-col .lbl{ text-align:center; }
 /* 56/221 = 25,3% · 132/221 = 59,7% · 221/221 = 100% */
 .st-1{ height:25.3% } .st-2{ height:59.7% } .st-3{ height:100% }
-
-/* ═══ BARRAS DE REVENUE · proporciones reales ═══════════════════
-   213K/7,52M = 2,8%. Se ve minúscula, y esa ES la historia.     */
-.bars{ display:flex; align-items:stretch; gap:clamp(.7rem,2.2vw,2.4rem); height:clamp(96px,21vh,215px); }
-.bar-col{ flex:1; display:flex; flex-direction:column; gap:clamp(.25rem,.7vh,.5rem); }
-.bar-track{ flex:1; display:flex; align-items:flex-end; min-height:0; }
-.bar{ width:100%; background:var(--vio); border-radius:var(--r) var(--r) 0 0; transform-origin:bottom; min-height:3px; }
-.bar-v{ font-family:var(--font-d); font-weight:700; font-size:clamp(.85rem,1.7vw,1.75rem); color:var(--ind); letter-spacing:-.02em; }
-.bar-col .lbl{ color:var(--gry); }
-/* 213K/7,52M = 2,8% · 2,17M/7,52M = 28,9% · 100% */
-.br-1{ height:2.8% } .br-2{ height:28.9% } .br-3{ height:100% }
 
 /* ═══ EL LOOP · la firma visual del deck ════════════════════════
    Venta → Dato → Activación → Recompra. Es la tesis del producto
@@ -507,7 +506,10 @@ body{
 /* ═══ EQUIPO ════════════════════════════════════════════════════ */
 .team{ display:grid; grid-template-columns:repeat(5,1fr); gap:clamp(.5rem,1.4vw,1.3rem); }
 .member{ display:flex; flex-direction:column; gap:.3em; }
-.member img{ width:clamp(42px,6vw,88px); height:clamp(42px,6vw,88px); max-height:none; border-radius:50%; object-fit:cover; margin-bottom:.25em; }
+/* Las fotos ocupan el alto que antes quedaba en blanco al pie. Es
+   mejor llenarlo con las caras que con aire: en pre-seed la gente
+   mira al equipo, y a 77 px las caras no se distinguían.          */
+.member img{ width:clamp(52px,8.4vw,124px); height:clamp(52px,8.4vw,124px); max-height:none; border-radius:50%; object-fit:cover; margin-bottom:.35em; }
 .mn{ font-family:var(--font-d); font-weight:700; font-size:clamp(.66rem,.95vw,.92rem); color:var(--ind); line-height:1.15; }
 .mr{ font-weight:700; font-size:var(--t-micro); letter-spacing:.1em; text-transform:uppercase; color:var(--vio); }
 /* Se llamaba .md y chocaba con el modificador de tamaño .n.md de los
@@ -516,7 +518,7 @@ body{
 .bio{ font-size:var(--t-micro); color:var(--gry); line-height:1.35; }
 .founders{ display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(.6rem,1.8vw,1.8rem); }
 .founder{ display:flex; align-items:flex-start; gap:clamp(.5rem,1.3vw,1.1rem); border-top:2px solid var(--vio); padding-top:clamp(.4rem,1.1vh,.8rem); }
-.founder img{ width:clamp(44px,5.4vw,76px); height:clamp(44px,5.4vw,76px); max-height:none; border-radius:50%; object-fit:cover; flex:none; }
+.founder img{ width:clamp(50px,6.6vw,98px); height:clamp(50px,6.6vw,98px); max-height:none; border-radius:50%; object-fit:cover; flex:none; }
 
 /* CHAPA — la credencial. Es lo que convierte la slide de equipo de
    relleno en argumento: un rol dice qué hace la persona, una chapa
@@ -655,22 +657,6 @@ body.show-backup .slide[data-track="backup"]{ display:flex }
 .keyboard-hint{ position:fixed; left:50%; bottom:clamp(7px,1.3vw,16px); transform:translateX(-50%); z-index:9000; font-size:var(--t-micro); letter-spacing:.14em; text-transform:uppercase; color:var(--hair); pointer-events:none; transition:opacity .5s var(--ease) }
 .keyboard-hint.hide{ opacity:0 }
 
-/* ═══ CONTROL DE RESPALDO ═══════════════════════════════════════
-   Las 7 de respaldo estaban ocultas y la única pista era el cartel
-   de teclas, que se desvanece a los 6 segundos. Quien abre el link
-   nunca sabía que existían. Este control queda siempre a la vista.
-   ═══════════════════════════════════════════════════════════════ */
-.backup-toggle{
-  position:fixed; right:clamp(7px,1.1vw,18px); bottom:clamp(7px,1.1vw,18px);
-  z-index:9500; cursor:pointer; font-family:var(--font-b);
-  background:var(--wht); color:var(--ind);
-  border:1px solid var(--hair); border-radius:999px;
-  padding:.5em 1em; font-size:var(--t-micro); font-weight:700;
-  letter-spacing:.14em; text-transform:uppercase;
-  transition:border-color .25s var(--ease), color .25s var(--ease);
-}
-.backup-toggle:hover{ border-color:var(--vio); color:var(--vio); }
-.backup-toggle.on{ background:var(--vio); border-color:var(--vio); color:var(--wht); }
 
 /* ═══ EDICIÓN EN LÍNEA ══════════════════════════════════════════ */
 .edit-hotzone{ position:fixed; top:0; left:0; width:80px; height:80px; z-index:10000; cursor:pointer }
@@ -807,8 +793,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 <div class="progress-bar" id="progressBar"></div>
 <nav class="nav-dots" id="navDots" aria-label="Navegación de slides"></nav>
 <div class="timer" id="timer">0:00</div>
-<p class="keyboard-hint" id="hint">← → navegar · M índice · T cronómetro</p>
-<button class="backup-toggle" id="backupToggle" aria-pressed="false">+7 de respaldo</button>
+<p class="keyboard-hint" id="hint">← → navegar · M índice · B respaldo · T cronómetro</p>
 
 <div class="edit-hotzone" aria-hidden="true"></div>
 <button class="edit-toggle" id="editToggle" title="Modo edición (E)" aria-label="Modo edición">✏️</button>
@@ -1221,7 +1206,11 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <h2 class="s-title reveal">2,6 millones de puntos de venta <span class="vio">en LATAM.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
-    <div class="s-body" style="justify-content:center;">
+    <!-- Sin justify-content:center: centrar dejaba ~140 px muertos
+         entre la regla del título y la primera barra. Ahora el gráfico
+         arranca pegado al título y el "por qué ahora" se va al pie con
+         margin-top:auto, que además lo separa como zona propia.     -->
+    <div class="s-body">
       <div class="funnel reveal">
         <!-- Las barras se achicaron de 70% a 50% para dejarle lugar al
              rótulo con la tipografía nueva. La proporción entre ambas
@@ -1232,8 +1221,9 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
           <div class="f-lane"><div class="f-bar" style="width:6.34%"></div><span class="f-txt" style="left:calc(6.34% + 14px)">cuentas · sin canal propio efectivo: <b>el foco de 3 años</b></span></div></div>
       </div>
       <p class="k reveal" style="color:var(--vio);font-weight:700;">2.000 cuentas al año 3 = 0,5% del mercado servible.</p>
-      <div class="reveal">
-        <p class="lbl" style="color:var(--vio);margin-bottom:calc(var(--gap) * .6);">Por qué ahora</p>
+
+      <div class="reveal porque">
+        <p class="porque-lbl">Por qué ahora</p>
         <div class="stats" style="grid-template-columns:repeat(3,1fr);">
           <div class="stat hair"><p class="k"><b>Fatiga de comisiones</b><br>15–35% por pedido erosiona el margen.</p></div>
           <div class="stat hair"><p class="k"><b>Giro al canal propio</b><br>el dato propio pasa a ser activo estratégico.</p></div>
@@ -1245,31 +1235,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   <footer class="closer reveal">Un POS registra la venta y un ecommerce la procesa. <b>Nadie convierte el dato en la próxima venta.</b></footer>
 </section>
 
-<!-- B3 · PROYECCIÓN FINANCIERA -->
-<section class="slide" data-track="backup" data-title="Proyección financiera">
-  <span class="badge-backup">Respaldo</span>
-  <div class="slide-content">
-    <header class="s-head">
-      <p class="eyebrow reveal">Financiero</p>
-      <h2 class="s-title reveal">US$ 7,5M de revenue <span class="vio">al año 3.</span></h2>
-      <div class="s-rule reveal"></div>
-    </header>
-    <div class="s-body" style="flex-direction:row;align-items:center;gap:clamp(.9rem,2.6vw,2.4rem);">
-      <div class="bars reveal" style="flex:1 1 55%;min-width:0;">
-        <div class="bar-col"><div class="bar-track"><div class="bar br-1"></div></div><span class="bar-v">$213K</span><span class="lbl">Año 1</span></div>
-        <div class="bar-col"><div class="bar-track"><div class="bar br-2"></div></div><span class="bar-v">$2,17M</span><span class="lbl">Año 2</span></div>
-        <div class="bar-col"><div class="bar-track"><div class="bar br-3"></div></div><span class="bar-v">$7,52M</span><span class="lbl">Año 3</span></div>
-      </div>
-      <div class="stats reveal" style="flex:1 1 45%;min-width:0;grid-template-columns:1fr;gap:clamp(.45rem,1.4vh,1rem);">
-        <div class="stat hair"><p class="k"><b>EBITDA positivo</b> desde el mes 12</p></div>
-        <div class="stat hair"><p class="k"><b>22% de margen</b> al año 3</p></div>
-        <div class="stat hair"><p class="k"><b>Gap máximo US$ 73K</b> · el plan es default-alive</p></div>
-      </div>
-    </div>
-    <p class="note reveal" style="flex:none;">Las barras están a escala: el año 1 es el 2,8% del año 3.</p>
-  </div>
-  <footer class="closer reveal">Activa sostiene el <b>55% del revenue del año 3</b>. Es nuestra hipótesis más grande y la validamos con atribución real este trimestre.</footer>
-</section>
 
 <!-- B4 · ADQUISICIÓN -->
 <section class="slide" data-track="backup" data-title="Adquisición">
@@ -1422,10 +1387,12 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <h2 class="s-title reveal">Siete personas, <span class="vio">cero pasajeros.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
-    <!-- El cuerpo arranca pegado al título en vez de centrarse: con
-         siete tarjetas cortas, centrar dejaba un hueco arriba y otro
-         abajo, y ninguno de los dos hacía nada.                     -->
-    <div class="s-body">
+    <!-- space-between en vez de center: centrar dejaba un hueco arriba
+         y otro abajo, y ninguno hacía nada. Así los founders quedan
+         pegados al título, el equipo apoya sobre la banda de cierre y
+         el aire que sobra cae entre los dos grupos, donde además
+         separa una jerarquía real.                                  -->
+    <div class="s-body" style="justify-content:space-between;">
       <!-- Cada chapa arranca por el dato duro y verificable: un nombre
            propio que el inversor reconoce, un número, una institución.
            "Lideró equipos" no dice nada; "construyó el sitio de River"
@@ -1521,10 +1488,6 @@ class SlidePresentation{
     this.current  = 0;
     this.observe(); this.buildDots(); this.keyboard(); this.touch();
     this.scrollTracking(); this.buildIndex(); this.videos(); this.timer(); this.fadeHint();
-    // El botón lleva la cuenta real de slides de respaldo, no un número fijo
-    const bt = document.getElementById('backupToggle');
-    bt.textContent = '+' + this.all.filter(s => s.dataset.track === 'backup').length + ' de respaldo';
-    bt.addEventListener('click', () => this.toggleBackup());
   }
 
   /* Slides que hoy están en el flujo (las de respaldo salen si se ocultan) */
@@ -1643,11 +1606,7 @@ class SlidePresentation{
   }
 
   toggleBackup(){
-    const on = document.body.classList.toggle('show-backup');
-    const b = document.getElementById('backupToggle');
-    b.classList.toggle('on', on);
-    b.setAttribute('aria-pressed', String(on));
-    b.textContent = on ? 'Ocultar respaldo' : ('+' + this.all.filter(s => s.dataset.track === 'backup').length + ' de respaldo');
+    document.body.classList.toggle('show-backup');
     this.buildDots();
     this.syncProgress();
   }
