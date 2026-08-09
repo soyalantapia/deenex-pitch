@@ -528,12 +528,12 @@ body{
 /* Las fotos ocupan el alto que antes quedaba en blanco al pie. Es
    mejor llenarlo con las caras que con aire: en pre-seed la gente
    mira al equipo, y a 77 px las caras no se distinguían.          */
-.member img{ width:clamp(52px,8.4vw,124px); height:clamp(52px,8.4vw,124px); max-height:none; border-radius:50%; object-fit:cover; margin-bottom:.35em; }
+.member img{ width:clamp(60px,11.4vw,208px); height:clamp(60px,11.4vw,208px); max-height:none; border-radius:50%; object-fit:cover; margin-bottom:.35em; }
 .mn{ font-family:var(--font-d); font-weight:700; font-size:clamp(.66rem,.95vw,.92rem); color:var(--ind); line-height:1.15; }
 .mr{ font-weight:700; font-size:var(--t-micro); letter-spacing:.1em; text-transform:uppercase; color:var(--vio); }
 .founders{ display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(.6rem,1.8vw,1.8rem); }
 .founder{ display:flex; align-items:flex-start; gap:clamp(.5rem,1.3vw,1.1rem); border-top:2px solid var(--vio); padding-top:clamp(.4rem,1.1vh,.8rem); }
-.founder img{ width:clamp(50px,6.6vw,98px); height:clamp(50px,6.6vw,98px); max-height:none; border-radius:50%; object-fit:cover; flex:none; }
+.founder img{ width:clamp(58px,8.8vw,158px); height:clamp(58px,8.8vw,158px); max-height:none; border-radius:50%; object-fit:cover; flex:none; }
 
 /* CHAPA — la credencial. Es lo que convierte la slide de equipo de
    relleno en argumento: un rol dice qué hace la persona, una chapa
@@ -1375,8 +1375,9 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
          un hueco arriba y otro abajo, y ninguno hacía nada. El aire
          que sobra se reparte entre founders y equipo, donde además
          separa una jerarquía real, sin que el equipo llegue a tocar
-         la banda de cierre.                                        -->
-    <div class="s-body">
+         la banda de cierre. El sobrante se reparte con space-evenly
+         para que no quede un bloque muerto al pie.                 -->
+    <div class="s-body" style="justify-content:space-evenly;">
       <!-- Cada chapa arranca por el dato duro y verificable: un nombre
            propio que el inversor reconoce, un número, una institución.
            "Lideró equipos" no dice nada; "construyó el sitio de River"
@@ -1400,7 +1401,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
         </div>
       </div>
 
-      <div class="team reveal" style="margin-top:clamp(1rem,10vh,5rem);">
+      <div class="team reveal">
         <div class="member"><img src="assets/equipo/iara.png" alt="Iara Gallardo"><span class="mn">Iara Gallardo</span><span class="mr">Head of Marketing</span><span class="chapa">MBA. Growth en startups de tecnología.</span></div>
         <div class="member"><img src="assets/equipo/thaina.png" alt="Thainá Messina"><span class="mn">Thainá Messina</span><span class="mr">Head Commercial Ops</span><span class="chapa">Economía con promedio 9,5. La eligieron para estudiar en Italia y se quedó por Deenex.</span></div>
         <div class="member"><img src="assets/equipo/leandro.png" alt="Leandro Rebequi"><span class="mn">Leandro Rebequi</span><span class="mr">CTO</span><span class="chapa">Construyó los sitios de River y de Bizarrap. Lideró equipos y proyectos grandes.</span></div>
