@@ -406,6 +406,13 @@ body{
 }
 .wall img{ height:clamp(1.1rem,2.4vw,2.2rem); width:auto; max-height:none; object-fit:contain; }
 
+/* Variante protagonista: en Tracción el muro dejó de ser una banda
+   entre otros bloques y pasó a ser el argumento de la slide. Si el
+   título dice "lo pagan los clientes", lo que sigue tienen que ser
+   los clientes, en grande.                                        */
+.wall-hero{ max-height:calc(3 * clamp(2rem,4.6vw,4rem) + 2 * clamp(.4rem,1.1vw,1rem)); }
+.wall-hero .wall-item{ font-size:clamp(1.25rem,2.85vw,2.7rem); line-height:clamp(2rem,4.6vw,4rem); }
+
 /* ═══ CHIPS DE CLIENTES ═════════════════════════════════════════ */
 .chips{ display:flex; flex-wrap:wrap; gap:var(--gap-s); }
 .chip{
@@ -962,25 +969,23 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <h2 class="s-title reveal">Ya está funcionando <span class="vio">y lo pagan los clientes.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
-    <!-- space-evenly: son tres bloques de alturas muy distintas
-         (stats, chips, prensa) y centrarlos los amontona.        -->
-    <div class="s-body" style="justify-content:space-evenly;">
-      <!-- Contratado y operando conviven en la misma fila, con el
-           "8 operando" como ancla de honestidad. Sin ese cuarto dato,
-           los otros tres se leen como si las 15 ya facturaran.      -->
-      <div class="stats reveal" style="grid-template-columns:repeat(4,1fr);">
-        <div class="stat"><span class="n md" data-count="15" data-prefix="US$&nbsp;" data-suffix="K">US$&nbsp;15K</span><p class="lbl">De CMRR contratado</p></div>
-        <div class="stat"><span class="n md" data-count="15">15</span><p class="lbl">Marcas mid-market</p></div>
-        <div class="stat"><span class="n md" data-count="250" data-prefix="+">+250</span><p class="lbl">Locales</p></div>
-        <div class="stat"><span class="n md" data-count="8">8</span><p class="lbl">Operando hoy</p></div>
+    <!-- La slide se descargó cuando "El camino" pasó a dibujar la
+         trayectoria: los +250 locales, el MRR y el "de cero a X en 8
+         meses" viven allá. Acá queda lo único que solo esta slide
+         hace — quiénes pagan y que no se fue ninguno — y el muro de
+         marcas pasa de banda lateral a protagonista.               -->
+    <div class="s-body">
+      <div class="stats reveal" style="grid-template-columns:repeat(3,1fr);">
+        <div class="stat"><span class="n md" data-count="15">15</span><p class="lbl">Marcas contratadas</p></div>
+        <div class="stat"><span class="n md" data-count="15" data-prefix="US$&nbsp;" data-suffix="K">US$&nbsp;15K</span><p class="lbl">De CMRR</p></div>
+        <div class="stat"><span class="n md wrap">Cero</span><p class="lbl">Bajas desde que arrancamos</p></div>
       </div>
       <!-- Sin punto verde: la lista mezcla marcas operando con marcas
            contratadas que todavía no lanzaron, y el punto significaba
            "en operación". Marcarlas todas en verde sería decir que las
-           15 ya facturan, que es justo lo que evitamos arriba.       -->
-      <div class="reveal">
-        <p class="lbl" style="margin-bottom:.55em;">Las marcas que ya eligieron Deenex</p>
-        <div class="wall">
+           15 ya facturan, que es justo lo que evita el cierre.       -->
+      <div class="reveal" style="margin-top:auto;margin-bottom:auto;">
+        <div class="wall wall-hero">
           <span class="wall-item">QUEM</span>
           <span class="wall-item">QUEM Central</span>
           <span class="wall-item">Palta</span>
@@ -993,21 +998,18 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
           <span class="wall-item">Emplatame</span>
         </div>
       </div>
-      <div class="reveal">
-        <div class="press">
-          <span class="press-name">iProUP</span><span class="press-sep">·</span>
-          <span class="press-name">Forbes</span><span class="press-sep">·</span>
-          <span class="press-name">El Cronista</span>
-        </div>
-        <p class="k" style="color:var(--gry);margin-top:.4em;">Una sola nota, sin inversión, generó <b>+40 leads y 20 cuentas en pipeline.</b></p>
+      <div class="press reveal">
+        <span class="press-name">iProUP</span><span class="press-sep">·</span>
+        <span class="press-name">Forbes</span><span class="press-sep">·</span>
+        <span class="press-name">El Cronista</span>
+        <span class="k" style="color:var(--gry);">Una sola nota, sin inversión, generó <b>+40 leads y 20 cuentas en pipeline.</b></span>
       </div>
     </div>
   </div>
-  <!-- El plazo es la única dimensión que faltaba: el deck tenía
-       niveles y ninguna derivada. Primer MRR recurrente en Q1 2026;
-       "menos de 8 meses" es cierto tanto si fue enero como marzo.
-       Con el mes exacto se puede afilar a "en 6 meses".          -->
-  <footer class="closer reveal">De cero a <b>US$ 15K de CMRR en menos de 8 meses</b>, sin un peso de capital externo. Ocho marcas operando, siete lanzando este trimestre, <b>cero bajas desde que arrancamos.</b></footer>
+  <!-- El "8 operando" baja al cierre. Como dato grande competía con
+       las marcas; acá sigue haciendo su trabajo, que es impedir que
+       los 15 contratados se lean como 15 facturando.               -->
+  <footer class="closer reveal">Ocho operando hoy, siete lanzando este trimestre. <b>Todo sin un peso de capital externo.</b></footer>
 </section>
 
 <!-- ══ 08 · EL CAMINO ════════════════════════════════════════════
@@ -1504,6 +1506,7 @@ class SlidePresentation{
     this.current = Math.max(0, Math.min(i, list.length-1));
     list[this.current].scrollIntoView({behavior:'smooth'});
     this.syncDots();
+    this.syncProgress();
   }
   next(){ this.goTo(this.current+1) } prev(){ this.goTo(this.current-1) }
 
@@ -1535,18 +1538,36 @@ class SlidePresentation{
     }, {passive:true});
   }
 
+  /* La posición actual la marca un IntersectionObserver, no la
+     aritmética de window.scrollY.
+
+     Por qué: `html, body { height:100%; overflow-x:hidden }` deja a
+     los dos con overflow-y:auto. html mide 100% y su contenido —body—
+     también, así que html no scrollea; el que scrollea es BODY. Con
+     eso window.scrollY se queda en 0 para siempre y la barra de
+     progreso y los dots nunca se movían al scrollear con el trackpad.
+     Con las flechas sí, porque goTo() sincroniza a mano.
+
+     El observer no depende de qué elemento scrollea, así que el bug
+     no puede volver por esa puerta.                                */
   scrollTracking(){
-    let raf = null;
-    window.addEventListener('scroll', () => {
-      if(raf) return;
-      raf = requestAnimationFrame(() => {
-        const list = this.live;
-        this.current = Math.max(0, Math.min(Math.round(window.scrollY/window.innerHeight), list.length-1));
-        this.progress.style.width = (list.length > 1 ? (this.current/(list.length-1))*100 : 100) + '%';
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.intersectionRatio < .55) return;
+        const i = this.live.indexOf(e.target);
+        if(i < 0 || i === this.current) return;
+        this.current = i;
         this.syncDots();
-        raf = null;
+        this.syncProgress();
       });
-    }, {passive:true});
+    }, {threshold:[.55]});
+    this.all.forEach(s => io.observe(s));
+    this.syncProgress();
+  }
+
+  syncProgress(){
+    const n = this.live.length;
+    this.progress.style.width = (n > 1 ? (this.current/(n-1))*100 : 100) + '%';
   }
 
   toggleBackup(){
@@ -1556,6 +1577,7 @@ class SlidePresentation{
     b.setAttribute('aria-pressed', String(on));
     b.textContent = on ? 'Ocultar respaldo' : ('+' + this.all.filter(s => s.dataset.track === 'backup').length + ' de respaldo');
     this.buildDots();
+    this.syncProgress();
   }
 
   /* La numeración cuenta por track, no por posición en el DOM: La
