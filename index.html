@@ -607,15 +607,98 @@ body{
 
 
 /* ═══ TABLA COMPETITIVA ═════════════════════════════════════════ */
-.ctable{ display:flex; flex-direction:column; }
-.crow{ display:grid; grid-template-columns:1.05fr 1fr 1.1fr 1.2fr; gap:clamp(.4rem,1.1vw,1.1rem); align-items:center; padding:clamp(.34rem,.95vh,.7rem) 0; border-bottom:1px solid var(--hair); }
-.crow.head{ padding-top:0; border-bottom:1px solid var(--ind); }
-.crow.head span{ font-weight:700; font-size:var(--t-micro); letter-spacing:.18em; text-transform:uppercase; color:var(--vio); }
-.crow.us{ background:var(--tint); border-bottom:0; padding-left:clamp(.4rem,.9vw,.8rem); padding-right:clamp(.4rem,.9vw,.8rem); margin-top:clamp(.2rem,.6vh,.45rem); border-radius:var(--r); }
-.cname{ font-family:var(--font-d); font-weight:700; font-size:clamp(.68rem,1vw,.95rem); color:var(--ind); line-height:1.15; }
-.cex{ display:block; font-family:var(--font-b); font-weight:400; font-size:var(--t-micro); color:var(--gry); margin-top:.15em; }
-.ccell{ font-size:var(--t-micro); color:var(--blk); line-height:1.35; }
-.ccell.win{ color:var(--ind); font-weight:700; }
+/* ═══ COMPETENCIA ═══════════════════════════════════════════════
+   La versión anterior era una matriz de 4×5 con TODO el texto en
+   --t-micro: 163 palabras (la slide más cargada del deck) metidas
+   en el 38% del alto, a 11px. Nada tenía jerarquía y la columna
+   que cargaba el argumento pesaba lo mismo que el resto.
+
+   Tres cosas cambian. Una: de cuatro columnas a tres, porque
+   "qué resuelven" y "qué no resuelven" entran en una sola frase
+   con el color como bisagra —gris lo que sí, índigo lo que no—.
+   Dos: la fracción. El título promete un loop y la slide no
+   mostraba ninguno; ahora cada categoría dice qué parte del loop
+   cubre y el ojo baja leyendo 1/4 · 2/4 · 2/4 · 1/4 … 4/4 sin
+   leer una palabra. Tres: el sobrante se reparte DENTRO de las
+   filas, no entre bloques, así que los 199px muertos de arriba y
+   de abajo se convierten en aire de lectura.                    */
+
+.ctable{ flex:1; min-height:0; display:flex; flex-direction:column; }
+
+/* flex:1 1 auto con basis AUTO, no 0: con basis 0 las filas se
+   encogen por debajo de su propio texto y —como la slide tiene
+   overflow:hidden— el recorte no lo ve nadie. Con auto reparten
+   el sobrante pero nunca bajan de lo que miden.                 */
+.crow{
+  flex:1 1 auto;
+  display:grid;
+  /* La columna del medio va a ancho FIJO y no auto: cada .crow es su
+     propia grilla, así que con auto el ancho lo decide el glifo de cada
+     fracción y las cinco quedaban corridas hasta 8px entre sí. Esa
+     columna alineada es el argumento de la slide; desalineada no es
+     nada. La fracción además se alinea a la derecha, que es lo que
+     corresponde a una columna numérica.                              */
+  grid-template-columns:minmax(0,1.12fr) clamp(146px,12.6vw,265px) minmax(0,1.28fr);
+  gap:clamp(.7rem,1.8vw,2.2rem);
+  align-items:center;
+  padding:clamp(.4rem,1.1vh,.95rem) clamp(.5rem,1vw,1.05rem);
+  border-bottom:1px solid var(--hair);
+}
+/* Todas las filas comparten el mismo padding lateral, incluida la
+   de Deenex. Es lo que mantiene las cinco fracciones en el mismo
+   eje vertical: esa columna alineada ES el argumento.           */
+
+.crow.head{ flex:none; padding-top:0; padding-bottom:clamp(.3rem,.7vh,.55rem); border-bottom:1px solid var(--ind); }
+.crow.head span{ font-weight:700; font-size:var(--t-micro); letter-spacing:.16em; text-transform:uppercase; color:var(--vio); line-height:1.2; }
+
+/* El nombre propio va primero y en display: "Rappi" y "Fudo" se
+   reconocen sin leer y son el activo de credibilidad de la slide.
+   La categoría baja a rótulo.                                   */
+.cname{
+  font-family:var(--font-d); font-weight:700;
+  font-size:clamp(.88rem,1.38vw,2.05rem);
+  line-height:1.15; letter-spacing:-.015em; color:var(--ind);
+}
+.cex{
+  display:block; font-family:var(--font-b); font-weight:700;
+  font-size:var(--t-micro); letter-spacing:.16em; text-transform:uppercase;
+  color:var(--vio); margin-bottom:.42em;
+}
+/* Los nombres son flex y el separador cuelga del span anterior:
+   un "·" suelto en el HTML termina huérfano al principio de la
+   línea cuando la lista envuelve.                               */
+.cnom{ display:flex; flex-wrap:wrap; column-gap:.42em; }
+.cnom span:not(:first-child)::before{ content:'·'; margin-right:.42em; color:var(--gry); }
+
+/* La oposición entera en un renglón. Nada de font-weight:600: la
+   hoja carga Bespoke Sans en 300/400/500/700 y el 600 resolvería
+   a 700, borrando el contraste de peso justo donde importa.     */
+.ccell{ font-size:clamp(.82rem,1.24vw,1.85rem); line-height:1.32; color:var(--gry); }
+.ccell b{ color:var(--ind); font-weight:700; }
+
+/* La fracción y los tramos. El hueco se marca con borde --vio y
+   no con --hair: --hair da 1,31:1 contra blanco y en un proyector
+   con luz ambiente directamente no existe.                      */
+.cloop{ display:flex; align-items:center; justify-content:space-between; gap:clamp(.4rem,.85vw,.85rem); }
+.ctrack{ display:flex; gap:clamp(3px,.34vw,6px); }
+.seg{ display:block; width:clamp(12px,1.28vw,25px); height:clamp(5px,.54vw,10px); border-radius:99px; border:1.5px solid var(--vio); }
+.seg.on{ background:var(--vio); }
+.cfrac{ font-family:var(--font-d); font-weight:700; text-align:right; font-size:clamp(.95rem,1.6vw,2.35rem); line-height:1; letter-spacing:-.02em; color:var(--vio); }
+
+/* Deenex gana por tinta llena y por tamaño, no por sutileza. En
+   las tres propuestas que revisamos, la fila propia terminaba
+   siendo el elemento más chico y de menor contraste de su propia
+   slide. Acá es --vio pleno con texto blanco (4,93:1) y la
+   tipografía más grande de la tabla. Va en --vio y no en --tint2
+   porque la banda de cierre de abajo YA es --tint2 y las dos
+   superficies pegadas se leerían como una sola.                 */
+.crow.us{ flex:none; background:var(--vio); border-bottom:0; border-radius:var(--r); margin-top:clamp(.35rem,.9vh,.75rem); padding-top:clamp(.6rem,1.5vh,1.15rem); padding-bottom:clamp(.6rem,1.5vh,1.15rem); }
+.crow.us .cname{ color:var(--wht); font-size:clamp(.98rem,1.62vw,2.4rem); }
+.crow.us .cex{ color:var(--tint2); }
+.crow.us .ccell{ color:var(--tint2); font-size:clamp(.88rem,1.34vw,2rem); text-wrap:balance; }
+.crow.us .ccell b{ color:var(--wht); }
+.crow.us .seg{ border-color:var(--wht); background:var(--wht); }
+.crow.us .cfrac{ color:var(--wht); font-size:clamp(1.05rem,1.82vw,2.7rem); }
 
 /* ═══ VIDEOS ════════════════════════════════════════════════════
    Sin URL en data-video no hacen nada: mejor eso que un ▶ que
@@ -842,10 +925,13 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   .s-body[style*="row"]{ flex-direction:column !important; }
   .loop{ height:min(34vh,260px); }
 
-  /* La tabla competitiva se apila: en 375 px cuatro columnas son ilegibles */
-  .crow{ grid-template-columns:1fr !important; gap:.25rem !important; }
+  /* La tabla competitiva se apila: en 375 px tres columnas son ilegibles.
+     La fracción sube al tope de cada bloque —es lo que hace escaneable
+     la columna en escritorio y en móvil sigue siendo el dato de entrada. */
+  .crow{ grid-template-columns:1fr !important; gap:.3rem !important; }
   .crow.head{ display:none; }
-  .crow.us .ccell{ grid-column:auto !important; }
+  .cloop{ order:-1; }
+  .crow.us{ padding:.7rem .8rem !important; }
 
   .vids{ grid-template-columns:repeat(2,1fr); }
   .press{ gap:.5rem; }
@@ -1495,36 +1581,33 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <h2 class="s-title reveal">Nadie cierra <span class="vio">el loop completo.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
-    <div class="s-body" style="justify-content:center;">
-      <div class="ctable reveal">
-        <div class="crow head"><span>Categoría</span><span>Qué resuelven</span><span>Qué no resuelven</span><span>Deenex</span></div>
-        <div class="crow">
-          <span class="cname">Marketplaces<span class="cex">Rappi, PedidosYa, Uber Eats</span></span>
-          <span class="ccell">Generan demanda, hábito y logística</span>
-          <span class="ccell">El restaurante no es dueño ni del cliente ni del dato</span>
-          <span class="ccell win">Le devuelve el canal propio y la relación</span>
+    <div class="s-body">
+      <div class="ctable">
+        <div class="crow head reveal"><span>Quién</span><span>Cuánto del loop</span><span>Dónde se corta</span></div>
+        <div class="crow reveal">
+          <span class="cname"><span class="cex">Marketplaces</span><span class="cnom"><span>Rappi</span><span>PedidosYa</span><span>Uber Eats</span></span></span>
+          <span class="cloop"><span class="ctrack" aria-hidden="true"><i class="seg on"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i></span><span class="cfrac">1/4</span></span>
+          <span class="ccell">Traen el pedido. <b>Se quedan con el cliente.</b></span>
         </div>
-        <div class="crow">
-          <span class="cname">POS / gestión<span class="cex">Fudo, Bistrosoft, Justo, Olakick</span></span>
-          <span class="ccell">Ordenan operación, ventas e inventario</span>
-          <span class="ccell">Pensados para operar, no para activar clientes</span>
-          <span class="ccell win">Convierte el dato transaccional en activación comercial</span>
+        <div class="crow reveal">
+          <span class="cname"><span class="cex">POS / gestión</span><span class="cnom"><span>Fudo</span><span>Bistrosoft</span><span>Justo</span><span>Olakick</span></span></span>
+          <span class="cloop"><span class="ctrack" aria-hidden="true"><i class="seg on"></i><i class="seg on"></i><i class="seg"></i><i class="seg"></i></span><span class="cfrac">2/4</span></span>
+          <span class="ccell">Registran la venta y el dato. <b>No activan clientes.</b></span>
         </div>
-        <div class="crow">
-          <span class="cname">Ecommerce propio<span class="cex">Tucán, Másdelivery, menús digitales</span></span>
-          <span class="ccell">Venden por canal propio y bajan dependencia</span>
-          <span class="ccell">Terminan en la transacción; no activan la base</span>
-          <span class="ccell win">Conecta pedidos, datos y recompra automática</span>
+        <div class="crow reveal">
+          <span class="cname"><span class="cex">Ecommerce propio</span><span class="cnom"><span>Tucán</span><span>Másdelivery</span></span></span>
+          <span class="cloop"><span class="ctrack" aria-hidden="true"><i class="seg on"></i><i class="seg on"></i><i class="seg"></i><i class="seg"></i></span><span class="cfrac">2/4</span></span>
+          <span class="ccell">Venden por canal propio. <b>Terminan en la transacción.</b></span>
         </div>
-        <div class="crow">
-          <span class="cname">CRM horizontal<span class="cex">Email, SMS y CRM genéricos</span></span>
-          <span class="ccell">Permiten segmentar y enviar</span>
-          <span class="ccell">No entienden comportamiento gastronómico ni frecuencia</span>
-          <span class="ccell win">Verticalizado en recurrencia gastronómica</span>
+        <div class="crow reveal">
+          <span class="cname"><span class="cex">CRM horizontal</span><span class="cnom"><span>Email</span><span>SMS</span><span>CRM genéricos</span></span></span>
+          <span class="cloop"><span class="ctrack" aria-hidden="true"><i class="seg"></i><i class="seg"></i><i class="seg on"></i><i class="seg"></i></span><span class="cfrac">1/4</span></span>
+          <span class="ccell">Segmentan y envían. <b>No entienden la frecuencia gastronómica.</b></span>
         </div>
-        <div class="crow us">
-          <span class="cname" style="color:var(--vio)">DEENEX<span class="cex">Canal propio + dato + activación</span></span>
-          <span class="ccell" style="grid-column:span 3;color:var(--ind);font-weight:700">Integra el loop completo: vender → capturar el dato → activar → generar recompra. La única contra es que requiere adopción inicial.</span>
+        <div class="crow us reveal">
+          <span class="cname"><span class="cex">Infraestructura de recompra</span><span class="cnom"><span>Deenex</span></span></span>
+          <span class="cloop"><span class="ctrack" aria-hidden="true"><i class="seg on"></i><i class="seg on"></i><i class="seg on"></i><i class="seg on"></i></span><span class="cfrac">4/4</span></span>
+          <span class="ccell"><b>Cierra el loop entero:</b> vender, capturar el dato, activar, recomprar. La contra: requiere adopción inicial.</span>
         </div>
       </div>
     </div>
