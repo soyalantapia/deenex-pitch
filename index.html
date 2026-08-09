@@ -371,7 +371,10 @@ body{
 .capas .note{ font-size:var(--t-small); }
 
 .loop-wrap{ display:flex; align-items:center; justify-content:center; height:100%; min-height:0; }
-.loop{ width:auto; height:min(52vh,420px); max-height:100%; overflow:visible; }
+/* max-width:100% es obligatorio: el SVG es cuadrado y su alto sale de
+   vh, así que en ventanas anchas pero bajas el ancho resultante
+   superaba el de su columna y se salía por la derecha.            */
+.loop{ width:auto; height:min(52vh,420px); max-width:100%; max-height:100%; overflow:visible; }
 .loop-ring{ fill:none; stroke:var(--hair); stroke-width:1.5; }
 /* Circunferencia real del anillo: 2π × 100 = 628,3. Si el
    dasharray no coincide, el trazo nunca cierra la vuelta.       */
@@ -715,7 +718,32 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
      de 4 cae a 2 y una que ya era de 1 se queda en 1. Forzar
      repeat(2,1fr) rompía las listas de una sola columna.         */
   .stats{ grid-template-columns:repeat(auto-fit,minmax(140px,1fr)) !important; gap:clamp(.5rem,3vw,1rem) !important; }
-  .team{ grid-template-columns:repeat(2,1fr) !important; }
+  /* En 375 px la grilla de dos columnas gastaba 447 px y recortaba
+     78 px de la slide: la última fila de personas quedaba cortada.
+     Con la foto al costado entra en ~350.
+
+     Va con grid y no con flex-direction:row porque .member no tiene
+     wrapper para el texto: en fila, los tres spans se irían al lado
+     de la foto en vez de apilarse.                                */
+  .team{ grid-template-columns:1fr !important; gap:clamp(.5rem,2.5vw,.9rem) !important; }
+  .member{
+    display:grid; grid-template-columns:auto 1fr;
+    column-gap:clamp(.6rem,3vw,1rem); align-items:center;
+  }
+  .member img{ grid-row:1 / -1; grid-column:1; margin-bottom:0; width:clamp(36px,9.6vw,54px); height:clamp(36px,9.6vw,54px); }
+  .member .mn,.member .mr,.member .chapa{ grid-column:2; }
+  /* Las fotos grandes y el aire entre grupos son para proyector: en
+     un teléfono desbordaban la slide 107 px. Siete personas con
+     credencial es contenido genuinamente alto, así que en pantalla
+     chica va más denso y se cae la bio de los founders, que repite
+     lo que la chapa ya dice mejor.                                */
+  .founder img{ width:clamp(42px,12vw,64px); height:clamp(42px,12vw,64px); }
+  .founder .bio{ display:none; }
+  .team[style]{ margin-top:clamp(.6rem,2vh,1.1rem) !important; }
+  .team{ gap:clamp(.35rem,1.8vw,.75rem) !important; }
+  .chapa{ line-height:1.25; padding-left:.55em; margin-top:.22em; }
+  .founders{ gap:clamp(.5rem,2.4vw,1rem) !important; }
+  .member .chapa{ margin-top:.15em; }
   /* 158 px de columna no alcanzan para el número más la barra */
   .perdidas{ grid-template-columns:1fr !important; gap:clamp(.9rem,4vw,1.6rem) !important; }
 
@@ -935,8 +963,10 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
           <div class="f-lane"><div class="f-bar" style="width:78%"></div><span class="f-txt" style="left:calc(78% + 14px)">pedidos por mes</span></div>
         </div>
         <div class="f-row">
-          <span class="f-num">15</span>
-          <div class="f-lane"><div class="f-bar" style="width:11.7%"></div><span class="f-txt" style="left:calc(11.7% + 14px)">dejan <b>algún dato</b> del cliente</span></div>
+          <!-- El ancho sale del dato, no al ojo: la barra de 100 mide
+               78%, así que 20 mide 78 × 20/100 = 15,6%.             -->
+          <span class="f-num">20</span>
+          <div class="f-lane"><div class="f-bar" style="width:15.6%"></div><span class="f-txt" style="left:calc(15.6% + 14px)">dejan <b>algún dato</b> del cliente</span></div>
         </div>
         <div class="f-row">
           <span class="f-num">4</span>
@@ -1387,12 +1417,12 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <h2 class="s-title reveal">Siete personas, <span class="vio">cero pasajeros.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
-    <!-- space-between en vez de center: centrar dejaba un hueco arriba
-         y otro abajo, y ninguno hacía nada. Así los founders quedan
-         pegados al título, el equipo apoya sobre la banda de cierre y
-         el aire que sobra cae entre los dos grupos, donde además
-         separa una jerarquía real.                                  -->
-    <div class="s-body" style="justify-content:space-between;">
+    <!-- Arranca pegado al título en vez de centrarse: centrar dejaba
+         un hueco arriba y otro abajo, y ninguno hacía nada. El aire
+         que sobra se reparte entre founders y equipo, donde además
+         separa una jerarquía real, sin que el equipo llegue a tocar
+         la banda de cierre.                                        -->
+    <div class="s-body">
       <!-- Cada chapa arranca por el dato duro y verificable: un nombre
            propio que el inversor reconoce, un número, una institución.
            "Lideró equipos" no dice nada; "construyó el sitio de River"
@@ -1418,7 +1448,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
         </div>
       </div>
 
-      <div class="team reveal" style="margin-top:var(--gap);">
+      <div class="team reveal" style="margin-top:clamp(1rem,10vh,5rem);">
         <div class="member"><img src="assets/equipo/iara.png" alt="Iara Gallardo"><span class="mn">Iara Gallardo</span><span class="mr">Head of Marketing</span><span class="chapa">MBA. Growth en startups de tecnología.</span></div>
         <div class="member"><img src="assets/equipo/thaina.png" alt="Thainá Messina"><span class="mn">Thainá Messina</span><span class="mr">Head Commercial Ops</span><span class="chapa">Economía con promedio 9,5. La eligieron para estudiar en Italia y se quedó por Deenex.</span></div>
         <div class="member"><img src="assets/equipo/leandro.png" alt="Leandro Rebequi"><span class="mn">Leandro Rebequi</span><span class="mr">CTO</span><span class="chapa">Construyó los sitios de River y de Bizarrap. Lideró equipos y proyectos grandes.</span></div>
