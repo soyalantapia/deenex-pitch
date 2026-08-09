@@ -13,16 +13,18 @@ Abrí `index.html` en cualquier navegador, o entrá al link publicado.
 | Tecla | Qué hace |
 |---|---|
 | `←` `→` `espacio` | Navegar |
-| `M` | Índice de salto — útil en Q&A para ir directo a una slide de respaldo |
-| `B` | Mostrar u ocultar las slides de respaldo |
+| `M` | Índice de salto — útil en Q&A para ir directo a una slide |
 | `T` | Cronómetro de escenario (el pitch son 3 minutos) |
 | `E` | Editar cualquier texto en el navegador · `Ctrl+S` exporta el archivo |
+| `Inicio` `Fin` | Primera y última slide |
 
 ## Estructura
 
-**10 slides en vivo:** Portada · El problema · La cita · La prueba del problema · El insight · La solución · Tracción · Modelo de ingresos · Objetivo y camino · La ronda
+Un solo flujo de **15 slides**, sin separación entre vivo y respaldo:
 
-**7 de respaldo (para Q&A):** Casos de éxito · Mercado · Proyección financiera · Adquisición · Equipo · La ronda en detalle · Competencia
+Portada · El problema · La cita · La prueba del problema · El insight · La solución · Tracción · El camino · Modelo de ingresos · Casos de éxito · Mercado · Adquisición · Competencia · Equipo · La ronda
+
+Cierra en La ronda a propósito: el pedido es construir la relación con el inversor, no levantar capital hoy. Para tres minutos en escenario, el recorrido corto es Portada → El problema → La cita → El insight → La solución → Tracción → La ronda; el resto se usa en Q&A saltando con `M`.
 
 ## Notas para editar
 
@@ -34,7 +36,7 @@ Abrí `index.html` en cualquier navegador, o entrá al link publicado.
 
 ## Pendientes
 
-- Videos de testimonio de Palta y La Fábrica: poner la URL en `data-video` de cada tarjeta y se activan solas.
-- Logos de las marcas en negociación.
+- Faltan 5 nombres de clientes para llegar a los 15 que dice Tracción.
+- Logos oficiales de las 8 marcas: hoy la grilla usa lo que había a mano.
 - Serie mensual de MRR para dibujar la curva de crecimiento.
-- Credenciales del equipo — la slide está hoy con contenido de ejemplo, marcado como maqueta.
+- Confirmar el número real de pipeline que muestra Adquisición.
