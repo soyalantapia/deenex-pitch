@@ -20,11 +20,13 @@ Abrí `index.html` en cualquier navegador, o entrá al link publicado.
 
 ## Estructura
 
-Un solo flujo de **15 slides**, sin separación entre vivo y respaldo:
+Un solo flujo de **16 slides**, sin separación entre vivo y respaldo:
 
-Portada · El problema · La cita · La prueba del problema · El insight · La solución · Tracción · El camino · Modelo de ingresos · Casos de éxito · Mercado · Adquisición · Competencia · Equipo · La ronda
+Portada · El problema · La cita · La prueba del problema · El insight · La solución · Los beneficios · Tracción · El camino · Modelo de ingresos · Casos de éxito · Mercado · Adquisición · Competencia · Equipo · La ronda
 
 Cierra en La ronda a propósito: el pedido es construir la relación con el inversor, no levantar capital hoy. Para tres minutos en escenario, el recorrido corto es Portada → El problema → La cita → El insight → La solución → Tracción → La ronda; el resto se usa en Q&A saltando con `M`.
+
+**Los beneficios** va pegada a **La solución** a propósito: la primera explica cómo funciona el sistema y la segunda qué se lleva el que lo contrata. Sus cuatro filas son las cuatro capas del loop leídas desde el lado del cliente, así que si cambia el loop hay que cambiarlas juntas.
 
 ## Notas para editar
 

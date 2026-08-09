@@ -417,6 +417,36 @@ body{
 .slide.visible .loop-dot-g{ animation:orbit 3.6s linear infinite }
 @keyframes orbit{ from{ transform:rotate(0deg) } to{ transform:rotate(360deg) } }
 
+/* ═══ BENEFICIOS · EL ANTES Y EL DESPUÉS ════════════════════════
+   La asimetría ES el argumento. La columna del "hoy" es gris, chica
+   y recesiva; la de Deenex pesa casi el doble y se lleva la tinta.
+   Si las dos midieran lo mismo, la slide estaría diciendo que las
+   dos opciones son comparables — y el punto es que no lo son.
+   No reusa .ctable a propósito: esa tabla es simétrica porque
+   compara categorías entre pares, y acá no hay paridad.          */
+.benef{ display:flex; flex-direction:column; width:100%; }
+.benef-head{ display:grid; grid-template-columns:.9fr auto 1.55fr; gap:clamp(.5rem,1.4vw,1.4rem); align-items:end; padding-bottom:clamp(.26rem,.75vh,.5rem); border-bottom:1px solid var(--ind); }
+.benef-head span{ font-weight:700; font-size:var(--t-micro); letter-spacing:.18em; text-transform:uppercase; line-height:1.2; }
+.benef-head .h-hoy{ color:var(--gry); }
+.benef-head .h-dnx{ color:var(--vio); grid-column:3; }
+/* align-items:start y no center: el "hoy" tiene que arrancar en la
+   misma línea que el titular de la derecha, porque la fila ES el par.
+   Centrado, la frase gris caía entre el titular y su bajada y el ojo
+   dejaba de aparearlos.                                            */
+.brow{ display:grid; grid-template-columns:.9fr auto 1.55fr; gap:clamp(.5rem,1.4vw,1.4rem); align-items:start; padding:clamp(.45rem,2.05vh,1.5rem) 0; border-bottom:1px solid var(--hair); }
+.brow:last-child{ border-bottom:0; padding-bottom:0; }
+/* Panchang tiene más altura de mayúscula que Bespoke: sin este
+   empujón las dos primeras líneas de la fila no arrancan parejas. */
+.b-hoy{ font-size:var(--t-small); color:var(--gry); line-height:1.32; padding-top:.14em; }
+/* Flecha dibujada, no un carácter: un "→" tipográfico cambia de
+   ancho y de línea de base según la fuente que llegue a cargar.  */
+.b-flecha{ position:relative; align-self:center; width:clamp(16px,2vw,30px); height:1px; background:var(--pale); flex:0 0 auto; }
+.b-flecha::after{ content:''; position:absolute; right:0; top:50%; width:5px; height:5px; border-top:1px solid var(--pale); border-right:1px solid var(--pale); transform:translateY(-50%) rotate(45deg); }
+.b-dnx{ display:flex; align-items:flex-start; gap:clamp(.4rem,1vw,.85rem); min-width:0; }
+.b-n{ font-family:var(--font-d); font-weight:700; font-size:var(--t-small); color:var(--vio); flex:0 0 auto; line-height:1.5; }
+.b-t{ font-family:var(--font-d); font-weight:700; font-size:var(--t-body); color:var(--ind); line-height:1.2; }
+.b-k{ font-size:var(--t-small); color:var(--blk); line-height:1.35; margin-top:.22em; }
+
 /* ═══ SLIDE VIOLETA A SANGRE ════════════════════════════════════ */
 .slide.slate{ background:var(--vio); color:var(--wht); }
 .slide.slate .eyebrow{ color:var(--tint2); }
@@ -514,12 +544,22 @@ body{
   padding-top:clamp(.7rem,2.2vh,1.5rem); padding-bottom:var(--m);
   border-top:1px solid rgba(255,255,255,.32);
 }
-/* Al mismo tamaño que el hero de la portada: es su eco, y a 43 px
-   contra 72 px el eco no se escuchaba.                           */
+/* El cierre es la marca: wordmark grande y debajo la frase que
+   explica qué es Deenex. Va más alto que el de la portada (4vw
+   contra 3,1vw) porque en la portada presenta y acá firma.       */
 .firma{
-  font-family:var(--font-d); font-weight:700;
-  font-size:clamp(1.5rem,4.5vw,4.4rem); line-height:.98; color:var(--wht);
-  letter-spacing:-.035em;
+  display:flex; flex-direction:column;
+  gap:clamp(.4rem,1.3vh,.85rem); min-width:0;
+}
+.firma-logo{
+  height:clamp(26px,4vw,64px); width:auto; max-height:none;
+  align-self:flex-start;
+}
+/* El tope en em y no en ch: ch se mide sobre el 0 de la fuente y
+   mientras Bespoke no cargó el renglón se corta en otro lado.    */
+.firma-slogan{
+  font-size:var(--t-body); line-height:1.3;
+  color:var(--tint2); max-width:34em;
 }
 
 /* ═══ EQUIPO ════════════════════════════════════════════════════ */
@@ -810,6 +850,18 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   /* Las capturas de prensa se envuelven en vez de desbordar */
   .slide[data-title="Adquisición"] .s-body > div:last-child{ flex-wrap:wrap; }
   .slide[data-title="Adquisición"] img{ max-height:min(15vh,110px) !important; }
+
+  /* Beneficios: la comparación se apila. En 375 px la columna del
+     "hoy" mide 111 px y la frase cae en cinco líneas. Apilado, el
+     "hoy" funciona de antetítulo del "con Deenex" y la lectura es
+     la misma, solo que en vertical.
+     El rótulo pasa al ::before porque el cabezal de columnas deja
+     de tener sentido cuando ya no hay columnas.                  */
+  .benef-head{ display:none; }
+  .brow{ grid-template-columns:1fr !important; gap:.15rem !important; padding:clamp(.5rem,2.6vw,.9rem) 0 !important; }
+  .b-flecha{ display:none; }
+  .b-hoy{ padding-top:0; font-size:var(--t-micro); }
+  .b-hoy::before{ content:'Hoy · '; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--lav); }
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -1021,7 +1073,82 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   <footer class="closer reveal">El delivery es el gancho. <b>La activación del dato es el negocio.</b></footer>
 </section>
 
-<!-- ══ 07 · TRACCIÓN ═════════════════════════════════════════════ -->
+<!-- ══ 07 · LOS BENEFICIOS ═══════════════════════════════════════
+     Va pegada a la solución a propósito: la anterior explica CÓMO
+     funciona el sistema y ésta QUÉ se lleva el que lo contrata. Sin
+     esta slide el inversor entiende la arquitectura pero no el
+     argumento de venta, que es lo que explica por qué cierran.
+
+     Las cuatro filas son las cuatro capas del loop leídas desde el
+     lado del cliente: canal propio, dato, activación, operación.  -->
+<section class="slide" data-title="Los beneficios">
+  <div class="slide-content">
+    <header class="s-head">
+      <p class="eyebrow reveal">Los beneficios</p>
+      <h2 class="s-title reveal">Qué cambia <span class="vio">para el restaurante.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="justify-content:center;">
+      <div class="benef reveal">
+        <div class="benef-head">
+          <span class="h-hoy">Hoy · con las apps</span>
+          <span class="h-dnx">Con Deenex</span>
+        </div>
+
+        <div class="brow">
+          <p class="b-hoy">De cada ticket, entre 15 y 35% se lo lleva la app.</p>
+          <div class="b-flecha"></div>
+          <div class="b-dnx">
+            <span class="b-n">01</span>
+            <div>
+              <p class="b-t">Suscripción fija, sin comisión de marketplace</p>
+              <p class="b-k">Lo que vende por canal propio le queda entero. El precio no sube porque venda más.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="brow">
+          <p class="b-hoy">El cliente queda registrado en la app, no en su base.</p>
+          <div class="b-flecha"></div>
+          <div class="b-dnx">
+            <span class="b-n">02</span>
+            <div>
+              <p class="b-t">La base de clientes es de la marca</p>
+              <p class="b-k">Nombre, teléfono, frecuencia e historial de cada pedido. Se lo lleva aunque se vaya.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="brow">
+          <p class="b-hoy">El pedido termina en la entrega y ahí se corta.</p>
+          <div class="b-flecha"></div>
+          <div class="b-dnx">
+            <span class="b-n">03</span>
+            <div>
+              <p class="b-t">Cada pedido trae el siguiente</p>
+              <p class="b-k">Deenex Activa recupera clientes por WhatsApp con IA, y mide qué venta trajo cada campaña.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="brow">
+          <p class="b-hoy">Un sistema distinto por cada canal, sin hablarse entre sí.</p>
+          <div class="b-flecha"></div>
+          <div class="b-dnx">
+            <span class="b-n">04</span>
+            <div>
+              <p class="b-t">Salón, take away y delivery en una sola operación</p>
+              <p class="b-k">Un solo lugar para todos los canales, con el POS y la logística de delivery integrados.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="closer reveal">No le cambiamos cómo cocina ni cómo atiende. Le cambiamos <b>de quién es el cliente.</b></footer>
+</section>
+
+<!-- ══ 08 · TRACCIÓN ═════════════════════════════════════════════ -->
 <section class="slide" data-title="Tracción">
   <div class="slide-content">
     <header class="s-head">
@@ -1071,7 +1198,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   <footer class="closer reveal">Ocho operando hoy, siete lanzando este trimestre. <b>Todo sin un peso de capital externo.</b></footer>
 </section>
 
-<!-- ══ 08 · EL CAMINO ════════════════════════════════════════════
+<!-- ══ 09 · EL CAMINO ════════════════════════════════════════════
      Tracción da la foto de hoy; esta la pone en movimiento. El +3
      meses cae en noviembre, o sea dentro de Q4: la atribución de
      Activa y los US$15K son el mismo hito, y por eso el pre-seed
@@ -1129,7 +1256,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   <footer class="closer reveal">La línea llena es lo que ya pasó; la punteada, el plan. <b>De los US$20K de los próximos tres meses, US$15K ya están firmados.</b></footer>
 </section>
 
-<!-- ══ 09 · MODELO DE INGRESOS ═══════════════════════════════════
+<!-- ══ 10 · MODELO DE INGRESOS ═══════════════════════════════════
      La escalera va a proporción real (56/132/221). Y la
      reconciliación Legacy vs ICP va en el cuerpo, no al pie: con
      US$15K y 15 marcas la división da ~US$1.000 por cuenta contra
@@ -1415,7 +1542,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   <footer class="closer reveal">Todo lo que viste lo construyó este equipo, <b>sin un peso de capital externo.</b></footer>
 </section>
 
-<!-- ══ 10 · LA RONDA · VIOLETA A SANGRE ══════════════════════════
+<!-- ══ 16 · LA RONDA · VIOLETA A SANGRE ══════════════════════════
      El disparador es la ATRIBUCIÓN DE ACTIVA (Q4 2026), no los
      US$500K de run-rate: los 500K son el escenario CON inversión,
      así que atarle la ronda la volvía circular. Este hito se
@@ -1446,8 +1573,18 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
         </div>
       </div>
 
+      <!-- Cierra con la marca, no con el claim. "Tus clientes son
+           tuyos" ya abre la portada: repetirlo acá lo gastaba. La
+           última imagen que se lleva el inversor tiene que ser el
+           nombre más la frase que explica qué es Deenex, porque es
+           lo que va a tener que repetirle a su socio.               -->
       <div class="ronda-cierre reveal">
-        <p class="firma">Tus clientes<br>son tuyos.</p>
+        <div class="firma">
+          <!-- Versión blanca del wordmark: el original es violeta
+               pleno #695EDE y sobre esta slide desaparecía.        -->
+          <img class="firma-logo" src="assets/logo-wordmark-white.png" alt="Deenex">
+          <p class="firma-slogan">El ecommerce que permite a los restaurantes transformar pedidos en clientes recurrentes.</p>
+        </div>
         <div class="contact">
           <img src="assets/qr.png" alt="Código QR para ver la demo">
           <div>
