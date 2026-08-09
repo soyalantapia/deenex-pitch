@@ -252,35 +252,53 @@ body{
    canal → cuánto trae → qué NO tenemos. La última columna repite
    "sin…" tres veces y esa repetición es el argumento de la slide.
    ═══════════════════════════════════════════════════════════════ */
+/* Dos bloques, no tres canales en fila. A la izquierda lo que YA
+   trae clientes, con números grandes y línea llena. A la derecha el
+   inbound, con borde PUNTEADO: es el mismo código que usa la línea
+   de tiempo para "todavía no". Dibujarlo igual que los otros dos
+   sería decir que ya existe.                                      */
+.adq{ display:grid; grid-template-columns:1.3fr 1fr; gap:clamp(.9rem,3vw,2.8rem); align-items:start; }
+.adq-col{ display:flex; flex-direction:column; min-width:0; }
+.adq-col.futuro{ border-left:2px dashed var(--lav); padding-left:clamp(.8rem,2.2vw,2rem); }
+.adq-cab{
+  font-weight:700; font-size:var(--t-micro); letter-spacing:.18em;
+  text-transform:uppercase; color:var(--vio);
+  padding-bottom:clamp(.24rem,.7vh,.45rem); border-bottom:1px solid var(--ind);
+  margin-bottom:clamp(.45rem,1.4vh,1rem);
+}
+.adq-txt{ font-size:var(--t-body); color:var(--blk); line-height:1.38; }
+/* Gris y chico a propósito: es contexto de cómo se mueven hoy los
+   dos canales, no un cuarto canal.                               */
+.adq-pie{ font-size:var(--t-small); color:var(--gry); line-height:1.35; margin-top:clamp(.5rem,1.6vh,1.1rem); }
+.adq-plazo{
+  font-family:var(--font-d); font-weight:700; font-size:var(--t-small);
+  color:var(--vio); line-height:1.25; margin-top:clamp(.5rem,1.6vh,1.1rem);
+}
+
 .canales{ display:flex; flex-direction:column; }
+/* Apilado y no en dos columnas: la falta va debajo, porque ahora la
+   columna mide la mitad que antes y a la derecha no entra.        */
 .canal{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  align-items:center;
-  gap:clamp(.6rem,2vw,2rem);
-  padding:clamp(.45rem,1.25vh,.95rem) 0;
+  display:flex; flex-direction:column;
+  padding:clamp(.45rem,1.5vh,1.1rem) 0;
   border-bottom:1px solid var(--hair);
 }
 .canal:last-child{ border-bottom:0; padding-bottom:0; }
 .canal:first-child{ padding-top:0; }
-/* Nombre y número en la misma línea: gana una línea por fila (las
-   tres no entraban en la slide) y se lee "REFERIDOS 50%" de un saque. */
-.canal-cab{ grid-column:1; display:flex; align-items:baseline; gap:clamp(.5rem,1.2vw,1rem); flex-wrap:wrap; }
+/* Nombre y número en la misma línea: se lee "REFERIDOS 50%" de un
+   saque y gana una línea por fila.                                */
+.canal-cab{ display:flex; align-items:baseline; gap:clamp(.5rem,1.2vw,1rem); flex-wrap:wrap; }
 .canal-nombre{
   font-weight:700; font-size:var(--t-micro);
   letter-spacing:.2em; text-transform:uppercase; color:var(--gry);
 }
 .canal .n{ display:inline-block; }
-/* Medida ancha a propósito: con 46ch cada descripción caía en dos
-   líneas y las tres filas no entraban en la slide.                */
-.canal-det{ grid-column:1; font-size:var(--t-body); color:var(--blk); line-height:1.35; margin-top:.2em; max-width:64ch; }
-/* La punchline de cada fila: ocupa las tres filas de la izquierda y
-   queda alineada a la derecha, para que las tres se lean en columna. */
+.canal-det{ font-size:var(--t-body); color:var(--blk); line-height:1.35; margin-top:.2em; }
+/* La punchline de la fila: lo que el canal NO tiene detrás.       */
 .canal-falta{
-  grid-column:2; grid-row:1 / span 2; justify-self:end; text-align:right;
   font-family:var(--font-d); font-weight:700;
-  font-size:clamp(.85rem,1.6vw,1.6rem); line-height:1.15;
-  color:var(--vio); max-width:11ch;
+  font-size:var(--t-small); line-height:1.2;
+  color:var(--vio); margin-top:.3em;
 }
 
 /* ═══ SLIDE DEL PROBLEMA ════════════════════════════════════════
@@ -796,7 +814,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   /* La punchline baja debajo del texto: en dos columnas la
      descripción quedaba estrangulada en cuatro líneas angostas. */
   .canal{ grid-template-columns:1fr; }
-  .canal-falta{ grid-column:1; grid-row:auto; justify-self:start; text-align:left; max-width:none; margin-top:.35em; }
 
   /* Cinco columnas dan 48 px en un teléfono: "La Fábrica de
      Sandwiches" no entra ni partida. Pasan a dos.               */
@@ -850,9 +867,14 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   .f-lane{ overflow:visible; height:26px; }
   .f-txt{ left:0 !important; top:100%; transform:none !important; white-space:normal !important; margin-top:5px; }
 
-  /* Las capturas de prensa se envuelven en vez de desbordar */
-  .slide[data-title="Adquisición"] .s-body > div:last-child{ flex-wrap:wrap; }
-  .slide[data-title="Adquisición"] img{ max-height:min(15vh,110px) !important; }
+  /* Adquisición se apila y el punteado, que en ancho marca el borde
+     izquierdo del bloque futuro, pasa a marcar su borde de arriba: en
+     una sola columna es el único lado que separa los dos bloques.  */
+  .adq{ grid-template-columns:1fr !important; gap:clamp(.7rem,3.5vw,1.2rem) !important; }
+  .adq-col.futuro{
+    border-left:0; padding-left:0;
+    border-top:2px dashed var(--lav); padding-top:clamp(.7rem,3.5vw,1.2rem);
+  }
 
   /* Beneficios: la comparación se apila. En 375 px la columna del
      "hoy" mide 111 px y la frase cae en cinco líneas. Apilado, el
@@ -1405,41 +1427,59 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">Adquisición</p>
-      <h2 class="s-title reveal">La mitad de nuestros clientes <span class="vio">llegó por referido.</span></h2>
+      <h2 class="s-title reveal">Referidos y outbound. <span class="vio">El inbound recién arranca.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
-    <!-- El 50% por referido pasa de ser una tarjeta más a llevar la
-         slide. Es el dato de mayor señal de todo el deck sobre
-         distribución, porque describe un canal que TODAVÍA NO EXISTE:
-         un producto que se recomienda solo, sin nada que lo empuje.
-         Y en porcentaje no envejece — el "4 de 8" quedaba viejo cada
-         vez que entraba una cuenta.                                 -->
-    <!-- Tres canales, una sola lectura. La columna derecha repite
-         "sin…" tres veces y esa repetición ES el argumento: todo
-         funciona sin que hayamos construido nada. Antes eran tres
-         números en fila que el lector tenía que conectar solo.     -->
+    <!-- La versión anterior ponía tres canales en fila y remataba con
+         "cada canal ya trae clientes, ninguno está construido". Sonaba
+         bien y dejaba al inversor sin saber cuál es el canal REAL: la
+         prensa aparecía al mismo nivel que los otros dos cuando fue
+         una nota, no un canal.
+
+         Partirla en "lo que ya trae" y "lo que se está construyendo"
+         dice las dos cosas sin mezclarlas, y mueve la prensa a donde
+         sirve de verdad: como evidencia de que hay demanda esperando
+         del lado del inbound.                                       -->
     <div class="s-body" style="justify-content:center;">
-      <p class="prob-lead reveal">Cada canal ya trae clientes. <span class="vio">Ninguno está construido.</span></p>
-      <div class="canales reveal">
-        <div class="canal">
-          <div class="canal-cab"><span class="canal-nombre">Referidos</span><span class="n md" data-count="50" data-suffix="%">50%</span></div>
-          <span class="canal-det">de los clientes actuales llegó por recomendación de otro cliente</span>
-          <span class="canal-falta">sin sistema de referidos</span>
+      <div class="adq reveal">
+
+        <div class="adq-col">
+          <p class="adq-cab">Hoy · lo que trae clientes</p>
+          <div class="canales">
+            <div class="canal">
+              <div class="canal-cab"><span class="canal-nombre">Referidos</span><span class="n md" data-count="50" data-suffix="%">50%</span></div>
+              <span class="canal-det">de los clientes actuales llegó por recomendación de otro cliente</span>
+              <span class="canal-falta">Sin sistema de referidos.</span>
+            </div>
+            <div class="canal">
+              <div class="canal-cab"><span class="canal-nombre">Outbound</span><span class="n md" data-count="31">31</span></div>
+              <span class="canal-det">leads abiertos en el pipeline de hoy</span>
+              <span class="canal-falta">Sin un SDR.</span>
+            </div>
+          </div>
+          <p class="adq-pie">Lo mueven los founders, con red de contactos propia y partners.</p>
         </div>
-        <div class="canal">
-          <div class="canal-cab"><span class="canal-nombre">Prensa</span><span class="n md" data-count="40" data-prefix="+">+40</span></div>
-          <span class="canal-det">leads de una sola nota, la de iProUP</span>
-          <span class="canal-falta">sin un peso invertido</span>
+
+        <div class="adq-col futuro">
+          <p class="adq-cab">En construcción · inbound</p>
+          <p class="adq-txt">Comunidad, paid media y redes sociales. <b>Arrancó este trimestre.</b></p>
+          <!-- La prensa deja de ser un canal y pasa a ser la señal: 40
+               leads de UNA nota es la demanda que ya existe del otro
+               lado y que hoy nadie captura.                          -->
+          <div class="canal" style="border-bottom:0;padding-bottom:0;margin-top:clamp(.5rem,1.6vh,1.1rem);">
+            <div class="canal-cab"><span class="canal-nombre">La señal</span><span class="n sm" data-count="40" data-prefix="+">+40</span></div>
+            <span class="canal-det">leads salieron de una sola nota de prensa, la de iProUP, sin un peso invertido</span>
+          </div>
+          <!-- Coma y no "·": el separador del deck vive en Bespoke con
+               .18em de tracking y respira; acá la línea es Panchang con
+               tracking normal y el punto se pegaba a la palabra.     -->
+          <p class="adq-plazo">A tres meses, el canal mucho más trabajado.</p>
         </div>
-        <div class="canal">
-          <div class="canal-cab"><span class="canal-nombre">Outbound</span><span class="n md" data-count="31">31</span></div>
-          <span class="canal-det">leads abiertos en el pipeline de hoy</span>
-          <span class="canal-falta">sin un SDR</span>
-        </div>
+
       </div>
     </div>
   </div>
-  <footer class="closer reveal">Todo esto sin un peso en paid media y sin un SDR: <b>eso es exactamente lo que compra la ronda.</b></footer>
+  <footer class="closer reveal">Dos canales que ya traen clientes sin nada detrás. <b>El inbound es el próximo escalón, y ya empezó.</b></footer>
 </section>
 
 <!-- B5 · EQUIPO -->
@@ -1634,6 +1674,7 @@ class SlidePresentation{
         ? v => Math.round(v).toLocaleString('es-AR')
         : v => String(Math.round(v));
       const t0 = performance.now(), dur = 1100;
+      const final = () => { el.textContent = pre + fmt(target) + suf; };
       const tick = now => {
         const p = Math.min(1, (now - t0)/dur);
         const eased = 1 - Math.pow(1 - p, 3);        // easeOutCubic
@@ -1641,6 +1682,14 @@ class SlidePresentation{
         if(p < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
+      /* Red de seguridad, y no es teórica: requestAnimationFrame se
+         FRENA cuando la pestaña pasa a segundo plano, y como la slide
+         ya quedó marcada como contada, el número se congelaba a mitad
+         de camino para siempre. Adquisición mostraba 4% donde dice
+         50%, con cara de número final. setTimeout sí dispara en una
+         pestaña de fondo (llega tarde, pero llega).                 */
+      setTimeout(final, dur + 150);
+      document.addEventListener('visibilitychange', final, {once:true});
     });
   }
 
