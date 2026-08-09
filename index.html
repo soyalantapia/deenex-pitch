@@ -431,7 +431,17 @@ body{
    Sin URL en data-video no hacen nada: mejor eso que un ▶ que
    promete algo que todavía no existe.                           */
 .vids{ display:grid; grid-template-columns:repeat(2,1fr); gap:var(--gap-s); }
-.vid{ background:var(--vio); border-radius:var(--r); aspect-ratio:9/16; max-height:min(34vh,270px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.45em; color:var(--wht); }
+/* Logo del cliente en lugar del nombre escrito: en una slide de casos
+   la marca se reconoce antes de leerse.                            */
+.caso-logo{ height:clamp(20px,2.9vw,42px); width:auto; max-height:none; margin-bottom:.5em; display:block }
+
+/* La tarjeta lleva el fotograma del video. Un bloque violeta liso con
+   un ▶ no dice de qué se trata; con el frame se ve a la persona que
+   habla. El velo sostiene el contraste del texto encima.           */
+.vid{ position:relative; background:var(--vio) center/cover no-repeat; border-radius:var(--r); aspect-ratio:9/16; max-height:min(34vh,270px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.45em; color:var(--wht); overflow:hidden; }
+.vid::before{ content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(43,0,104,.25) 0%,rgba(43,0,104,.65) 100%); }
+.vid > *{ position:relative; z-index:1; }
+.vid-lbl{ font-weight:700; font-size:var(--t-micro); letter-spacing:.16em; text-transform:uppercase; color:var(--tint2); }
 .vid[data-video]:not([data-video=""]){ cursor:pointer; transition:transform .3s var(--ease) }
 .vid[data-video]:not([data-video=""]):hover{ transform:translateY(-4px) }
 .vid .play{ width:clamp(24px,3.2vw,46px); height:clamp(24px,3.2vw,46px); border-radius:50%; background:var(--wht); display:flex; align-items:center; justify-content:center }
@@ -951,14 +961,28 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <div class="s-rule reveal"></div>
     </header>
     <div class="s-body" style="flex-direction:row;align-items:center;gap:clamp(.8rem,2.4vw,2.2rem);">
+      <!-- Los dos casos son los que tienen testimonio filmado. Un caso
+           con la cara del dueño contándolo pesa más que uno escrito, y
+           Monti además cierra el círculo con la cita de Federico que
+           abre el deck: el mismo hombre que dice "ni un cliente es
+           mío" aparece acá contando cómo lo resolvió.               -->
       <div class="stats reveal" style="flex:1 1 62%;min-width:0;grid-template-columns:1fr;gap:clamp(.6rem,2vh,1.4rem);">
-        <div class="stat"><span class="n sm ink wrap">Palta</span><p class="k">15 locales y +4.000 pedidos por mes sin saber quién compraba. En 8 meses de canal propio: <b>+16.000 clientes registrados</b>. Hoy es la cuenta piloto donde corre Activa.</p></div>
-        <div class="stat"><span class="n sm ink wrap">La Fábrica de Sandwiches</span><p class="k">80 locales. Pusieron <b>+US$ 25K</b> para cocrear la plataforma antes de lanzar y operan sobre canal propio Deenex desde junio.</p></div>
+        <div class="stat">
+          <img class="caso-logo" src="assets/clientes/palta.png" alt="Palta">
+          <p class="k">15 locales y +4.000 pedidos por mes sin saber quién compraba. En 8 meses de canal propio: <b>+16.000 clientes registrados</b>. Hoy es la cuenta piloto donde corre Activa.</p>
+        </div>
+        <div class="stat">
+          <img class="caso-logo" src="assets/clientes/monti.png" alt="Monti · bar de pastas y café">
+          <p class="k">10 locales y <b>25.000 pedidos por mes</b> que no dejaban un solo cliente propio —son las palabras de su fundador. Hoy operan sobre canal propio Deenex.</p>
+        </div>
       </div>
-      <!-- Para activar: poné la URL en data-video, ej. data-video="assets/testimonio-palta.mp4" -->
       <div class="vids reveal" style="flex:1 1 38%;min-width:0;">
-        <div class="vid" data-video=""><span class="play"></span><span class="vn">Palta</span><span class="lbl" style="color:var(--tint2)">Testimonio</span></div>
-        <div class="vid" data-video=""><span class="play"></span><span class="vn">La Fábrica</span><span class="lbl" style="color:var(--tint2)">Testimonio</span></div>
+        <div class="vid" data-video="https://player.vimeo.com/video/1215628999?autoplay=1" style="background-image:url('assets/clientes/thumb-palta.jpg')">
+          <span class="play"></span><span class="vn">Palta</span><span class="vid-lbl">Testimonio · 1:17</span>
+        </div>
+        <div class="vid" data-video="https://player.vimeo.com/video/1215627170?autoplay=1" style="background-image:url('assets/clientes/thumb-monti.jpg')">
+          <span class="play"></span><span class="vn">Monti</span><span class="vid-lbl">Testimonio · 0:51</span>
+        </div>
       </div>
     </div>
   </div>
