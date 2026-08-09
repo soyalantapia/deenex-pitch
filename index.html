@@ -235,6 +235,14 @@ body{
 /* ═══ EL LOOP · la firma visual del deck ════════════════════════
    Venta → Dato → Activación → Recompra. Es la tesis del producto
    dibujada: el imán que devuelve al cliente al mismo circuito.  */
+/* Las tres capas se leían más chicas que el diagrama que ilustran.
+   Acá el texto ES el contenido y el loop es el apoyo, así que la
+   columna derecha manda: más ancho y un escalón más de tipografía. */
+.capas .lbl{ font-size:var(--t-small); letter-spacing:.16em; color:var(--vio); }
+.capas .k{ font-size:var(--t-lead); line-height:1.35; margin-top:.25em; }
+.capas .stat{ border-top-width:3px; }
+.capas .note{ font-size:var(--t-small); }
+
 .loop-wrap{ display:flex; align-items:center; justify-content:center; height:100%; min-height:0; }
 .loop{ width:auto; height:min(52vh,420px); max-height:100%; overflow:visible; }
 .loop-ring{ fill:none; stroke:var(--hair); stroke-width:1.5; }
@@ -301,18 +309,58 @@ body{
 
 /* ═══ ARCO TEMPORAL ═════════════════════════════════════════════ */
 .arc{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(.5rem,1.6vw,1.6rem); }
-.arc-step{ border-top:2px solid rgba(255,255,255,.55); padding-top:clamp(.4rem,1.1vh,.8rem); }
-.arc-step.now{ border-top-color:var(--wht); }
+/* El arco vive en una slide BLANCA (la de respaldo). Los colores
+   base son de tinta; la variante para violeta va abajo.          */
+.arc-step{ border-top:2px solid var(--hair); padding-top:clamp(.4rem,1.1vh,.8rem); }
+.arc-step.now{ border-top-color:var(--vio); }
 /* display:block — sin esto los tres spans corren en una sola
    línea y el paso se lee como una frase suelta.                 */
-.arc-when{ display:block; font-weight:700; font-size:var(--t-micro); letter-spacing:.2em; text-transform:uppercase; color:var(--tint2); }
-.arc-what{ display:block; font-family:var(--font-d); font-weight:700; font-size:clamp(.88rem,1.6vw,1.45rem); color:var(--wht); line-height:1.12; margin-top:.35em; }
-.arc-why{ display:block; font-size:var(--t-small); color:var(--tint2); margin-top:.3em; }
+.arc-when{ display:block; font-weight:700; font-size:var(--t-micro); letter-spacing:.2em; text-transform:uppercase; color:var(--vio); }
+.arc-what{ display:block; font-family:var(--font-d); font-weight:700; font-size:clamp(.88rem,1.6vw,1.45rem); color:var(--ind); line-height:1.12; margin-top:.35em; }
+.arc-why{ display:block; font-size:var(--t-small); color:var(--gry); margin-top:.3em; }
+.slide.slate .arc-step{ border-top-color:rgba(255,255,255,.55); }
+.slide.slate .arc-step.now{ border-top-color:var(--wht); }
+.slide.slate .arc-when,.slide.slate .arc-why{ color:var(--tint2); }
+.slide.slate .arc-what{ color:var(--wht); }
 
 /* ═══ CONTACTO ══════════════════════════════════════════════════ */
 .contact{ display:flex; align-items:center; gap:clamp(.6rem,1.4vw,1.2rem); }
-.contact img{ width:clamp(44px,5.6vw,84px); height:auto; max-height:none; border-radius:6px; background:var(--wht); padding:4px; }
-.contact a{ color:var(--wht); font-weight:700; text-decoration:none; display:block; }
+.contact img{ width:clamp(52px,6.4vw,96px); height:auto; max-height:none; border-radius:var(--r); background:var(--wht); padding:5px; }
+.contact a{ color:var(--wht); font-weight:700; text-decoration:none; display:block; font-size:var(--t-body); }
+.contact-lbl{ display:block; font-size:var(--t-small); color:var(--tint2); margin-bottom:.25em; }
+
+/* ═══ SLIDE DE RONDA ════════════════════════════════════════════
+   Se rehízo alrededor del pedido. Antes declaraba una posición y
+   daba un mail; ahora dice qué queremos del inversor esta semana.
+   El arco Hoy → Q4 → Ronda se mudó a la de respaldo.            */
+.ronda-lead{
+  font-family:var(--font-d); font-weight:700;
+  font-size:clamp(1rem,2.15vw,2.05rem); line-height:1.16;
+  color:var(--wht); max-width:34ch;
+}
+.ask{
+  border:2px solid rgba(255,255,255,.55); border-radius:var(--r);
+  padding:clamp(.7rem,1.9vh,1.35rem) clamp(.9rem,2vw,1.7rem);
+  /* En ch se calculaba sobre la tipografía del padre (13 px), no
+     sobre la del texto del pedido, y la caja quedaba angosta.   */
+  margin-top:var(--gap); max-width:min(100%,clamp(320px,55vw,760px));
+}
+.ask-lbl{
+  font-weight:700; font-size:var(--t-small); letter-spacing:.2em;
+  text-transform:uppercase; color:var(--tint2); margin-bottom:.4em;
+}
+.ask-txt{ font-size:var(--t-lead); line-height:1.35; color:var(--wht); }
+.ask-txt b{ color:var(--wht); font-weight:700; }
+.ronda-cierre{
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap:clamp(.8rem,2vw,2rem); flex-wrap:wrap;
+  margin-top:auto; padding-bottom:var(--m);
+}
+.firma{
+  font-family:var(--font-d); font-weight:700;
+  font-size:clamp(1.3rem,3.4vw,3.4rem); line-height:1; color:var(--wht);
+  letter-spacing:-.03em;
+}
 
 /* ═══ EQUIPO ════════════════════════════════════════════════════ */
 .team{ display:grid; grid-template-columns:repeat(5,1fr); gap:clamp(.5rem,1.4vw,1.3rem); }
@@ -621,10 +669,10 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
     <div class="s-body" style="justify-content:center;">
       <div class="reveal">
         <span class="n xl"><span class="pre">+US$</span><span data-count="60000" data-format="es">60.000</span></span>
-        <p class="lead" style="margin-top:.5em;max-width:46ch;">Seis marcas pusieron capital por adelantado para cocrear la plataforma, <b>antes de que el producto existiera.</b></p>
+        <p class="lead" style="margin-top:.5em;max-width:46ch;">Dos marcas pusieron capital por adelantado para cocrear la plataforma, <b>antes de que el producto existiera.</b></p>
       </div>
       <div class="stats reveal" style="grid-template-columns:repeat(3,1fr);margin-top:var(--gap);">
-        <div class="stat hair"><p class="lbl">6 marcas</p><p class="k">pusieron el capital por adelantado</p></div>
+        <div class="stat hair"><p class="lbl">Dos marcas</p><p class="k">pusieron el capital por adelantado</p></div>
         <div class="stat hair"><p class="lbl">US$ 0 de capital externo</p><p class="k">sin fondos, aceleradoras ni capital de riesgo</p></div>
         <div class="stat hair"><p class="lbl">100% del desarrollo</p><p class="k">pagado por clientes</p></div>
       </div>
@@ -675,7 +723,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <div class="s-rule reveal"></div>
     </header>
     <div class="s-body" style="flex-direction:row;align-items:center;gap:clamp(.8rem,2.6vw,2.6rem);">
-      <div class="loop-wrap reveal" style="flex:1 1 44%;min-width:0;">
+      <div class="loop-wrap reveal" style="flex:1 1 38%;min-width:0;">
         <!-- Geometría: centro 175,175 · anillo r=100 · nodos r=58.
              Los nodos tienen que dar 2r−8 ≥ 98 px, que es lo que
              mide "Activación" a 12,5 px. Con r=46 no entraba.     -->
@@ -689,7 +737,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
           <g class="loop-node"><circle cx="75"  cy="175" r="58"/><text class="step" x="75" y="168">04</text><text class="nm" x="75" y="189" style="font-size:12.5px">Recompra</text></g>
         </svg>
       </div>
-      <div class="stats reveal" style="flex:1 1 56%;min-width:0;grid-template-columns:1fr;gap:clamp(.5rem,1.7vh,1.2rem);">
+      <div class="stats capas reveal" style="flex:1 1 62%;min-width:0;grid-template-columns:1fr;gap:clamp(.5rem,1.9vh,1.4rem);">
         <div class="stat"><p class="lbl">01 · Captura</p><p class="k">Canal propio: salón, take away y delivery, sin intermediarios.</p></div>
         <div class="stat"><p class="lbl">02 · Dato</p><p class="k">Cada pedido estructura cliente, frecuencia y canal. <b>Es de la marca.</b></p></div>
         <div class="stat"><p class="lbl">03 · Activación</p><p class="k">Deenex Activa: IA que recupera clientes por WhatsApp, con atribución.</p></div>
@@ -850,18 +898,25 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <h2 class="s-title wipe">No estamos <span class="vio">levantando hoy.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
-    <div class="s-body" style="justify-content:center;">
-      <p class="lead reveal" style="max-width:52ch;font-family:var(--font-d);font-weight:700;font-size:clamp(1rem,2.1vw,2rem);line-height:1.15;color:#fff;">En Q4 medimos la atribución real de Activa. Ese número convierte la hipótesis más grande del plan —el 55% del revenue del año 3— en un dato.</p>
-      <div class="arc reveal" style="margin-top:var(--gap);">
-        <div class="arc-step now"><span class="arc-when">Hoy</span><span class="arc-what">8 marcas · +US$&nbsp;10K de MRR</span><span class="arc-why">Default-alive: crecemos sin capital externo.</span></div>
-        <div class="arc-step"><span class="arc-when">Q4 2026</span><span class="arc-what">Activa medida con atribución real</span><span class="arc-why">La hipótesis más cara del plan, resuelta.</span></div>
-        <div class="arc-step"><span class="arc-when">Entonces</span><span class="arc-what">Abrimos la ronda</span><span class="arc-why">Desde la fuerza, no desde la necesidad.</span></div>
+    <div class="s-body">
+      <p class="ronda-lead reveal">En Q4 medimos la atribución real de Activa —la hipótesis más grande del plan— y ahí abrimos la ronda.</p>
+
+      <!-- EL PEDIDO. La slide anterior no le pedía NADA al inversor:
+           declaraba una posición y daba un mail. Alguien que te quiere
+           seguir tiene que saber qué hacer el lunes, y el pedido tiene
+           que ser compatible con "no estamos levantando": no se pide
+           plata, se pide la conversación.                            -->
+      <div class="ask reveal">
+        <p class="ask-lbl">Lo que sí queremos ahora</p>
+        <p class="ask-txt">Tres o cuatro conversaciones abiertas, para que cuando salga ese número <b>no estemos empezando de cero.</b></p>
       </div>
-      <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(.8rem,2vw,2rem);flex-wrap:wrap;margin-top:auto;padding-bottom:var(--m);">
-        <p style="font-family:var(--font-d);font-weight:700;font-size:clamp(1rem,2.2vw,2.1rem);color:#fff;line-height:1.1;">Por eso construimos el vínculo hoy,<br>y no después.</p>
+
+      <div class="ronda-cierre reveal">
+        <p class="firma">Tus clientes<br>son tuyos.</p>
         <div class="contact">
           <img src="assets/qr.png" alt="Código QR para ver la demo">
-          <div style="font-size:var(--t-small);color:var(--tint2);">Escaneá para ver la demo
+          <div>
+            <span class="contact-lbl">Escaneá para ver la demo</span>
             <a href="mailto:alan@deenex.com">alan@deenex.com</a>
             <a href="https://deenex.com">deenex.com</a>
           </div>
@@ -1069,6 +1124,17 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
         <div class="stat"><span class="n sm wrap">Activa</span><p class="lbl">Con atribución real</p></div>
         <div class="stat"><span class="n sm wrap">EBITDA+</span><p class="lbl">Sostenido</p></div>
         <div class="stat"><span class="n sm wrap">Seed 2027</span><p class="lbl">Cap table limpio</p></div>
+      </div>
+      <!-- El arco vivía en la slide en vivo. Bajó acá cuando la de
+           Ronda se rehizo alrededor del pedido: la secuencia es
+           detalle de Q&A, no argumento de escenario.               -->
+      <div class="reveal" style="margin-top:var(--gap);">
+        <p class="lbl" style="color:var(--vio);margin-bottom:calc(var(--gap) * .6);">Cuándo se abre</p>
+        <div class="arc">
+          <div class="arc-step now"><span class="arc-when">Hoy</span><span class="arc-what">8 marcas · +US$&nbsp;10K de MRR</span><span class="arc-why">Default-alive: crecemos sin capital externo.</span></div>
+          <div class="arc-step"><span class="arc-when">Q4 2026</span><span class="arc-what">Activa medida con atribución real</span><span class="arc-why">La hipótesis más cara del plan, resuelta.</span></div>
+          <div class="arc-step"><span class="arc-when">Entonces</span><span class="arc-what">Abrimos la ronda</span><span class="arc-why">Desde la fuerza, no desde la necesidad.</span></div>
+        </div>
       </div>
     </div>
   </div>
