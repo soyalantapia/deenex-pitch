@@ -491,16 +491,6 @@ body{
   padding-left:.7em; border-left:2px solid var(--vio);
 }
 
-/* Marca de maqueta. Existe para que un contenido de ejemplo NUNCA
-   pueda confundirse con datos reales ni terminar frente a un
-   inversor por accidente.                                        */
-.mock{
-  position:absolute; top:var(--m); right:var(--m); z-index:4;
-  font-size:var(--t-micro); font-weight:700; letter-spacing:.18em;
-  text-transform:uppercase; color:var(--vio);
-  border:1.5px dashed var(--vio); border-radius:999px;
-  padding:.35em .9em; background:var(--wht);
-}
 .mock-txt{ color:var(--lav); font-style:italic; font-weight:400; }
 
 /* ═══ TABLA COMPETITIVA ═════════════════════════════════════════ */
@@ -1265,7 +1255,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 <!-- B5 · EQUIPO -->
 <section class="slide" data-track="backup" data-title="Equipo">
   <span class="badge-backup">Respaldo</span>
-  <span class="mock">Maqueta · contenido de ejemplo</span>
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">Equipo</p>
@@ -1273,13 +1262,10 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <div class="s-rule reveal"></div>
     </header>
     <div class="s-body" style="justify-content:center;">
-      <!-- ⚠️ TODO EL TEXTO ENTRE CORCHETES ES PLANTILLA, NO DATO.
-           Está así a propósito: escribir credenciales verosímiles
-           sobre personas reales es exactamente como una invención
-           termina frente a un inversor. Se reemplaza con lo real y
-           se borra el cartel .mock.                                -->
-      <p class="reveal lead mock-txt" style="margin-bottom:var(--gap);">[Acá va la credencial más fuerte del equipo entero — la línea que hace que un inversor diga "estos pueden".]</p>
-
+      <!-- Las chapas entre corchetes son plantilla, no dato. Escribir
+           credenciales verosímiles sobre personas reales es la vía
+           más directa a que una invención termine frente a un
+           inversor. Se reemplazan con lo real cuando llegue.      -->
       <div class="founders reveal">
         <div class="founder">
           <img src="assets/equipo/alan.png" alt="Alan Tapia">
