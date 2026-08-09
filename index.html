@@ -329,13 +329,6 @@ body{
 .press-name{ font-family:var(--font-d); font-weight:700; font-size:clamp(.7rem,1.1vw,1.05rem); color:var(--ind); white-space:nowrap; }
 .press-sep{ color:var(--hair); }
 
-/* ═══ ECUACIÓN ══════════════════════════════════════════════════ */
-.eq{ display:flex; align-items:flex-start; gap:clamp(.4rem,1.3vw,1.3rem); }
-.eq .stat{ flex:1; }
-/* Los operadores se alinean con los números, no con el centro de
-   la columna: si no, quedan flotando junto al texto chico.      */
-.eq-op{ display:flex; align-items:flex-start; padding-top:clamp(.5rem,1.5vh,1.1rem); font-family:var(--font-d); font-size:var(--n-sm); color:var(--lav); font-weight:700; }
-
 /* ═══ ARCO TEMPORAL ═════════════════════════════════════════════ */
 .arc{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(.5rem,1.6vw,1.6rem); }
 /* El arco vive en una slide BLANCA (la de respaldo). Los colores
@@ -573,10 +566,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   .team{ grid-template-columns:repeat(2,1fr) !important; }
   .founders{ grid-template-columns:1fr !important; }
   .arc{ grid-template-columns:1fr !important; }
-
-  /* La ecuación se apila y los operadores se centran entre filas */
-  .eq{ flex-direction:column; }
-  .eq-op{ justify-content:center; padding-top:0; }
 
   /* La portada deja de ser dos columnas */
   .cover .slide-content{ flex-direction:column; justify-content:center; }
@@ -900,51 +889,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   <footer class="closer reveal">La expansión no cuesta CAC adicional. <b>Ese es el foso.</b></footer>
 </section>
 
-<!-- ══ 09 · OBJETIVO Y CAMINO ════════════════════════════════════
-     Fusiona las viejas 12 y 13. Fuera "sin depender de capital
-     externo" (contradecía al plan) y fuera la comparación con/sin
-     inversión (expone la contradicción y no tiene función si no
-     estamos pidiendo plata).                                     -->
-<section class="slide" data-track="live" data-title="Objetivo y camino">
-  <div class="slide-content">
-    <header class="s-head">
-      <p class="eyebrow reveal">El objetivo</p>
-      <h2 class="s-title reveal">200 cuentas y <span class="vio">US$&nbsp;500K de run-rate.</span></h2>
-      <div class="s-rule reveal"></div>
-    </header>
-    <div class="s-body" style="justify-content:center;">
-      <div class="eq reveal">
-        <div class="stat"><span class="n sm" data-count="200">200</span><p class="lbl">Cuentas operativas</p><p class="k">ICP de 1 a 20 locales</p></div>
-        <div class="eq-op">×</div>
-        <div class="stat"><span class="n sm wrap">~US$&nbsp;210</span><p class="lbl">Por cuenta / mes</p><p class="k">suscripción + delivery + Activa</p></div>
-        <div class="eq-op">=</div>
-        <div class="stat"><span class="n sm wrap">~US$&nbsp;500K</span><p class="lbl">De run-rate anual</p><p class="k">con EBITDA positivo sostenido</p></div>
-      </div>
-      <!-- Dos velocidades, declaradas. El deck prometía 15–20 cierres
-           por mes sin decir qué los hace posibles, cuando el ritmo
-           real es 2–3 y el propio BP ubica los 15–20 en el escenario
-           CON inversión. Decirlo así no debilita el pitch: contesta
-           "¿para qué querés la plata?", que hasta ahora no se
-           contestaba en ninguna slide del flujo en vivo.           -->
-      <div class="reveal" style="margin-top:var(--gap);">
-        <p class="lbl" style="color:var(--vio);margin-bottom:calc(var(--gap) * .6);">Cómo llegamos</p>
-        <div class="split" style="display:flex;align-items:stretch;gap:clamp(.5rem,1.6vw,1.5rem);">
-          <div class="stat hair" style="flex:1 1 38%;min-width:0;">
-            <span class="n sm ink">2–3</span>
-            <p class="lbl">Cierres por mes, hoy</p>
-            <p class="k">Founder-led, sin SDR y sin un peso en paid media.</p>
-          </div>
-          <div class="panel" style="flex:1 1 62%;min-width:0;">
-            <p class="lbl">Cierres por mes, con la ronda</p>
-            <span class="n sm" style="margin-top:.15em;">15–20</span>
-            <p class="k" style="margin-top:.4em;">Lo compran tres palancas concretas: <b>onboarding productizado</b> para que activar una cuenta no consuma horas de founder, <b>referidos sistematizados</b> —4 de nuestras primeras 8 cuentas llegaron así, sin sistema— y un <b>SDR</b>.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <footer class="closer reveal">El plan es <b>default-alive</b>: sin la ronda seguimos creciendo, solo que más lento. El peor punto de caja del escenario base es <b>US$ 73K</b>.</footer>
-</section>
 
 <!-- ══ 10 · LA RONDA · VIOLETA A SANGRE ══════════════════════════
      El disparador es la ATRIBUCIÓN DE ACTIVA (Q4 2026), no los
