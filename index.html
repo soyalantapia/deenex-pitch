@@ -439,6 +439,7 @@ body{
 .cover-rule{ width:clamp(60px,8vw,130px); height:3px; background:var(--vio); border-radius:2px; margin:clamp(.85rem,2.3vh,1.6rem) 0 clamp(.45rem,1.3vh,.85rem) }
 .cover-meta{ font-weight:700; font-size:var(--t-micro); letter-spacing:.2em; text-transform:uppercase; color:var(--gry) }
 .cover-tr{ margin-top:clamp(.6rem,1.8vh,1.15rem); font-weight:700; font-size:var(--t-small); letter-spacing:.11em; text-transform:uppercase; color:var(--ind) }
+.cover-note{ margin-top:.35em; font-size:var(--t-small); color:var(--gry) }
 
 /* ═══ ANIMACIÓN ═════════════════════════════════════════════════
    Un solo load orquestado por slide. Son ~11 s por slide: nada de
@@ -611,7 +612,13 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <div class="reveal">
         <div class="cover-rule"></div>
         <p class="cover-meta">Deenex Technologies SAS · Buenos Aires, Argentina</p>
-        <p class="cover-tr">8 marcas pagando · +145 locales operando · +US$ 10K de MRR</p>
+        <!-- CMRR, no MRR. Los 15 contratos están firmados hoy; 8 ya
+             operan y 7 lanzan este trimestre. Decir "pagando" y
+             "operando" sobre los 15 sería presentar el trimestre que
+             viene como si fuera hoy: el primer número que un inversor
+             verifica es este, y si no cuadra deja de creer el resto.  -->
+        <p class="cover-tr">15 marcas mid-market contratadas · +250 locales · US$&nbsp;15K de CMRR</p>
+        <p class="cover-note">8 operando hoy · el resto lanza este trimestre</p>
       </div>
     </div>
     <div class="cover-r reveal"><img src="assets/product-collage.png" alt="Producto Deenex: app de pedidos, panel de clientes y checkout"></div>
@@ -668,11 +675,15 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
     </header>
     <div class="s-body" style="justify-content:center;">
       <div class="reveal">
-        <span class="n xl"><span class="pre">+US$</span><span data-count="60000" data-format="es">60.000</span></span>
-        <p class="lead" style="margin-top:.5em;max-width:46ch;">Dos marcas pusieron capital por adelantado para cocrear la plataforma, <b>antes de que el producto existiera.</b></p>
+        <span class="n xl"><span class="pre">+US$</span><span data-count="100000" data-format="es">100.000</span></span>
+        <p class="lead" style="margin-top:.5em;max-width:46ch;">facturados a clientes desde el día uno, <b>sin un peso de capital externo.</b></p>
       </div>
       <div class="stats reveal" style="grid-template-columns:repeat(3,1fr);margin-top:var(--gap);">
-        <div class="stat hair"><p class="lbl">Dos marcas</p><p class="k">pusieron el capital por adelantado</p></div>
+        <!-- Los US$60K por adelantado no se pierden al subir el titular
+             a los 100K facturados: son el dato que sostiene el título.
+             Facturar es normal; cobrar ANTES de que el producto exista
+             es la prueba del dolor.                                   -->
+        <div class="stat hair"><p class="lbl">US$ 60.000 por adelantado</p><p class="k">dos marcas pusieron el capital <b>antes de que el producto existiera</b></p></div>
         <div class="stat hair"><p class="lbl">US$ 0 de capital externo</p><p class="k">sin fondos, aceleradoras ni capital de riesgo</p></div>
         <div class="stat hair"><p class="lbl">100% del desarrollo</p><p class="k">pagado por clientes</p></div>
       </div>
@@ -746,7 +757,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
              capas están entregadas en las 8 cuentas — y Activa es la
              hipótesis del 55% del revenue del año 3. Que el inversor lo
              descubra después cuesta mucho más que decirlo acá.        -->
-        <p class="note" style="font-style:normal;">Captura y dato corren en las <b style="color:var(--ind);font-weight:700;">8 cuentas</b>. Activa ya está en producción en las primeras y <b style="color:var(--ind);font-weight:700;">se está abriendo al resto</b>.</p>
+        <p class="note" style="font-style:normal;">Captura y dato corren en las <b style="color:var(--ind);font-weight:700;">8 cuentas que ya operan</b>. Activa ya está en producción en las primeras y <b style="color:var(--ind);font-weight:700;">se está abriendo al resto</b>.</p>
       </div>
     </div>
   </div>
@@ -764,17 +775,23 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
     <!-- space-evenly: son tres bloques de alturas muy distintas
          (stats, chips, prensa) y centrarlos los amontona.        -->
     <div class="s-body" style="justify-content:space-evenly;">
+      <!-- Contratado y operando conviven en la misma fila, con el
+           "8 operando" como ancla de honestidad. Sin ese cuarto dato,
+           los otros tres se leen como si las 15 ya facturaran.      -->
       <div class="stats reveal" style="grid-template-columns:repeat(4,1fr);">
-        <div class="stat"><span class="n md" data-count="10" data-prefix="+$" data-suffix="K">+$10K</span><p class="lbl">MRR mensual</p></div>
-        <div class="stat"><span class="n md" data-count="8">8</span><p class="lbl">Marcas pagando</p></div>
-        <div class="stat"><span class="n md" data-count="145" data-prefix="+">+145</span><p class="lbl">Locales operando</p></div>
-        <div class="stat"><span class="n md" data-count="70" data-prefix="+$" data-suffix="K">+$70K</span><p class="lbl">Facturado</p></div>
+        <div class="stat"><span class="n md" data-count="15" data-prefix="US$&nbsp;" data-suffix="K">US$&nbsp;15K</span><p class="lbl">De CMRR contratado</p></div>
+        <div class="stat"><span class="n md" data-count="15">15</span><p class="lbl">Marcas mid-market</p></div>
+        <div class="stat"><span class="n md" data-count="250" data-prefix="+">+250</span><p class="lbl">Locales</p></div>
+        <div class="stat"><span class="n md" data-count="8">8</span><p class="lbl">Operando hoy</p></div>
       </div>
-      <div class="chips reveal">
-        <span class="chip"><span class="dot"></span>QUEM</span><span class="chip"><span class="dot"></span>Palta</span>
-        <span class="chip"><span class="dot"></span>La Fábrica</span><span class="chip"><span class="dot"></span>Hatsu</span>
-        <span class="chip"><span class="dot"></span>Monti</span><span class="chip"><span class="dot"></span>Pannus</span>
-        <span class="chip"><span class="dot"></span>Konex</span><span class="chip"><span class="dot"></span>UTE</span>
+      <div class="reveal">
+        <p class="lbl" style="margin-bottom:.5em;">Las 8 que ya operan</p>
+        <div class="chips">
+          <span class="chip"><span class="dot"></span>QUEM</span><span class="chip"><span class="dot"></span>Palta</span>
+          <span class="chip"><span class="dot"></span>La Fábrica</span><span class="chip"><span class="dot"></span>Hatsu</span>
+          <span class="chip"><span class="dot"></span>Monti</span><span class="chip"><span class="dot"></span>Pannus</span>
+          <span class="chip"><span class="dot"></span>Konex</span><span class="chip"><span class="dot"></span>UTE</span>
+        </div>
       </div>
       <div class="reveal">
         <div class="press">
@@ -790,13 +807,13 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
        niveles y ninguna derivada. Primer MRR recurrente en Q1 2026;
        "menos de 8 meses" es cierto tanto si fue enero como marzo.
        Con el mes exacto se puede afilar a "en 6 meses".          -->
-  <footer class="closer reveal">De cero a +US$10K de MRR <b>en menos de 8 meses</b>, sin un peso de capital externo. <b>Las 8 marcas están operando y no se cayó ninguna.</b></footer>
+  <footer class="closer reveal">De cero a <b>US$ 15K de CMRR en menos de 8 meses</b>, sin un peso de capital externo. Ocho marcas operando, siete lanzando este trimestre, <b>cero bajas desde que arrancamos.</b></footer>
 </section>
 
 <!-- ══ 08 · MODELO DE INGRESOS ═══════════════════════════════════
      La escalera va a proporción real (56/132/221). Y la
      reconciliación Legacy vs ICP va en el cuerpo, no al pie: con
-     +US$10K y 8 marcas la división da ~US$1.250 por cuenta contra
+     US$15K y 15 marcas la división da ~US$1.000 por cuenta contra
      los $221 del modelo. Si no lo explicamos, lo encuentra él.   -->
 <section class="slide" data-track="live" data-title="Modelo de ingresos">
   <div class="slide-content">
@@ -831,7 +848,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
         </div>
       </div>
       <div class="reveal" style="display:flex;align-items:flex-start;gap:clamp(.8rem,2.4vw,2.4rem);margin-top:var(--gap);">
-        <p class="k" style="flex:1;">Nuestras 8 cuentas de hoy promedian <b>18 locales</b> cada una y facturan <b>~US$1.250/mes</b>. La escalera es el ICP nuevo —marcas de 1 a 20 locales— que es el que escala: <b>menos revenue por cuenta, muchas más cuentas, cero venta enterprise.</b></p>
+        <p class="k" style="flex:1;">Nuestras 15 cuentas contratadas promedian <b>17 locales</b> cada una y <b>~US$1.000/mes</b>. La escalera es el ICP nuevo —marcas de 1 a 20 locales— que es el que escala: <b>menos revenue por cuenta, muchas más cuentas, cero venta enterprise.</b></p>
         <div class="stat" style="flex:0 0 auto;min-width:clamp(110px,12vw,170px);"><span class="n sm">81,5%</span><p class="lbl">De margen bruto</p></div>
       </div>
     </div>
@@ -876,7 +893,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
           <div class="panel" style="flex:1 1 62%;min-width:0;">
             <p class="lbl">Cierres por mes, con la ronda</p>
             <span class="n sm" style="margin-top:.15em;">15–20</span>
-            <p class="k" style="margin-top:.4em;">Lo compran tres palancas concretas: <b>onboarding productizado</b> para que activar una cuenta no consuma horas de founder, <b>referidos sistematizados</b> —4 de nuestras 8 cuentas ya llegaron así, sin sistema— y un <b>SDR</b>.</p>
+            <p class="k" style="margin-top:.4em;">Lo compran tres palancas concretas: <b>onboarding productizado</b> para que activar una cuenta no consuma horas de founder, <b>referidos sistematizados</b> —4 de nuestras primeras 8 cuentas llegaron así, sin sistema— y un <b>SDR</b>.</p>
           </div>
         </div>
       </div>
@@ -1026,7 +1043,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <div class="stats reveal" style="grid-template-columns:repeat(4,1fr);">
         <div class="stat"><span class="n md" data-count="31">31</span><p class="lbl">Deals abiertos</p><p class="k">en pipeline hoy</p></div>
         <div class="stat"><span class="n md" data-count="3">3</span><p class="lbl">Cierres documentados</p><p class="k">en canales distintos</p></div>
-        <div class="stat"><span class="n md wrap">4 de 8</span><p class="lbl">Cuentas actuales</p><p class="k">llegaron por referido</p></div>
+        <div class="stat"><span class="n md wrap">4 de 8</span><p class="lbl">Primeras cuentas</p><p class="k">llegaron por referido</p></div>
         <div class="stat"><span class="n md" data-count="40" data-prefix="+">+40</span><p class="lbl">Leads</p><p class="k">de una sola nota de prensa</p></div>
       </div>
       <div class="reveal" style="display:flex;gap:clamp(.4rem,1.1vw,.9rem);align-items:center;justify-content:center;min-height:0;">
@@ -1131,7 +1148,7 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
       <div class="reveal" style="margin-top:var(--gap);">
         <p class="lbl" style="color:var(--vio);margin-bottom:calc(var(--gap) * .6);">Cuándo se abre</p>
         <div class="arc">
-          <div class="arc-step now"><span class="arc-when">Hoy</span><span class="arc-what">8 marcas · +US$&nbsp;10K de MRR</span><span class="arc-why">Default-alive: crecemos sin capital externo.</span></div>
+          <div class="arc-step now"><span class="arc-when">Hoy</span><span class="arc-what">15 marcas contratadas · US$&nbsp;15K de CMRR</span><span class="arc-why">Default-alive: crecemos sin capital externo.</span></div>
           <div class="arc-step"><span class="arc-when">Q4 2026</span><span class="arc-what">Activa medida con atribución real</span><span class="arc-why">La hipótesis más cara del plan, resuelta.</span></div>
           <div class="arc-step"><span class="arc-when">Entonces</span><span class="arc-what">Abrimos la ronda</span><span class="arc-why">Desde la fuerza, no desde la necesidad.</span></div>
         </div>
