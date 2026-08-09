@@ -285,6 +285,35 @@ body{
 .quote-by{ margin-top:clamp(.9rem,2.6vh,2rem); font-size:var(--t-body); color:var(--tint2); }
 .quote-by b{ color:var(--wht); font-weight:700; }
 
+/* ═══ MURO DE CLIENTES ══════════════════════════════════════════
+   El muro se corta contra el borde derecho a propósito: una lista
+   que termina prolija se lee como "estos son todos", y una que se
+   sale del cuadro se lee como "hay más". El sangrado llega justo
+   al borde de la slide (no más allá), así que no genera scroll; el
+   efecto lo hace la máscara, que desvanece los últimos nombres.
+   Cuando lleguen los logos, se reemplaza el contenido de .wall y
+   la mecánica queda igual.
+   ═══════════════════════════════════════════════════════════════ */
+.wall{
+  display:flex; flex-wrap:wrap;
+  gap:clamp(.4rem,1.1vw,1rem) clamp(.8rem,2.2vw,2.2rem);
+  width:calc(100% + var(--m));
+  /* Dos filas EXACTAS: dos cajas de línea más el hueco entre ellas.
+     Si se corta a media caja, un nombre queda partido al medio y eso
+     se lee como error, no como sangrado. Una tercera fila queda
+     oculta entera, que es el efecto buscado.                      */
+  max-height:calc(2 * clamp(1.5rem,3.4vw,3rem) + clamp(.4rem,1.1vw,1rem));
+  overflow:hidden;
+  -webkit-mask-image:linear-gradient(to right,#000 72%,transparent 99%);
+          mask-image:linear-gradient(to right,#000 72%,transparent 99%);
+}
+.wall-item{
+  font-family:var(--font-d); font-weight:700;
+  font-size:clamp(.95rem,2.05vw,1.95rem); line-height:clamp(1.5rem,3.4vw,3rem);
+  letter-spacing:-.015em; color:var(--ind); white-space:nowrap;
+}
+.wall img{ height:clamp(1.1rem,2.4vw,2.2rem); width:auto; max-height:none; object-fit:contain; }
+
 /* ═══ CHIPS DE CLIENTES ═════════════════════════════════════════ */
 .chips{ display:flex; flex-wrap:wrap; gap:var(--gap-s); }
 .chip{
@@ -565,6 +594,11 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   .vids{ grid-template-columns:repeat(2,1fr); }
   .press{ gap:.5rem; }
 
+  /* En un teléfono el deck se lee, no se proyecta: cortar el muro en
+     dos filas escondía 6 de 10 clientes. Ahí el sangrado deja de ser
+     efecto y pasa a ser información perdida.                       */
+  .wall{ max-height:calc(4 * clamp(1.5rem,3.4vw,3rem) + 3 * clamp(.4rem,1.1vw,1rem)); }
+
   /* La etiqueta del embudo baja debajo de la barra: al 3% de ancho
      no hay lugar a la derecha en un teléfono.                    */
   .funnel{ gap:clamp(1.6rem,7vw,2.4rem); }
@@ -784,13 +818,23 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
         <div class="stat"><span class="n md" data-count="250" data-prefix="+">+250</span><p class="lbl">Locales</p></div>
         <div class="stat"><span class="n md" data-count="8">8</span><p class="lbl">Operando hoy</p></div>
       </div>
+      <!-- Sin punto verde: la lista mezcla marcas operando con marcas
+           contratadas que todavía no lanzaron, y el punto significaba
+           "en operación". Marcarlas todas en verde sería decir que las
+           15 ya facturan, que es justo lo que evitamos arriba.       -->
       <div class="reveal">
-        <p class="lbl" style="margin-bottom:.5em;">Las 8 que ya operan</p>
-        <div class="chips">
-          <span class="chip"><span class="dot"></span>QUEM</span><span class="chip"><span class="dot"></span>Palta</span>
-          <span class="chip"><span class="dot"></span>La Fábrica</span><span class="chip"><span class="dot"></span>Hatsu</span>
-          <span class="chip"><span class="dot"></span>Monti</span><span class="chip"><span class="dot"></span>Pannus</span>
-          <span class="chip"><span class="dot"></span>Konex</span><span class="chip"><span class="dot"></span>UTE</span>
+        <p class="lbl" style="margin-bottom:.55em;">Las marcas que ya eligieron Deenex</p>
+        <div class="wall">
+          <span class="wall-item">QUEM</span>
+          <span class="wall-item">QUEM Central</span>
+          <span class="wall-item">Palta</span>
+          <span class="wall-item">La Fábrica de Sandwiches</span>
+          <span class="wall-item">Hatsu</span>
+          <span class="wall-item">Papanatos</span>
+          <span class="wall-item">Monti</span>
+          <span class="wall-item">Pannus</span>
+          <span class="wall-item">CC Konex</span>
+          <span class="wall-item">Emplatame</span>
         </div>
       </div>
       <div class="reveal">
