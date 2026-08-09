@@ -1231,15 +1231,21 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   <div class="slide-content">
     <header class="s-head">
       <p class="eyebrow reveal">Adquisición</p>
-      <h2 class="s-title reveal">Tenemos producto, <span class="vio">tenemos ventas.</span></h2>
+      <h2 class="s-title reveal">La mitad de nuestros clientes <span class="vio">llegó por referido.</span></h2>
       <div class="s-rule reveal"></div>
     </header>
+    <!-- El 50% por referido pasa de ser una tarjeta más a llevar la
+         slide. Es el dato de mayor señal de todo el deck sobre
+         distribución, porque describe un canal que TODAVÍA NO EXISTE:
+         un producto que se recomienda solo, sin nada que lo empuje.
+         Y en porcentaje no envejece — el "4 de 8" quedaba viejo cada
+         vez que entraba una cuenta.                                 -->
     <div class="s-body" style="justify-content:center;">
-      <div class="stats reveal" style="grid-template-columns:repeat(4,1fr);">
-        <div class="stat"><span class="n md" data-count="31">31</span><p class="lbl">Deals abiertos</p><p class="k">en pipeline hoy</p></div>
-        <div class="stat"><span class="n md" data-count="3">3</span><p class="lbl">Cierres documentados</p><p class="k">en canales distintos</p></div>
-        <div class="stat"><span class="n md wrap">4 de 8</span><p class="lbl">Primeras cuentas</p><p class="k">llegaron por referido</p></div>
-        <div class="stat"><span class="n md" data-count="40" data-prefix="+">+40</span><p class="lbl">Leads</p><p class="k">de una sola nota de prensa</p></div>
+      <p class="prob-lead reveal">Y todavía <span class="vio">no existe un sistema de referidos.</span></p>
+      <div class="stats reveal" style="grid-template-columns:repeat(3,1fr);margin-top:var(--gap);">
+        <div class="stat"><span class="n md" data-count="50" data-suffix="%">50%</span><p class="lbl">De los clientes actuales</p><p class="k">llegó por recomendación de otro cliente</p></div>
+        <div class="stat"><span class="n md" data-count="40" data-prefix="+">+40</span><p class="lbl">Leads</p><p class="k">de una sola nota de prensa, sin pagar un peso</p></div>
+        <div class="stat"><span class="n md" data-count="31">31</span><p class="lbl">Leads abiertos</p><p class="k">en el pipeline de hoy</p></div>
       </div>
       <div class="reveal" style="display:flex;gap:clamp(.4rem,1.1vw,.9rem);align-items:center;justify-content:center;min-height:0;">
         <img src="assets/prensa/iproup.png"   alt="Nota en iProUP"     style="max-height:min(23vh,180px);border-radius:8px;">
@@ -1253,52 +1259,6 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
 </section>
 
 <!-- B5 · EQUIPO -->
-<section class="slide" data-track="backup" data-title="Equipo">
-  <span class="badge-backup">Respaldo</span>
-  <div class="slide-content">
-    <header class="s-head">
-      <p class="eyebrow reveal">Equipo</p>
-      <h2 class="s-title reveal">Siete personas, <span class="vio">cero pasajeros.</span></h2>
-      <div class="s-rule reveal"></div>
-    </header>
-    <div class="s-body" style="justify-content:center;">
-      <!-- Las chapas entre corchetes son plantilla, no dato. Escribir
-           credenciales verosímiles sobre personas reales es la vía
-           más directa a que una invención termine frente a un
-           inversor. Se reemplazan con lo real cuando llegue.      -->
-      <div class="founders reveal">
-        <div class="founder">
-          <img src="assets/equipo/alan.png" alt="Alan Tapia">
-          <div>
-            <p class="mn" style="font-size:clamp(.8rem,1.2vw,1.1rem)">Alan Tapia</p>
-            <p class="mr">Founder &amp; CEO / CPO</p>
-            <span class="chapa mock-txt">[Antes fundó EMPRESA · AÑO–AÑO · resultado]</span>
-            <p class="bio" style="margin-top:.35em;">Producto y tecnología. Dev AI y back-end. Lidera visión y ventas.</p>
-          </div>
-        </div>
-        <div class="founder">
-          <img src="assets/equipo/joaquin.png" alt="Joaquín Lombardi">
-          <div>
-            <p class="mn" style="font-size:clamp(.8rem,1.2vw,1.1rem)">Joaquín Lombardi</p>
-            <p class="mr">Founder &amp; COO</p>
-            <span class="chapa mock-txt">[Antes fundó EMPRESA · AÑO–AÑO · resultado]</span>
-            <p class="bio" style="margin-top:.35em;">Estrategia y operación. Lidera la implementación de cada cuenta.</p>
-          </div>
-        </div>
-      </div>
-
-      <p class="reveal mock-txt" style="font-size:var(--t-small);margin-top:calc(var(--gap) * .7);">[X] años construyendo juntos antes de Deenex.</p>
-
-      <div class="team reveal" style="margin-top:var(--gap);">
-        <div class="member"><img src="assets/equipo/iara.png" alt="Iara Gallardo"><span class="mn">Iara Gallardo</span><span class="mr">Head of Marketing</span><span class="chapa mock-txt">[MBA en UNIVERSIDAD · antes en STARTUP]</span></div>
-        <div class="member"><img src="assets/equipo/thaina.png" alt="Thainá Messina"><span class="mn">Thainá Messina</span><span class="mr">Head Commercial Ops</span><span class="chapa mock-txt">[Credencial · idiomas · logro]</span></div>
-        <div class="member"><img src="assets/equipo/leandro.png" alt="Leandro Rebequi"><span class="mn">Leandro Rebequi</span><span class="mr">Tech Lead</span><span class="chapa mock-txt">[Construyó QUÉ para QUIÉN]</span></div>
-        <div class="member"><img src="assets/equipo/santiago.png" alt="Santiago Brito"><span class="mn">Santiago Brito</span><span class="mr">Dev Full Stack</span><span class="chapa mock-txt">[Antes en EMPRESA · construyó QUÉ]</span></div>
-        <div class="member"><img src="assets/equipo/agustin.png" alt="Agustín Friadenrich"><span class="mn">Agustín Friadenrich</span><span class="mr">Dev Full Stack</span><span class="chapa mock-txt">[Enseña QUÉ en DÓNDE desde los X]</span></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- B6 · LA RONDA EN DETALLE
      Vive acá y no en la slide 10 a propósito: poner el monto en
@@ -1397,6 +1357,53 @@ body.edit-active [contenteditable]:focus{ outline:2px solid var(--vio) }
   <footer class="closer reveal">Un POS registra la venta y un ecommerce la procesa. <b>Nadie convierte el dato en la próxima venta.</b></footer>
 </section>
 
+
+<section class="slide" data-track="backup" data-title="Equipo">
+  <span class="badge-backup">Respaldo</span>
+  <div class="slide-content">
+    <header class="s-head">
+      <p class="eyebrow reveal">Equipo</p>
+      <h2 class="s-title reveal">Siete personas, <span class="vio">cero pasajeros.</span></h2>
+      <div class="s-rule reveal"></div>
+    </header>
+    <div class="s-body" style="justify-content:center;">
+      <!-- Las chapas entre corchetes son plantilla, no dato. Escribir
+           credenciales verosímiles sobre personas reales es la vía
+           más directa a que una invención termine frente a un
+           inversor. Se reemplazan con lo real cuando llegue.      -->
+      <div class="founders reveal">
+        <div class="founder">
+          <img src="assets/equipo/alan.png" alt="Alan Tapia">
+          <div>
+            <p class="mn" style="font-size:clamp(.8rem,1.2vw,1.1rem)">Alan Tapia</p>
+            <p class="mr">Founder &amp; CEO / CPO</p>
+            <span class="chapa mock-txt">[Antes fundó EMPRESA · AÑO–AÑO · resultado]</span>
+            <p class="bio" style="margin-top:.35em;">Producto y tecnología. Dev AI y back-end. Lidera visión y ventas.</p>
+          </div>
+        </div>
+        <div class="founder">
+          <img src="assets/equipo/joaquin.png" alt="Joaquín Lombardi">
+          <div>
+            <p class="mn" style="font-size:clamp(.8rem,1.2vw,1.1rem)">Joaquín Lombardi</p>
+            <p class="mr">Founder &amp; COO</p>
+            <span class="chapa mock-txt">[Antes fundó EMPRESA · AÑO–AÑO · resultado]</span>
+            <p class="bio" style="margin-top:.35em;">Estrategia y operación. Lidera la implementación de cada cuenta.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="reveal mock-txt" style="font-size:var(--t-small);margin-top:calc(var(--gap) * .7);">[X] años construyendo juntos antes de Deenex.</p>
+
+      <div class="team reveal" style="margin-top:var(--gap);">
+        <div class="member"><img src="assets/equipo/iara.png" alt="Iara Gallardo"><span class="mn">Iara Gallardo</span><span class="mr">Head of Marketing</span><span class="chapa mock-txt">[MBA en UNIVERSIDAD · antes en STARTUP]</span></div>
+        <div class="member"><img src="assets/equipo/thaina.png" alt="Thainá Messina"><span class="mn">Thainá Messina</span><span class="mr">Head Commercial Ops</span><span class="chapa mock-txt">[Credencial · idiomas · logro]</span></div>
+        <div class="member"><img src="assets/equipo/leandro.png" alt="Leandro Rebequi"><span class="mn">Leandro Rebequi</span><span class="mr">Tech Lead</span><span class="chapa mock-txt">[Construyó QUÉ para QUIÉN]</span></div>
+        <div class="member"><img src="assets/equipo/santiago.png" alt="Santiago Brito"><span class="mn">Santiago Brito</span><span class="mr">Dev Full Stack</span><span class="chapa mock-txt">[Antes en EMPRESA · construyó QUÉ]</span></div>
+        <div class="member"><img src="assets/equipo/agustin.png" alt="Agustín Friadenrich"><span class="mn">Agustín Friadenrich</span><span class="mr">Dev Full Stack</span><span class="chapa mock-txt">[Enseña QUÉ en DÓNDE desde los X]</span></div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ══ 10 · LA RONDA · VIOLETA A SANGRE ══════════════════════════
      El disparador es la ATRIBUCIÓN DE ACTIVA (Q4 2026), no los
